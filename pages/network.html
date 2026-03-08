@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DeciRepo — Verification Network</title>
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="header-root"></div>
+
+    <main class="page-network">
+      <section class="panel">
+        <h1 class="section-title">Verification Network</h1>
+        <p class="section-subtitle">Connected registries, signed manifests, and cross-registry verification graph.</p>
+        <div class="button-row tight">
+          <a class="btn" href="../api/network.json">Network API</a>
+          <a class="btn" href="../api/verification-graph">Verification Graph API</a>
+          <a class="btn" href="../FEDERATION_HANDSHAKE_V0_1.md">Handshake Spec</a>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Connected Registries</h2>
+        <table class="lineage-table" role="grid">
+          <thead>
+            <tr>
+              <th>Registry</th>
+              <th>Verify Endpoint</th>
+              <th>Manifest Endpoint</th>
+              <th>Protocol</th>
+              <th>Signature</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="network-registries-body"></tbody>
+        </table>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Verification Graph</h2>
+        <div class="policy-controls">
+          <label class="feed-field">
+            <span class="feed-label">Perspective Registry</span>
+            <select id="graph-perspective" class="feed-select"></select>
+          </label>
+          <div></div>
+          <div class="policy-run-cell">
+            <a class="btn" href="../api/verification-graph">Open Graph API</a>
+          </div>
+        </div>
+        <table class="lineage-table" role="grid">
+          <thead>
+            <tr>
+              <th>Source</th>
+              <th>Target</th>
+              <th>Verify Rate</th>
+              <th>Rebuild Match</th>
+              <th>Last Verified</th>
+              <th>Edge Status</th>
+            </tr>
+          </thead>
+          <tbody id="verification-graph-body"></tbody>
+        </table>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Trust Events</h2>
+        <div id="network-activity-stream" class="publisher-stream"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-brand">DeciRepo</div>
+      <div class="footer-description">Decision infrastructure powered by DLX</div>
+      <div class="footer-legal">© 2026 IndrasNet OÜ</div>
+      <div class="footer-meta">DeciRepo Protocol v0.1</div>
+    </footer>
+  </div>
+
+  <script src="../assets/data.js"></script>
+  <script src="../components/header.js"></script>
+  <script>
+    window.DeciRepoHeader.mount("header-root", "network");
+
+    function pct(value) {
+      return `${(Number(value || 0) * 100).toFixed(1)}%`;
+    }
+
+    async function loadNetwork() {
+      const candidates = ["../api/network.json"];
+      for (const url of candidates) {
+        try {
+          const res = await fetch(url, { cache: "no-store" });
+          if (!res.ok) continue;
+          const payload = await res.json();
+          if (payload && Array.isArray(payload.connected_registries)) return payload;
+        } catch (_err) {
+          // continue
+        }
+      }
+      return { connected_registries: window.DeciRepoData.registries || [] };
+    }
+
+    async function loadManifest(nodeEndpoint) {
+      if (!nodeEndpoint) return null;
+      try {
+        const res = await fetch(nodeEndpoint, { cache: "no-store" });
+        if (!res.ok) return null;
+        return await res.json();
+      } catch (_err) {
+        return null;
+      }
+    }
+
+    async function loadTrustEvents() {
+      const candidates = ["../api/trust-events", "../api/trust-events.json"];
+      for (const url of candidates) {
+        try {
+          const res = await fetch(url, { cache: "no-store" });
+          if (!res.ok) continue;
+          const payload = await res.json();
+          if (payload && Array.isArray(payload.events)) return payload;
+        } catch (_err) {
+          // continue
+        }
+      }
+      return window.DeciRepoData.buildTrustEventsPayload();
+    }
+
+    async function loadVerificationGraph() {
+      const candidates = ["../api/verification-graph", "../api/verification-graph.json"];
+      for (const url of candidates) {
+        try {
+          const res = await fetch(url, { cache: "no-store" });
+          if (!res.ok) continue;
+          const payload = await res.json();
+          if (payload && Array.isArray(payload.edges)) return payload;
+        } catch (_err) {
+          // continue
+        }
+      }
+      return {
+        perspective_registry: window.DeciRepoData.LOCAL_REGISTRY_ID,
+        edges: window.DeciRepoData.verificationGraphEdges || []
+      };
+    }
+
+    function mountPerspectiveOptions() {
+      const select = document.getElementById("graph-perspective");
+      const options = (window.DeciRepoData.registries || []).map((registry) => registry.registry_id);
+      select.innerHTML = options.map((id) => `<option value="${id}">${id}</option>`).join("");
+      select.value = window.DeciRepoData.LOCAL_REGISTRY_ID;
+      return select;
+    }
+
+    function renderGraphByPerspective(perspectiveRegistry, apiGraphPayload) {
+      const perspective = perspectiveRegistry || window.DeciRepoData.LOCAL_REGISTRY_ID;
+      const payload = perspective === window.DeciRepoData.LOCAL_REGISTRY_ID
+        ? {
+            perspective_registry: perspective,
+            edges: (apiGraphPayload && Array.isArray(apiGraphPayload.edges))
+              ? apiGraphPayload.edges.filter((edge) => edge.source_registry === perspective)
+              : []
+          }
+        : window.DeciRepoData.buildVerificationGraphPayload(perspective);
+      const body = document.getElementById("verification-graph-body");
+      body.innerHTML = (payload.edges || [])
+        .map((edge) => `
+          <tr>
+            <td>${edge.source_registry}</td>
+            <td>${edge.target_registry}</td>
+            <td>${pct(edge.verify_success_rate)}</td>
+            <td>${pct(edge.rebuild_match_rate)}</td>
+            <td>${edge.last_verified_at}</td>
+            <td>${edge.edge_status}</td>
+          </tr>
+        `)
+        .join("") || `<tr><td colspan="6">No verification edges available.</td></tr>`;
+    }
+
+    async function renderNetworkRegistries(network) {
+      const body = document.getElementById("network-registries-body");
+      const rows = [];
+
+      for (const registry of network.connected_registries || []) {
+        const manifest = await loadManifest(registry.node_endpoint || registry.manifest_endpoint);
+        const protocolVersion = manifest && manifest.protocol_version ? manifest.protocol_version : "N/A";
+        const signatureState = manifest && manifest.signature && manifest.signature.value ? "present" : "missing";
+        const status = manifest && manifest.status ? manifest.status : (registry.status || "unknown");
+        rows.push(`
+          <tr>
+            <td>${registry.registry_id}</td>
+            <td class="kv-value mono">${registry.verify_endpoint}</td>
+            <td class="kv-value mono">${registry.manifest_endpoint || registry.node_endpoint || "N/A"}</td>
+            <td>${protocolVersion}</td>
+            <td>${signatureState}</td>
+            <td>${status}</td>
+          </tr>
+        `);
+      }
+
+      body.innerHTML = rows.join("") || `<tr><td colspan="6">No registries connected.</td></tr>`;
+    }
+
+    function renderTrustEvents(eventsPayload) {
+      const stream = document.getElementById("network-activity-stream");
+      stream.innerHTML = (eventsPayload.events || [])
+        .map((event) => `
+          <div class="publisher-stream-item">
+            ${event.timestamp} · ${event.type} · ${event.source_registry} → ${event.target_registry} · ${event.severity}<br/>
+            ${event.details}
+          </div>
+        `)
+        .join("") || `<div class="publisher-stream-item">No trust events available.</div>`;
+    }
+
+    async function init() {
+      const network = await loadNetwork();
+      await renderNetworkRegistries(network);
+      const eventsPayload = await loadTrustEvents();
+      renderTrustEvents(eventsPayload);
+      const apiGraphPayload = await loadVerificationGraph();
+
+      const perspectiveSelect = mountPerspectiveOptions();
+      renderGraphByPerspective(perspectiveSelect.value, apiGraphPayload);
+      perspectiveSelect.addEventListener("change", () => {
+        renderGraphByPerspective(perspectiveSelect.value, apiGraphPayload);
+      });
+    }
+
+    init();
+  </script>
+</body>
+</html>

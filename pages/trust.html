@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DeciRepo — Trust Registry</title>
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="header-root"></div>
+
+    <main class="page-trust">
+      <section class="panel">
+        <h1 class="section-title">Trust Registry</h1>
+        <p class="section-subtitle">Root of trust for validators, policy profiles, and trusted registry nodes.</p>
+      </section>
+
+      <section class="content-grid">
+        <section class="panel">
+          <h2 class="section-title">Trusted Validators</h2>
+          <table class="lineage-table" role="grid">
+            <thead>
+              <tr>
+                <th>Validator</th>
+                <th>Public Key</th>
+                <th>Environment</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="trust-validators-body"></tbody>
+          </table>
+        </section>
+
+        <aside class="panel">
+          <h2 class="section-title">Policy Profiles</h2>
+          <div id="trust-policy-profiles" class="lineage-list"></div>
+          <h3 class="section-title">Control Model</h3>
+          <div class="lineage-list">
+            <div class="lineage-item">Tenant control: publication scope and privacy</div>
+            <div class="lineage-item">Protocol control: versioned artifact and verify spec</div>
+            <div class="lineage-item">Trust control: transparent validator/registry list</div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Trusted Registries</h2>
+        <div class="policy-controls">
+          <label class="feed-field">
+            <span class="feed-label">Trust Perspective</span>
+            <select id="trust-perspective" class="feed-select"></select>
+          </label>
+          <div></div>
+          <div class="policy-run-cell">
+            <a class="btn" href="../api/trust-score">Open Trust Score API</a>
+          </div>
+        </div>
+        <table class="lineage-table" role="grid">
+          <thead>
+            <tr>
+              <th>Registry</th>
+              <th>Trust Score</th>
+              <th>Verify Rate</th>
+              <th>Rebuild Match</th>
+              <th>Uptime</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="trust-registries-body"></tbody>
+        </table>
+        <div class="button-row tight">
+          <a class="btn" href="./network.html">Open Network</a>
+          <a class="btn btn-gold" href="./root-of-trust.html">Open Root of Trust</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-brand">DeciRepo</div>
+      <div class="footer-description">Decision infrastructure powered by DLX</div>
+      <div class="footer-legal">© 2026 IndrasNet OÜ</div>
+      <div class="footer-meta">DeciRepo Protocol v0.1</div>
+    </footer>
+  </div>
+
+  <script src="../assets/data.js"></script>
+  <script src="../components/header.js"></script>
+  <script>
+    window.DeciRepoHeader.mount("header-root", "trust");
+
+    function pct(value) {
+      const n = Number(value || 0);
+      return `${(n * 100).toFixed(1)}%`;
+    }
+
+    function scoreBadgeClass(score) {
+      const n = Number(score || 0);
+      if (n >= 92) return "outcome-approved";
+      if (n >= 85) return "outcome-neutral";
+      return "outcome-rejected";
+    }
+
+    async function loadTrust() {
+      const candidates = ["../api/trust", "../api/trust.json"];
+      for (const url of candidates) {
+        try {
+          const res = await fetch(url, { cache: "no-store" });
+          if (!res.ok) continue;
+          const payload = await res.json();
+          if (payload && Array.isArray(payload.validators)) return payload;
+        } catch (_err) {
+          // continue
+        }
+      }
+      return window.DeciRepoData.trustRegistry;
+    }
+
+    async function loadTrustScores() {
+      const candidates = ["../api/trust-score", "../api/trust-score.json"];
+      for (const url of candidates) {
+        try {
+          const res = await fetch(url, { cache: "no-store" });
+          if (!res.ok) continue;
+          const payload = await res.json();
+          if (payload && Array.isArray(payload.registries)) return payload;
+        } catch (_err) {
+          // continue
+        }
+      }
+      return window.DeciRepoData.buildTrustScorePayload();
+    }
+
+    function mountPerspectiveOptions() {
+      const select = document.getElementById("trust-perspective");
+      const options = (window.DeciRepoData.registries || []).map((registry) => registry.registry_id);
+      select.innerHTML = options.map((id) => `<option value="${id}">${id}</option>`).join("");
+      select.value = window.DeciRepoData.LOCAL_REGISTRY_ID;
+      return select;
+    }
+
+    function scoreMapFromPayload(payload) {
+      const map = {};
+      for (const row of payload.registries || []) {
+        map[String(row.registry || "").toLowerCase()] = row;
+      }
+      return map;
+    }
+
+    function renderTrust(trust, scorePayload, perspectiveRegistry) {
+      const validatorsBody = document.getElementById("trust-validators-body");
+      validatorsBody.innerHTML = (trust.validators || [])
+        .map((validator) => `
+          <tr>
+            <td>${validator.validator_id}</td>
+            <td class="kv-value mono">${validator.public_key}</td>
+            <td>${validator.environment}</td>
+            <td>${validator.status}</td>
+          </tr>
+        `)
+        .join("") || `<tr><td colspan="4">No validators configured.</td></tr>`;
+
+      const profilesRoot = document.getElementById("trust-policy-profiles");
+      profilesRoot.innerHTML = (trust.policy_profiles || [])
+        .map((profile) => `
+          <div class="lineage-item">
+            <strong>${profile.profile_id}</strong><br/>
+            versions: ${(profile.policy_versions || []).join(", ")}<br/>
+            status: ${profile.status}
+          </div>
+        `)
+        .join("") || `<div class="lineage-item muted">No policy profiles configured.</div>`;
+
+      const scoreMap = scoreMapFromPayload(scorePayload || { registries: [] });
+      const registriesBody = document.getElementById("trust-registries-body");
+      registriesBody.innerHTML = (trust.trusted_registries || [])
+        .map((registry) => {
+          const scoreRow = scoreMap[String(registry.registry_id || "").toLowerCase()];
+          const score = scoreRow ? Number(scoreRow.trust_score || 0) : 0;
+          const components = scoreRow ? (scoreRow.components || {}) : {};
+          return `
+            <tr>
+              <td>
+                ${registry.registry_id}<br/>
+                <span class="kv-value mono">${registry.verify_endpoint}</span>
+              </td>
+              <td class="${scoreBadgeClass(score)}">${score.toFixed(1)}</td>
+                <td>${pct(components.verify_success_rate)}</td>
+                <td>${pct(components.rebuild_match_rate)}</td>
+                <td>${pct(components.uptime_score)}</td>
+                <td>${registry.status}</td>
+            </tr>
+          `;
+        })
+        .join("") || `<tr><td colspan="6">No trusted registries configured.</td></tr>`;
+    }
+
+    Promise.all([loadTrust(), loadTrustScores()]).then(([trust, scorePayload]) => {
+      const perspectiveSelect = mountPerspectiveOptions();
+      function renderForPerspective() {
+        const perspective = perspectiveSelect.value || window.DeciRepoData.LOCAL_REGISTRY_ID;
+        const localPayload = window.DeciRepoData.buildTrustScorePayload(perspective);
+        const effectivePayload = perspective === window.DeciRepoData.LOCAL_REGISTRY_ID ? scorePayload : localPayload;
+        renderTrust(trust, effectivePayload, perspective);
+      }
+      renderForPerspective();
+      perspectiveSelect.addEventListener("change", renderForPerspective);
+    });
+  </script>
+</body>
+</html>

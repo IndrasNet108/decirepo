@@ -1,0 +1,22 @@
+{
+  "decision_id": "DR-GENESIS-0001",
+  "title": "DeciRepo Network Genesis Anchor",
+  "authority": "IndrasNet Protocol Steward",
+  "generated_at": "2026-03-07T18:00:00Z",
+  "model_reference": "dlx-ref-v0.1",
+  "policy_reference": "DECIREPO_PROTOCOL_CONSTITUTION_V0_1",
+  "input_set": {
+    "network_status": "genesis",
+    "steward_id": "indrasnet-steward-001",
+    "target_verification_density": 1
+  },
+  "execution_trace": [
+    "resolve_policy",
+    "validate_steward_identity",
+    "initialize_verification_graph",
+    "seal_genesis_anchor"
+  ],
+  "result": "NETWORK_ACTIVE",
+  "identity_hash": "◢GENESIS_777_HASH_MATCH_PROVED",
+  "evidence_bundle": "/api/evidence-bundle-manifest.json"
+}

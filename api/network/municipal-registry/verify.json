@@ -1,0 +1,9 @@
+{
+  "registry_id": "municipal-registry.gov",
+  "artifact_hash": "a10ed2a595d3ecf21338117408f99fd0f9adf7324f17b2d45bff320f97fca416",
+  "decision_id": "DR-0006",
+  "rebuild_result": "MATCH",
+  "validator": "PASS",
+  "environment": "DLX v1.0",
+  "status": "VERIFIED"
+}

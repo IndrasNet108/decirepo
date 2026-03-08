@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DeciRepo — Diff</title>
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="header-root"></div>
+
+    <main class="page-diff">
+      <section class="panel">
+        <h1 class="section-title" id="diff-title">Compare Decisions</h1>
+        <p class="section-subtitle">Changed values are highlighted.</p>
+      </section>
+
+      <section id="diff-root"></section>
+
+      <section class="panel">
+        <div class="button-row">
+          <button id="btn-left" class="btn" type="button">Open Left Decision</button>
+          <button id="btn-right" class="btn" type="button">Open Right Decision</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-brand">DeciRepo</div>
+      <div class="footer-description">Decision infrastructure powered by DLX</div>
+      <div class="footer-legal">© 2026 IndrasNet OÜ</div>
+      <div class="footer-meta">DeciRepo Protocol v0.1</div>
+    </footer>
+  </div>
+
+  <script src="../assets/data.js"></script>
+  <script src="../components/header.js"></script>
+  <script src="../components/diff-view.js"></script>
+  <script>
+    window.DeciRepoHeader.mount("header-root", "repository");
+
+    const params = new URLSearchParams(window.location.search);
+    const leftId = params.get("left") || "DR-0001";
+    const rightId = params.get("right") || "DR-0002";
+
+    const left = window.DeciRepoData.getDecisionById(leftId);
+    const right = window.DeciRepoData.getDecisionById(rightId);
+    const visual = (d) => `◢${d.short_hash}`;
+
+    if (!left || !right) {
+      document.getElementById("diff-root").innerHTML = '<section class="panel"><h2 class="section-title">Comparison data missing</h2></section>';
+    } else {
+      document.getElementById("diff-title").textContent = `Compare: ${visual(left)} ↔ ${visual(right)}`;
+      window.DeciRepoDiffView.mount("diff-root", left, right);
+    }
+
+    document.getElementById("btn-left").addEventListener("click", () => {
+      window.location.href = `./decision.html?id=${encodeURIComponent(leftId)}`;
+    });
+
+    document.getElementById("btn-right").addEventListener("click", () => {
+      window.location.href = `./decision.html?id=${encodeURIComponent(rightId)}`;
+    });
+  </script>
+</body>
+</html>

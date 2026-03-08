@@ -1,0 +1,49 @@
+{
+  "report_id": "PSR-20260307-0001",
+  "generated_at": "2026-03-07T12:00:00Z",
+  "query_context": {
+    "decision_id": "DR-A-10492",
+    "decision_class": "A",
+    "policy_version": "AML-KYC-OVERRIDES",
+    "search_mode": "by_decision_id"
+  },
+  "match_basis": [
+    "same_decision_class",
+    "same_policy_family",
+    "same_reason_code"
+  ],
+  "result_summary": {
+    "total_precedents": 5,
+    "approved": 3,
+    "rejected": 2
+  },
+  "precedent_candidates": [
+    {
+      "decision_id": "DR-A-10311",
+      "outcome": "APPROVED",
+      "publisher": "workflow-system"
+    },
+    {
+      "decision_id": "DR-A-10102",
+      "outcome": "APPROVED",
+      "publisher": "workflow-system"
+    },
+    {
+      "decision_id": "DR-A-09971",
+      "outcome": "APPROVED",
+      "publisher": "workflow-system"
+    },
+    {
+      "decision_id": "DR-A-10045",
+      "outcome": "REJECTED",
+      "publisher": "workflow-system"
+    },
+    {
+      "decision_id": "DR-A-10311",
+      "outcome": "REJECTED",
+      "publisher": "workflow-system"
+    }
+  ],
+  "selected_precedent": "DR-A-10311",
+  "disclaimer": "Precedents are retrieval results. They are not recommendations."
+}

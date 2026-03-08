@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DeciRepo — Public Decision Registry</title>
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="header-root"></div>
+
+    <main class="page-index">
+      <section class="title-block">
+        <h1 class="title-main">Public Decision Registry</h1>
+        <p class="title-sub">Verified decision artifacts recorded with DLX</p>
+      </section>
+
+      <section class="panel index-hero-panel after-title-gap">
+        <h2 class="section-title">Live Decision Registry</h2>
+        <div class="search-row">
+          <input id="index-search-input" class="verify-input" type="text" placeholder="Search decisions..." />
+        </div>
+        <table class="live-table" role="grid">
+          <thead>
+            <tr>
+              <th>Decision ID</th>
+              <th>Authority</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="live-registry-body"></tbody>
+        </table>
+      </section>
+
+      <section class="content-grid">
+        <section class="panel">
+          <h2 class="section-title">Latest Verified Decision</h2>
+          <div id="latest-decision-line" class="preview-line">◢......</div>
+          <div id="latest-decision-title" class="section-subtitle">Loading...</div>
+          <div class="button-row tight">
+            <button id="verify-live-button" class="btn btn-gold" type="button">VERIFY LIVE</button>
+            <button id="open-latest-decision" class="btn" type="button">Open Decision</button>
+          </div>
+          <div id="latest-verify-banner" class="banner valid">VERIFIED</div>
+          <div id="latest-verify-result" class="kv-stack"></div>
+        </section>
+
+        <aside class="panel" id="policy-impact">
+          <h2 class="section-title">Policy Impact</h2>
+          <p class="section-subtitle" id="policy-impact-head">PROCUREMENT_RULES_V1 → PROCUREMENT_RULES_V2</p>
+          <div id="policy-impact-preview" class="kv-stack"></div>
+          <div class="button-row tight">
+            <button id="open-policy-impact" class="btn" type="button">Open Policy Impact</button>
+          </div>
+        </aside>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Network Activity</h2>
+        <div id="network-activity-stream" class="publisher-stream"></div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">About DeciRepo</h2>
+        <p class="section-subtitle">Decision artifacts, reproducibility, and verification protocol.</p>
+        <div class="bottom-links">
+          <a class="menu-link" href="./about.html">About DeciRepo</a>
+          <a class="menu-link" href="./publisher.html">Publisher Onboarding</a>
+          <a class="menu-link" href="./policy-impact.html">Policy Impact</a>
+          <a class="menu-link" href="./verify.html">How Verification Works</a>
+          <a class="menu-link" href="./lineage.html">Decision Lineage</a>
+          <a class="menu-link" href="./network.html">Network</a>
+          <a class="menu-link" href="./trust.html">Trust</a>
+          <a class="menu-link" href="./root-of-trust.html">Root of Trust</a>
+          <a class="menu-link" href="./protocol.html">Protocol</a>
+          <a class="menu-link" href="../api/feed">API</a>
+          <a class="menu-link" href="#">GitHub</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-brand">DeciRepo</div>
+      <div class="footer-description">Decision infrastructure powered by DLX</div>
+      <div class="footer-legal">© 2026 IndrasNet OÜ</div>
+      <div class="footer-meta">DeciRepo Protocol v0.1</div>
+    </footer>
+  </div>
+
+  <script src="../assets/data.js"></script>
+  <script src="../components/header.js"></script>
+  <script src="../components/decision-block.js"></script>
+  <script>
+    window.DeciRepoHeader.mount("header-root", "repository");
+
+    function visualId(decision) {
+      return `◢${decision.short_hash}`;
+    }
+
+    function outcomeClass(outcome) {
+      if (outcome === "APPROVED") return "outcome-approved";
+      if (outcome === "REJECTED") return "outcome-rejected";
+      return "outcome-neutral";
+    }
+
+    const latest = window.DeciRepoData.decisions
+      .slice()
+      .sort((a, b) => b.id.localeCompare(a.id));
+
+    const listRoot = document.getElementById("live-registry-body");
+    const searchInput = document.getElementById("index-search-input");
+
+    function syntheticTimestamp(decision, idx) {
+      const hour = String(14 - (idx % 5)).padStart(2, "0");
+      const minute = String((idx * 11) % 60).padStart(2, "0");
+      return `${decision.date} ${hour}:${minute} UTC`;
+    }
+
+    function renderDecisionIndex(query = "") {
+      const q = String(query || "").trim().toLowerCase();
+      const rows = latest
+        .map((decision, idx) => ({ decision, time: syntheticTimestamp(decision, idx) }))
+        .filter(({ decision }) => {
+          if (!q) return true;
+          const haystack = [
+            decision.id,
+            decision.short_hash,
+            decision.title,
+            decision.authority,
+            decision.publisher_label || decision.publisher,
+            decision.outcome,
+            decision.policyVersion
+          ]
+            .join(" ")
+            .toLowerCase();
+          return haystack.includes(q);
+        });
+
+      listRoot.innerHTML = rows.map(({ decision, time }) => `
+        <tr class="live-row" data-id="${decision.id}">
+          <td>
+            <div class="index-id">${visualId(decision)}</div>
+            <div class="legacy-id">${decision.id}</div>
+          </td>
+          <td>
+            <div class="live-main">${decision.authority}</div>
+            <div class="live-sub">${decision.title}</div>
+            <div class="live-sub">Publisher: ${decision.publisher_label || decision.publisher || "unknown"}</div>
+            <div class="live-sub">${time}</div>
+            <div class="live-hover-meta">
+              artifact_hash: ${decision.artifact.artifact_hash.slice(0, 14)}...<br/>
+              policy_version: ${decision.policyVersion}<br/>
+              publisher: ${decision.publisher || "unknown"}<br/>
+              validator: DLX v1.0
+            </div>
+          </td>
+          <td class="${outcomeClass(decision.outcome)}">${decision.outcome}</td>
+          <td>
+            <button class="btn small btn-gold" type="button" data-verify-short="${decision.short_hash}">VERIFY</button>
+          </td>
+        </tr>
+      `).join("") || `<tr><td colspan="4">No decisions matched your search.</td></tr>`;
+
+      listRoot.querySelectorAll(".live-row").forEach((row) => {
+        row.addEventListener("click", (event) => {
+          if (event.target && event.target.closest("button")) return;
+          const id = row.getAttribute("data-id");
+          if (!id) return;
+          window.location.href = `./decision.html?id=${encodeURIComponent(id)}`;
+        });
+      });
+
+      listRoot.querySelectorAll("[data-verify-short]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const short = button.getAttribute("data-verify-short");
+          window.location.href = `./verify.html?q=${encodeURIComponent(`◢${short}`)}`;
+        });
+      });
+    }
+
+    renderDecisionIndex("");
+    searchInput.addEventListener("input", () => renderDecisionIndex(searchInput.value));
+
+    const latestVerified = latest.find((decision) => decision.artifact.validator_result === "PASS" && decision.artifact.rebuild_status === "MATCH") || latest[0];
+    const latestLine = document.getElementById("latest-decision-line");
+    const latestTitle = document.getElementById("latest-decision-title");
+    const latestBanner = document.getElementById("latest-verify-banner");
+    const latestResult = document.getElementById("latest-verify-result");
+    const verifyLiveButton = document.getElementById("verify-live-button");
+    const openLatestDecision = document.getElementById("open-latest-decision");
+
+    latestLine.textContent = `${visualId(latestVerified)} · ${latestVerified.id}`;
+    latestTitle.textContent = latestVerified.title;
+    latestBanner.style.display = "none";
+    latestResult.innerHTML = "";
+
+    verifyLiveButton.addEventListener("click", () => {
+      latestBanner.style.display = "block";
+      const payload = window.DeciRepoDecisionBlock.toRows({
+        artifact_hash: latestVerified.artifact.artifact_hash,
+        rebuild_result: latestVerified.artifact.rebuild_status,
+        validator: latestVerified.artifact.validator_result,
+        environment: "DLX v1.0"
+      });
+      latestResult.innerHTML = window.DeciRepoDecisionBlock.renderStack(payload, ["artifact_hash"]);
+    });
+
+    openLatestDecision.addEventListener("click", () => {
+      window.location.href = `./decision.html?id=${encodeURIComponent(latestVerified.id)}`;
+    });
+
+    const impactBase = window.DeciRepoData.getDecisionById("DR-0007");
+    const impactTarget = window.DeciRepoData.getDecisionById("DR-0008");
+    const impactRows = impactBase && impactTarget
+      ? [
+          { key: "decision", value: `${visualId(impactBase)} → ${visualId(impactTarget)}` },
+          { key: "outcome", value: `${impactBase.outcomeFields.decision} → ${impactTarget.outcomeFields.decision}` },
+          { key: "reason_code", value: `${impactBase.outcomeFields.reason_code} → ${impactTarget.outcomeFields.reason_code}` }
+        ]
+      : [{ key: "status", value: "N/A" }];
+
+    document.getElementById("policy-impact-preview").innerHTML = window.DeciRepoDecisionBlock.renderStack(impactRows);
+    document.getElementById("open-policy-impact").addEventListener("click", () => {
+      window.location.href = "./policy-impact.html?id=DR-0007";
+    });
+
+    function buildNetworkEvents() {
+      const sorted = latest.slice().sort((a, b) => b.id.localeCompare(a.id));
+      const events = sorted.slice(0, 4).map((decision) => {
+      const origin = decision.artifact.origin_registry || "decirepo.com";
+      const visual = `◢${decision.short_hash}`;
+      const source = decision.publisher_label || decision.publisher || "unknown";
+      const action = origin === "decirepo.com" ? "published and locally verified" : `remote-verified from ${origin}`;
+      return `${visual} ${decision.id} (${source}) ${action}`;
+    });
+      events.push("Policy Impact recalculated for PROCUREMENT_RULES_V1 → PROCUREMENT_RULES_V2");
+      return events;
+    }
+
+    document.getElementById("network-activity-stream").innerHTML = buildNetworkEvents()
+      .map((entry) => `<div class="publisher-stream-item">${entry}</div>`)
+      .join("");
+  </script>
+</body>
+</html>

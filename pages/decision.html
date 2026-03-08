@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DeciRepo — Decision</title>
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="header-root"></div>
+
+    <main class="page-decision">
+      <section class="panel">
+        <h1 class="section-title" id="decision-title">Decision</h1>
+        <p class="section-subtitle" id="decision-subtitle">Decision Title</p>
+        <div id="decision-dlx-chip" class="dlx-chip">DLX validated</div>
+        <div class="decision-header-lines" id="decision-header-lines"></div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Status</h2>
+        <div id="decision-status-line" class="decision-status-line outcome-neutral">VERIFIED</div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Artifact Identity</h2>
+        <div id="artifact-block"></div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Input</h2>
+        <div id="input-block"></div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Policy Context</h2>
+        <div id="policy-block"></div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Outcome</h2>
+        <div id="outcome-block"></div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Decision Explanation</h2>
+        <div id="decision-explanation-block">
+          <div class="lineage-item muted">retrieving explanation...</div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Decision Divergence</h2>
+        <div id="decision-divergence-block">
+          <div class="lineage-item muted">scanning for divergent decisions...</div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Divergence Investigation</h2>
+        <div id="divergence-investigation-block">
+          <div class="lineage-item muted">checking investigation status...</div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Precedent Evidence</h2>
+        <div id="precedent-evidence-block">
+          <div class="lineage-item muted">retrieving precedent evidence...</div>
+        </div>
+        <div class="precedent-meta">This panel shows retrieved precedent evidence, not a recommended decision.</div>
+      </section>
+
+      <section class="panel">
+        <div class="button-row">
+          <button id="btn-verify" class="btn btn-gold" type="button">Verify Artifact</button>
+          <button id="btn-rebuild" class="btn" type="button">Rebuild</button>
+          <button id="btn-compare" class="btn" type="button">Compare</button>
+          <button id="btn-policy-impact" class="btn" type="button">Policy Impact</button>
+          <a id="btn-divergence-report" class="btn" href="../api/divergence-investigation-report" target="_blank" style="display:none">OPEN DIVERGENCE REPORT</a>
+          <a id="btn-audit-package" class="btn" href="../api/audit-package" target="_blank">AUDIT PACKAGE</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-brand">DeciRepo</div>
+      <div class="footer-description">Decision infrastructure powered by DLX</div>
+      <div class="footer-legal">© 2026 IndrasNet OÜ</div>
+      <div class="footer-meta">DeciRepo Protocol v0.1</div>
+    </footer>
+  </div>
+
+  <script src="../assets/data.js"></script>
+  <script src="../components/header.js"></script>
+  <script src="../components/decision-block.js"></script>
+  <script>
+    window.DeciRepoHeader.mount("header-root", "repository");
+
+    const params = new URLSearchParams(window.location.search);
+    const decisionId = params.get("id") || "DR-0001";
+    const decision = window.DeciRepoData.getDecisionById(decisionId) || window.DeciRepoData.getDecisionById("DR-0001");
+    const verified = decision.artifact.validator_result === "PASS" && decision.artifact.rebuild_status === "MATCH";
+    const chip = document.getElementById("decision-dlx-chip");
+    chip.textContent = verified ? "DLX validated" : "DLX validation pending";
+    if (!verified) chip.classList.add("warn");
+
+    document.getElementById("decision-title").textContent = `Decision ${decision.id}`;
+    document.getElementById("decision-subtitle").textContent = decision.title;
+    document.getElementById("decision-status-line").textContent = decision.outcomeFields.decision;
+    document.getElementById("decision-status-line").className = `decision-status-line ${decision.outcomeFields.decision === "APPROVED" ? "outcome-approved" : decision.outcomeFields.decision === "REJECTED" ? "outcome-rejected" : "outcome-neutral"}`;
+
+    const headerRows = [
+      ["Decision ID", `◢${decision.short_hash} (${decision.id})`],
+      ["Authority", decision.authority],
+      ["Publisher", decision.publisher_label || decision.publisher || "unknown"],
+      ["RFC Reference", decision.rfc_ref || "N/A"],
+      ["Date", decision.date]
+    ];
+
+    document.getElementById("decision-header-lines").innerHTML = headerRows
+      .map(([label, value]) => `<div class="decision-header-line"><span class="label">${label}:</span>${value}</div>`)
+      .join("");
+
+    const artifactRows = window.DeciRepoDecisionBlock.toRows({
+      artifact_hash: decision.artifact.artifact_hash,
+      origin_registry: decision.artifact.origin_registry || window.DeciRepoData.LOCAL_REGISTRY_ID,
+      validator_profile: decision.artifact.validator_profile || "DLX-CORE-V1",
+      policy_version: decision.policyVersion,
+      environment: "DLX v1.0",
+      validator_status: decision.artifact.validator_result,
+      rebuild_result: decision.artifact.rebuild_status,
+      runtime_identity: decision.artifact.runtime_identity
+    });
+    document.getElementById("artifact-block").innerHTML = window.DeciRepoDecisionBlock.renderStack(artifactRows, ["artifact_hash"]);
+
+    const inputRows = window.DeciRepoDecisionBlock.toRows(decision.input);
+    document.getElementById("input-block").innerHTML = window.DeciRepoDecisionBlock.renderTwoColumnGrid(inputRows);
+
+    const policyRows = window.DeciRepoDecisionBlock.toRows(decision.policyContext);
+    document.getElementById("policy-block").innerHTML = window.DeciRepoDecisionBlock.renderStack(policyRows);
+
+    const outcomeRows = window.DeciRepoDecisionBlock.toRows(decision.outcomeFields);
+    document.getElementById("outcome-block").innerHTML = window.DeciRepoDecisionBlock.renderStack(outcomeRows);
+
+    async function loadDecisionExplanation() {
+      const container = document.getElementById("decision-explanation-block");
+      try {
+        const response = await fetch("../api/decision-explanation.json", { cache: "no-store" });
+        if (!response.ok) throw new Error("no explanation");
+        const explanation = await response.json();
+        
+        container.innerHTML = `
+          <div class="kv-stack">
+            <div class="kv-line"><div class="kv-key">Policy Context</div><div class="kv-value">${explanation.policy_context.policy_family} (${explanation.policy_context.policy_version})</div></div>
+            <div class="kv-line"><div class="kv-key">Explanation Basis</div><div class="kv-value">${explanation.explanation_basis.join(", ")}</div></div>
+            <div class="kv-line"><div class="kv-key">Outcome Type</div><div class="kv-value">${explanation.decision_outcome.exception_type}</div></div>
+          </div>
+          <div class="button-row tight">
+            <a class="btn small" href="../api/decision-explanation" target="_blank">OPEN EXPLANATION</a>
+          </div>
+        `;
+      } catch (e) {
+        container.innerHTML = `<div class="lineage-item muted">No structured explanation available for this decision.</div>`;
+      }
+    }
+
+    async function loadDecisionDivergence() {
+      const container = document.getElementById("decision-divergence-block");
+      const currentId = decision.id;
+      try {
+        const response = await fetch("../api/decision-divergence.json", { cache: "no-store" });
+        if (!response.ok) throw new Error("no divergence report");
+        const data = await response.json();
+        
+        if (data.reference_decision !== currentId) {
+          container.innerHTML = `<div class="lineage-item muted">No divergence detected for this specific decision context.</div>`;
+          return;
+        }
+
+        container.innerHTML = data.divergent_decisions.map(d => `
+          <div class="kv-stack">
+            <div class="kv-line"><div class="kv-key">Divergent Decision</div><div class="kv-value mono">${d.decision_id}</div></div>
+            <div class="kv-line"><div class="kv-key">Matching Dimensions</div><div class="kv-value">${d.matching_dimensions.join(", ")}</div></div>
+            <div class="kv-line"><div class="kv-key">Outcome Diff</div><div class="kv-value"><span class="outcome-approved">${d.outcome_difference.reference_outcome}</span> vs <span class="outcome-rejected">${d.outcome_difference.divergent_outcome}</span></div></div>
+          </div>
+          <div class="button-row tight">
+            <a class="btn small" href="./diff.html?left=${currentId}&right=${d.decision_id}">COMPARE DIVERGENCE</a>
+          </div>
+        `).join("");
+      } catch (e) {
+        container.innerHTML = `<div class="lineage-item muted">No divergence analysis available for this decision.</div>`;
+      }
+    }
+
+    async function loadDivergenceInvestigation() {
+      const container = document.getElementById("divergence-investigation-block");
+      const reportBtn = document.getElementById("btn-divergence-report");
+      const currentId = decision.id;
+      try {
+        const response = await fetch("../api/divergence-investigation-report.json", { cache: "no-store" });
+        if (!response.ok) throw new Error("no investigation report");
+        const data = await response.json();
+        
+        if (data.reference_decision !== currentId) {
+          container.innerHTML = `<div class="lineage-item muted">No investigation required for this decision context.</div>`;
+          return;
+        }
+
+        container.innerHTML = `
+          <div class="kv-stack">
+            <div class="kv-line"><div class="kv-key">Investigation ID</div><div class="kv-value mono">${data.report_id}</div></div>
+            <div class="kv-line"><div class="kv-key">Basis</div><div class="kv-value">${data.investigation_basis.join(", ")}</div></div>
+            <div class="kv-line"><div class="kv-key">Divergent Cases</div><div class="kv-value mono">${data.divergent_decisions.length}</div></div>
+          </div>
+          <div class="button-row tight">
+            <a class="btn small" href="../api/divergence-investigation-report" target="_blank">VIEW FULL INVESTIGATION</a>
+          </div>
+        `;
+        if (reportBtn) reportBtn.style.display = "inline-flex";
+      } catch (e) {
+        container.innerHTML = `<div class="lineage-item muted">No divergence investigation available for this decision.</div>`;
+      }
+    }
+
+    async function loadPrecedentEvidence() {
+      const container = document.getElementById("precedent-evidence-block");
+      const decisionId = decision.id;
+      try {
+        const response = await fetch("../api/precedent-search-report.json", { cache: "no-store" });
+        if (!response.ok) throw new Error("no report");
+        const report = await response.json();
+        
+        container.innerHTML = `
+          <div class="kv-stack">
+            <div class="kv-line"><div class="kv-key">Precedent Report</div><div class="kv-value mono">${report.report_id}</div></div>
+            <div class="kv-line"><div class="kv-key">Selected Precedent</div><div class="kv-value mono">${report.selected_precedent}</div></div>
+            <div class="kv-line"><div class="kv-key">Match Basis</div><div class="kv-value">${report.match_basis.join(", ")}</div></div>
+            <div class="kv-line"><div class="kv-key">Summary</div><div class="kv-value">Total: ${report.result_summary.total_precedents} (Approved: ${report.result_summary.approved}, Rejected: ${report.result_summary.rejected})</div></div>
+          </div>
+          <div class="button-row tight">
+            <a class="btn small" href="../api/precedent-search-report" target="_blank">OPEN REPORT</a>
+            <a class="btn small" href="./diff.html?left=${decisionId}&right=${report.selected_precedent}">COMPARE</a>
+            <a class="btn small" href="./verify.html?id=${report.selected_precedent}">VERIFY</a>
+            <a class="btn small" href="./lineage.html?id=${report.selected_precedent}">OPEN LINEAGE</a>
+          </div>
+        `;
+      } catch (e) {
+        container.innerHTML = `<div class="lineage-item muted">No precedent report available for this decision.</div>`;
+      }
+    }
+
+    loadDecisionExplanation();
+    loadDecisionDivergence();
+    loadDivergenceInvestigation();
+    loadPrecedentEvidence();
+
+    document.getElementById("btn-verify").addEventListener("click", () => {
+      window.location.href = `./verify.html?q=${encodeURIComponent(`◢${decision.short_hash}`)}`;
+    });
+
+    document.getElementById("btn-rebuild").addEventListener("click", () => {
+      window.location.href = `./verify.html?q=${encodeURIComponent(`◢${decision.short_hash}`)}`;
+    });
+
+    const compareButton = document.getElementById("btn-compare");
+    const pairId = window.DeciRepoData.getPairId(decision.id);
+    if (!pairId) {
+      compareButton.disabled = true;
+      compareButton.classList.add("disabled");
+    } else {
+      compareButton.addEventListener("click", () => {
+        window.location.href = `./diff.html?left=${encodeURIComponent(decision.id)}&right=${encodeURIComponent(pairId)}`;
+      });
+    }
+
+    document.getElementById("btn-policy-impact").addEventListener("click", () => {
+      window.location.href = `./policy-impact.html?id=${encodeURIComponent(decision.id)}`;
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DeciRepo — Decision Lineage</title>
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="header-root"></div>
+
+    <main class="page-lineage">
+      <section class="panel">
+        <h1 id="lineage-decision-title" class="section-title">Decision ◢......</h1>
+        <p id="lineage-decision-subtitle" class="section-subtitle">Select a decision to inspect its lineage.</p>
+        <div id="lineage-decision-meta" class="decision-header-lines"></div>
+        <div class="button-row tight">
+          <button id="lineage-verify" class="btn btn-gold" type="button">Verify</button>
+          <button id="lineage-compare" class="btn" type="button">Compare</button>
+          <button id="lineage-policy-impact" class="btn" type="button">Policy Impact</button>
+          <button class="btn disabled" type="button" disabled>Lineage</button>
+        </div>
+      </section>
+
+      <section class="content-grid">
+        <section class="panel">
+          <h2 class="section-title">Decision Graph</h2>
+          <p class="section-subtitle">How this decision is connected to previous and following decisions.</p>
+          <div id="lineage-graph-column" class="lineage-column"></div>
+
+          <h3 class="section-title">Lineage Relations</h3>
+          <table class="lineage-table" role="grid">
+            <thead>
+              <tr>
+                <th>Parent</th>
+                <th>Relation</th>
+                <th>Child</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="lineage-edges-body"></tbody>
+          </table>
+        </section>
+
+        <aside class="panel">
+          <h2 class="section-title">Context</h2>
+          <div id="lineage-context" class="kv-stack"></div>
+
+          <h3 class="section-title">Derived from</h3>
+          <div id="selected-parents" class="lineage-list"></div>
+
+          <h3 class="section-title">Influenced</h3>
+          <div id="selected-children" class="lineage-list"></div>
+        </aside>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Registry Stats</h2>
+        <div class="snapshot-list">
+          <div class="snapshot-row"><div class="snapshot-label">Total decisions</div><div id="lineage-stat-decisions" class="snapshot-value">0</div></div>
+          <div class="snapshot-row"><div class="snapshot-label">Lineage edges</div><div id="lineage-stat-edges" class="snapshot-value">0</div></div>
+          <div class="snapshot-row"><div class="snapshot-label">Lineage roots</div><div id="lineage-stat-roots" class="snapshot-value">0</div></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-brand">DeciRepo</div>
+      <div class="footer-description">Decision infrastructure powered by DLX</div>
+      <div class="footer-legal">© 2026 IndrasNet OÜ</div>
+      <div class="footer-meta">DeciRepo Protocol v0.1</div>
+    </footer>
+  </div>
+
+  <script src="../assets/data.js"></script>
+  <script src="../components/header.js"></script>
+  <script src="../components/decision-block.js"></script>
+  <script>
+    window.DeciRepoHeader.mount("header-root", "lineage");
+
+    const edges = window.DeciRepoData.lineageEdges || [];
+    const decisions = window.DeciRepoData.decisions || [];
+    const params = new URLSearchParams(window.location.search);
+
+    function visualId(decision) {
+      return `◢${decision.short_hash}`;
+    }
+
+    function decisionById(id) {
+      return window.DeciRepoData.getDecisionById(id);
+    }
+
+    const rootCandidates = new Set(edges.map((edge) => edge.parent));
+    const childSet = new Set(edges.map((edge) => edge.child));
+    const roots = Array.from(rootCandidates).filter((id) => !childSet.has(id));
+
+    document.getElementById("lineage-stat-decisions").textContent = String(decisions.length);
+    document.getElementById("lineage-stat-edges").textContent = String(edges.length);
+    document.getElementById("lineage-stat-roots").textContent = String(roots.length);
+
+    const edgesBody = document.getElementById("lineage-edges-body");
+    const selectedParents = document.getElementById("selected-parents");
+    const selectedChildren = document.getElementById("selected-children");
+    const contextRoot = document.getElementById("lineage-context");
+    const graphRoot = document.getElementById("lineage-graph-column");
+
+    const titleNode = document.getElementById("lineage-decision-title");
+    const subtitleNode = document.getElementById("lineage-decision-subtitle");
+    const metaNode = document.getElementById("lineage-decision-meta");
+
+    const verifyButton = document.getElementById("lineage-verify");
+    const compareButton = document.getElementById("lineage-compare");
+    const policyImpactButton = document.getElementById("lineage-policy-impact");
+
+    let selectedId = params.get("id") || (edges[0] ? edges[0].child : "DR-0001");
+
+    function buildPathToRoot(id) {
+      const path = [];
+      let currentId = id;
+      let guard = 0;
+      while (currentId && guard < 32) {
+        const node = decisionById(currentId);
+        if (!node) break;
+        path.unshift(node);
+        const parents = window.DeciRepoData.parentsOf(currentId);
+        if (!parents.length) break;
+        currentId = parents[0].parent;
+        guard += 1;
+      }
+      return path;
+    }
+
+    function buildChain(decision) {
+      const path = buildPathToRoot(decision.id);
+      const children = window.DeciRepoData.childrenOf(decision.id);
+      if (children.length) {
+        const firstChild = decisionById(children[0].child);
+        if (firstChild && !path.find((node) => node.id === firstChild.id)) {
+          path.push(firstChild);
+        }
+      }
+      return path;
+    }
+
+    function renderHeader(decision, parents, children) {
+      titleNode.textContent = `Decision ${visualId(decision)}`;
+      subtitleNode.textContent = decision.title;
+      metaNode.innerHTML = [
+        ["Authority", decision.authority],
+        ["Policy", decision.policyVersion],
+        ["Date", decision.date]
+      ]
+        .map(([label, value]) => `<div class="decision-header-line"><span class="label">${label}:</span>${value}</div>`)
+        .join("");
+
+      verifyButton.onclick = () => {
+        window.location.href = `./verify.html?q=${encodeURIComponent(visualId(decision))}`;
+      };
+
+      compareButton.onclick = () => {
+        const pairId = window.DeciRepoData.getPairId(decision.id);
+        if (!pairId) return;
+        window.location.href = `./diff.html?left=${encodeURIComponent(decision.id)}&right=${encodeURIComponent(pairId)}`;
+      };
+      const hasPair = Boolean(window.DeciRepoData.getPairId(decision.id));
+      compareButton.disabled = !hasPair;
+      compareButton.classList.toggle("disabled", !hasPair);
+
+      policyImpactButton.onclick = () => {
+        window.location.href = `./policy-impact.html?id=${encodeURIComponent(decision.id)}`;
+      };
+
+      const contextRows = window.DeciRepoDecisionBlock.toRows({
+        decision: `${visualId(decision)} (${decision.id})`,
+        publisher: decision.publisher_label || decision.publisher || "unknown",
+        rfc_reference: decision.rfc_ref || "N/A",
+        related_decisions: String(parents.length + children.length),
+        linked_policy: decision.policyVersion,
+        derived_from: parents.length ? visualId(decisionById(parents[0].parent)) : "N/A",
+        influenced: children.length ? visualId(decisionById(children[0].child)) : "N/A"
+      });
+      contextRoot.innerHTML = window.DeciRepoDecisionBlock.renderStack(contextRows);
+    }
+
+    function renderLists(parents, children) {
+      selectedParents.innerHTML = parents.length
+        ? parents
+            .map((edge) => {
+              const parent = decisionById(edge.parent);
+              return parent ? `<div class="lineage-item">${visualId(parent)} · ${parent.title}</div>` : "";
+            })
+            .join("")
+        : `<div class="lineage-item muted">No parent decisions</div>`;
+
+      selectedChildren.innerHTML = children.length
+        ? children
+            .map((edge) => {
+              const child = decisionById(edge.child);
+              return child ? `<div class="lineage-item">${visualId(child)} · ${child.title}</div>` : "";
+            })
+            .join("")
+        : `<div class="lineage-item muted">No influenced decisions</div>`;
+    }
+
+    function renderGraph(decision) {
+      const chain = buildChain(decision);
+      graphRoot.innerHTML = chain.length
+        ? `
+            <div class="lineage-vertical">
+              ${chain
+                .map(
+                  (node, idx) => `
+                    <div class="lineage-node ${node.id === decision.id ? "active" : ""}" data-node-id="${node.id}">
+                      <div class="lineage-node-id">${visualId(node)}</div>
+                      <div class="lineage-node-title">${node.title}</div>
+                      <div class="lineage-node-meta">${node.date}</div>
+                    </div>
+                    ${idx < chain.length - 1 ? '<div class="lineage-node-arrow">▼</div>' : ""}
+                  `
+                )
+                .join("")}
+            </div>
+          `
+        : `<div class="lineage-item muted">No lineage chain available</div>`;
+
+      graphRoot.querySelectorAll("[data-node-id]").forEach((node) => {
+        node.addEventListener("click", () => {
+          const id = node.getAttribute("data-node-id");
+          if (!id) return;
+          selectedId = id;
+          renderSelected();
+        });
+      });
+    }
+
+    function renderEdgeRows() {
+      edgesBody.innerHTML = edges
+        .map((edge) => {
+          const parent = decisionById(edge.parent);
+          const child = decisionById(edge.child);
+          if (!parent || !child) return "";
+          const changed = parent.outcome !== child.outcome ? "changed" : "";
+          return `
+            <tr class="lineage-row ${changed}" data-parent="${edge.parent}" data-child="${edge.child}">
+              <td>
+                <div class="index-id">${visualId(parent)}</div>
+                <div class="legacy-id">${parent.id}</div>
+              </td>
+              <td>${edge.relation}</td>
+              <td>
+                <div class="index-id">${visualId(child)}</div>
+                <div class="legacy-id">${child.id}</div>
+              </td>
+              <td>
+                <div class="feed-actions">
+                  <button class="btn small" type="button" data-select="${edge.child}">Select</button>
+                  <button class="btn small" type="button" data-open="${edge.child}">Open</button>
+                  <button class="btn small" type="button" data-diff-left="${edge.parent}" data-diff-right="${edge.child}">Diff</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        })
+        .join("");
+
+      edgesBody.querySelectorAll("[data-select]").forEach((button) => {
+        button.addEventListener("click", () => {
+          selectedId = button.getAttribute("data-select");
+          renderSelected();
+        });
+      });
+
+      edgesBody.querySelectorAll("[data-open]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const id = button.getAttribute("data-open");
+          window.location.href = `./decision.html?id=${encodeURIComponent(id)}`;
+        });
+      });
+
+      edgesBody.querySelectorAll("[data-diff-left]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const left = button.getAttribute("data-diff-left");
+          const right = button.getAttribute("data-diff-right");
+          window.location.href = `./diff.html?left=${encodeURIComponent(left)}&right=${encodeURIComponent(right)}`;
+        });
+      });
+
+      edgesBody.querySelectorAll(".lineage-row").forEach((row) => {
+        row.addEventListener("click", (event) => {
+          if (event.target && event.target.closest("button")) return;
+          const child = row.getAttribute("data-child");
+          if (!child) return;
+          selectedId = child;
+          renderSelected();
+        });
+      });
+    }
+
+    function renderSelected() {
+      const decision = decisionById(selectedId) || decisionById("DR-0001");
+      if (!decision) return;
+      selectedId = decision.id;
+
+      const parents = window.DeciRepoData.parentsOf(decision.id);
+      const children = window.DeciRepoData.childrenOf(decision.id);
+      renderHeader(decision, parents, children);
+      renderLists(parents, children);
+      renderGraph(decision);
+    }
+
+    renderEdgeRows();
+    renderSelected();
+  </script>
+</body>
+</html>

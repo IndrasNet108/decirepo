@@ -1,0 +1,34 @@
+{
+  "schema_version": "dlx-artifact-v0.1",
+  "decision_id": "DR-PROTOCOL-0001",
+  "publisher": "indrasnet-governance",
+  "policy_version": "DECIREPO_PROTOCOL_V0_1",
+  "artifact_hash": "91fbb68f8f1232d2f2d2d6d875f7e6c2684f3aef2b9e06dcb1598ac3dbf4a501",
+  "validator_result": "PASS",
+  "rebuild_result": "MATCH",
+  "rebuild_source": {
+    "decision_id": "DR-PROTOCOL-0001",
+    "outcome": "APPROVED",
+    "policy_version": "DECIREPO_PROTOCOL_V0_1",
+    "publisher": "indrasnet-governance",
+    "rfc_ref": "RFC-0001"
+  },
+  "rebuild_hash_expected": "626b16a861b4632ebbf2a303176843d40bd458cc372a8b370799ba18df9626d1",
+  "transition_chain": [
+    {
+      "from": "DRAFT",
+      "to": "PROPOSED",
+      "evidence_hash": "8fd7a3d19b9d2c6e66574ed1b13334d436f66d44d38ab73e55370c69b6ddaf19"
+    },
+    {
+      "from": "PROPOSED",
+      "to": "VALIDATED",
+      "evidence_hash": "db76414537d18112ce6f1893f351f9c9a060f7be3c7feb82e2bb64819365afef"
+    },
+    {
+      "from": "VALIDATED",
+      "to": "PUBLISHED",
+      "evidence_hash": "1f7e04ee95cab3a78f7fd74f8f4f57d4bb00d968a3f28fb11f2f31019083b0f7"
+    }
+  ]
+}

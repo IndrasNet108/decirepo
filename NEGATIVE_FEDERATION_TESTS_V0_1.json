@@ -1,0 +1,66 @@
+{
+  "suite_id": "negative-federation-tests-v0_1",
+  "mode": "fail-closed",
+  "cases": [
+    {
+      "id": "NEG-001",
+      "name": "incompatible_protocol_version",
+      "input": {
+        "protocol_compatible": false,
+        "node_manifest_present": true,
+        "manifest_signature_valid": true,
+        "rebuild_mismatch_repeated": false,
+        "undeclared_profile_drift": false
+      },
+      "expected_action": "deny_quarantine"
+    },
+    {
+      "id": "NEG-002",
+      "name": "missing_node_manifest",
+      "input": {
+        "protocol_compatible": true,
+        "node_manifest_present": false,
+        "manifest_signature_valid": false,
+        "rebuild_mismatch_repeated": false,
+        "undeclared_profile_drift": false
+      },
+      "expected_action": "deny"
+    },
+    {
+      "id": "NEG-003",
+      "name": "invalid_manifest_signature",
+      "input": {
+        "protocol_compatible": true,
+        "node_manifest_present": true,
+        "manifest_signature_valid": false,
+        "rebuild_mismatch_repeated": false,
+        "undeclared_profile_drift": false
+      },
+      "expected_action": "deny"
+    },
+    {
+      "id": "NEG-004",
+      "name": "repeated_rebuild_mismatch",
+      "input": {
+        "protocol_compatible": true,
+        "node_manifest_present": true,
+        "manifest_signature_valid": true,
+        "rebuild_mismatch_repeated": true,
+        "undeclared_profile_drift": false
+      },
+      "expected_action": "suspend"
+    },
+    {
+      "id": "NEG-005",
+      "name": "undeclared_policy_profile_drift",
+      "input": {
+        "protocol_compatible": true,
+        "node_manifest_present": true,
+        "manifest_signature_valid": true,
+        "rebuild_mismatch_repeated": false,
+        "undeclared_profile_drift": true
+      },
+      "expected_action": "quarantine"
+    }
+  ]
+}

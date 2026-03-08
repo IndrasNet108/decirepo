@@ -1,0 +1,120 @@
+{
+  "policy_id": "decirepo-root-of-trust-v0_1",
+  "version": "v0.1",
+  "trust_admission_rules": [
+    {
+      "rule_id": "protocol_support",
+      "requirement": "Registry supports artifact/verify/lineage protocol v0.1",
+      "status": "required"
+    },
+    {
+      "rule_id": "verify_endpoint_compliance",
+      "requirement": "Verify endpoint returns deterministic PASS/MATCH semantics",
+      "status": "required"
+    },
+    {
+      "rule_id": "validator_publication",
+      "requirement": "Registry publishes validator keys and active profile set",
+      "status": "required"
+    },
+    {
+      "rule_id": "availability_minimum",
+      "requirement": "Verify endpoint uptime >= 99.5% over rolling 30 days",
+      "status": "required"
+    }
+  ],
+  "reputation_rules": [
+    {
+      "metric": "verify_success_rate",
+      "target": ">= 99.0%",
+      "weight": 0.35
+    },
+    {
+      "metric": "rebuild_match_rate",
+      "target": ">= 98.5%",
+      "weight": 0.30
+    },
+    {
+      "metric": "uptime_score",
+      "target": ">= 99.5%",
+      "weight": 0.20
+    },
+    {
+      "metric": "policy_compatibility",
+      "target": ">= 95.0%",
+      "weight": 0.10
+    },
+    {
+      "metric": "incident_penalty",
+      "target": "negative penalty applied for critical incidents",
+      "weight": 0.05
+    }
+  ],
+  "scoring_model": {
+    "scale": "0..100",
+    "formula": "trust_score = 100 * (0.35*verify_success_rate + 0.30*rebuild_match_rate + 0.20*uptime_score + 0.10*policy_compatibility + 0.05*incident_penalty)"
+  },
+  "governance_rules": [
+    {
+      "scope": "tenant_local_trust",
+      "controller": "tenant_admins",
+      "policy": "Tenants can alter local trust list without changing platform defaults"
+    },
+    {
+      "scope": "platform_default_trust",
+      "controller": "decirepo_trust_committee",
+      "policy": "Default trust updates require public changelog and 14-day compatibility window"
+    },
+    {
+      "scope": "protocol_breaking_change",
+      "controller": "protocol_maintainers",
+      "policy": "Breaking changes require new version and dual-support period"
+    }
+  ],
+  "revocation_rules": [
+    {
+      "trigger": "repeated_verify_mismatch",
+      "action": "suspend_registry",
+      "threshold": ">= 3 major mismatches in 7 days"
+    },
+    {
+      "trigger": "signature_key_invalidation",
+      "action": "immediate_revocation",
+      "threshold": "invalidated or compromised key"
+    },
+    {
+      "trigger": "protocol_non_compliance",
+      "action": "quarantine",
+      "threshold": "failed compatibility checks for 14 days"
+    },
+    {
+      "trigger": "silent_drift",
+      "action": "suspend_until_disclosed",
+      "threshold": "undeclared breaking change detected"
+    }
+  ],
+  "challenge_recheck_flow": {
+    "enabled": true,
+    "steps": [
+      "emit verification_mismatch_detected event",
+      "perform deterministic recheck with same payload",
+      "compare first result and recheck result",
+      "if mismatch persists, apply incident penalty and downgrade edge"
+    ]
+  },
+  "operation_endpoints": {
+    "trust_events": "/api/trust-events",
+    "verification_graph": "/api/verification-graph",
+    "trust_score": "/api/trust-score"
+  },
+  "challenge_endpoints": {
+    "challenges": "/api/challenges",
+    "rechecks": "/api/rechecks"
+  },
+  "parameters": {
+    "trust_score_minimum": 85,
+    "probation_period_days": 30,
+    "suspension_review_sla_hours": 24,
+    "compatibility_window_days": 14
+  }
+}

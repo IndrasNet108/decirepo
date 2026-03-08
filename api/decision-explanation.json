@@ -1,0 +1,29 @@
+{
+  "decision_id": "DR-A-10492",
+  "policy_context": {
+    "policy_family": "AML-KYC-OVERRIDES",
+    "policy_version": "V3.1",
+    "authority": "Compliance Committee"
+  },
+  "precedent_context": {
+    "reference_precedents": [
+      {
+        "decision_id": "DR-A-10311",
+        "match_basis": ["decision_class", "policy_family"],
+        "similarity_score": 0.94
+      }
+    ]
+  },
+  "decision_outcome": {
+    "outcome": "APPROVED",
+    "exception_type": "high_net_worth_validation",
+    "authority_action": "approve"
+  },
+  "explanation_basis": [
+    "same policy family precedent",
+    "matching decision class",
+    "exception pattern observed"
+  ],
+  "generated_at": "2026-03-07T14:00:00Z",
+  "protocol_version": "v0.1"
+}

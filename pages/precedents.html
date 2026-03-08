@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DeciRepo — Precedents</title>
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="header-root"></div>
+
+    <main class="page-precedents">
+      <section class="panel">
+        <h1 class="section-title">Decision Precedent Console</h1>
+        <p class="section-subtitle">Deterministic retrieval layer for similar decisions. This screen does not recommend decisions.</p>
+        <div class="banner">Precedents are retrieval results, not recommendations.</div>
+        <div class="banner valid">Disclaimer: Precedents are retrieval results. They are not recommendations.</div>
+      </section>
+
+      <section class="panel">
+        <div class="precedent-filter-grid">
+          <label class="feed-field">
+            <span class="feed-label">Search Mode</span>
+            <select id="search-mode" class="feed-select">
+              <option value="by_decision">By decision id</option>
+              <option value="by_class_policy">By class/policy</option>
+              <option value="outcome_change_context">By outcome change context</option>
+            </select>
+          </label>
+
+          <label class="feed-field">
+            <span class="feed-label">Reference Decision ID</span>
+            <input id="reference-id" class="precedent-input" type="text" placeholder="DR-0001 or ◢A9D325" />
+          </label>
+
+          <label class="feed-field">
+            <span class="feed-label">Decision Class</span>
+            <select id="filter-class" class="feed-select">
+              <option value="ALL">ALL</option>
+            </select>
+          </label>
+
+          <label class="feed-field">
+            <span class="feed-label">Policy Version</span>
+            <select id="filter-policy" class="feed-select">
+              <option value="ALL">ALL</option>
+            </select>
+          </label>
+
+          <label class="feed-field">
+            <span class="feed-label">Outcome</span>
+            <select id="filter-outcome" class="feed-select">
+              <option value="ALL">ALL</option>
+            </select>
+          </label>
+
+          <label class="feed-field">
+            <span class="feed-label">Publisher</span>
+            <select id="filter-publisher" class="feed-select">
+              <option value="ALL">ALL</option>
+            </select>
+          </label>
+
+          <label class="feed-field">
+            <span class="feed-label">Authority</span>
+            <select id="filter-authority" class="feed-select">
+              <option value="ALL">ALL</option>
+            </select>
+          </label>
+
+          <label class="feed-field">
+            <span class="feed-label">Date Range</span>
+            <select id="filter-date-range" class="feed-select">
+              <option value="all">ALL</option>
+              <option value="30d">Last 30d</option>
+              <option value="90d">Last 90d</option>
+              <option value="180d">Last 180d</option>
+              <option value="365d">Last 365d</option>
+            </select>
+          </label>
+
+          <label class="feed-field">
+            <span class="feed-label">Divergence</span>
+            <select id="filter-divergence" class="feed-select">
+              <option value="all">All precedents</option>
+              <option value="divergent_only">Show divergent precedents</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="precedent-controls">
+          <button id="run-search" class="btn btn-gold" type="button">Run Precedent Search</button>
+          <button id="reset-filters" class="btn" type="button">Reset</button>
+          <div id="precedent-mode-note" class="precedent-mode-note">Mode: by decision id.</div>
+        </div>
+      </section>
+
+      <section class="content-grid">
+        <section class="panel">
+          <h2 class="section-title">Precedent Candidates</h2>
+          <table class="precedent-table" role="grid">
+            <thead>
+              <tr>
+                <th>Decision</th>
+                <th>Outcome</th>
+                <th>Class</th>
+                <th>Policy</th>
+                <th>Publisher</th>
+                <th>Similarity</th>
+                <th>Match Basis</th>
+              </tr>
+            </thead>
+            <tbody id="precedent-body"></tbody>
+          </table>
+          <div id="precedent-meta" class="precedent-meta">Loading precedents...</div>
+          <div id="precedent-summary" class="kv-stack"></div>
+        </section>
+
+        <aside class="panel">
+          <h2 class="section-title">Selected Precedent</h2>
+          <div id="selected-card" class="precedent-side-card">No selection.</div>
+
+          <h3 class="section-title">Match Basis</h3>
+          <div id="selected-match-basis" class="lineage-list">
+            <div class="lineage-item muted">No precedent selected.</div>
+          </div>
+
+          <div class="button-row">
+            <button id="action-open" class="btn small" type="button">Open</button>
+            <button id="action-compare" class="btn small" type="button">Compare</button>
+            <button id="action-verify" class="btn small" type="button">Verify</button>
+          </div>
+          <div class="button-row">
+            <button id="action-lineage" class="btn small" type="button">Open Lineage</button>
+            <button id="action-use-reference" class="btn small btn-gold" type="button">Use as reference</button>
+            <a id="action-report" class="btn small" href="../api/precedent-search-report" target="_blank">OPEN REPORT</a>
+          </div>
+          <div id="precedent-action-note" class="precedent-meta">Select a row to enable actions.</div>
+        </aside>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Scoring Model</h2>
+        <div id="precedent-scoring-model" class="kv-stack">
+          <div class="kv-line">
+            <div class="kv-key">Status</div>
+            <div class="kv-value">Loading /api/precedent-search</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Safety Boundary</div>
+            <div class="kv-value mono">recommendation_mode=false</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Determinism</div>
+            <div class="kv-value mono">tie_breaker=decision_id_lexical</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-brand">DeciRepo</div>
+      <div class="footer-description">Decision infrastructure powered by DLX</div>
+      <div class="footer-legal">© 2026 IndrasNet OÜ</div>
+      <div class="footer-meta">DeciRepo Protocol v0.1</div>
+    </footer>
+  </div>
+
+  <script src="../assets/data.js"></script>
+  <script src="../components/header.js"></script>
+  <script>
+    window.DeciRepoHeader.mount("header-root", "precedents");
+
+    const SCORE_WEIGHTS = {
+      class_match: 0.40,
+      policy_family_match: 0.30,
+      reason_code_match: 0.20,
+      risk_distance: 0.10
+    };
+
+    const state = {
+      items: [],
+      results: [],
+      selected: null,
+      referenceDecision: null,
+      remoteSpec: null
+    };
+
+    function uniqSorted(values) {
+      return Array.from(new Set(values.filter(Boolean))).sort();
+    }
+
+    function parseRisk(value) {
+      if (value === null || value === undefined) return null;
+      if (typeof value === "number") return Math.max(0, Math.min(1, value));
+      const raw = String(value).trim().toLowerCase();
+      if (raw === "low") return 0.2;
+      if (raw === "medium") return 0.5;
+      if (raw === "high") return 0.8;
+      const num = Number(raw);
+      if (!Number.isFinite(num)) return null;
+      if (num > 1) return Math.max(0, Math.min(1, num / 100));
+      return Math.max(0, Math.min(1, num));
+    }
+
+    function deriveClass(decision) {
+      const id = String(decision.id || "").toUpperCase();
+      const title = String(decision.title || "").toLowerCase();
+      if (id.startsWith("DR-PROTOCOL") || id.startsWith("DR-TRUST") || id.startsWith("DR-CONF") || id.startsWith("DR-REFNODE") || id.startsWith("DR-GOV")) return "D";
+      if (title.includes("vendor") || title.includes("risk waiver") || title.includes("risk")) return "A";
+      if (title.includes("heating") || title.includes("procurement") || title.includes("threshold") || title.includes("access")) return "B";
+      if (title.includes("transaction") || title.includes("credit") || title.includes("payment") || title.includes("verification") || title.includes("rebuild")) return "C";
+      return "B";
+    }
+
+    function derivePolicyFamily(decision) {
+      const p = String(decision.policyVersion || "").toUpperCase();
+      if (p.startsWith("PROCUREMENT_RULES")) return "PROCUREMENT-EXCEPTIONS";
+      if (p.startsWith("AUDIT_PROTOCOL")) return "AUDIT-VERIFICATION";
+      if (p.startsWith("DECIREPO_PROTOCOL")) return "PROTOCOL-GOVERNANCE";
+      if (p.startsWith("ROOT_OF_TRUST")) return "TRUST-OPERATIONS";
+      if (p.startsWith("CONFORMANCE_POLICY")) return "CONFORMANCE";
+      if (p.startsWith("REFERENCE_NODE_POLICY")) return "REFERENCE-NODE";
+      if (p.startsWith("GOVERNANCE_POLICY")) return "GOVERNANCE";
+      return p || "UNKNOWN";
+    }
+
+    function derivePublisherClass(decision) {
+      const publisher = String(decision.publisher || "").toLowerCase();
+      if (publisher === "indrasnet-governance") return "governance-operator";
+      return "workflow-system";
+    }
+
+    function enrichDecision(decision) {
+      return {
+        ...decision,
+        decision_class: deriveClass(decision),
+        policy_family: derivePolicyFamily(decision),
+        publisher_class: derivePublisherClass(decision),
+        reason_code: String((decision.outcomeFields && decision.outcomeFields.reason_code) || ""),
+        risk_numeric: parseRisk((decision.input && decision.input.risk_score) || null)
+      };
+    }
+
+    function populateFilters() {
+      const classSelect = document.getElementById("filter-class");
+      const policySelect = document.getElementById("filter-policy");
+      const outcomeSelect = document.getElementById("filter-outcome");
+      const publisherSelect = document.getElementById("filter-publisher");
+      const authoritySelect = document.getElementById("filter-authority");
+
+      classSelect.innerHTML = `<option value="ALL">ALL</option>${uniqSorted(state.items.map((x) => x.decision_class)).map((x) => `<option value="${x}">${x}</option>`).join("")}`;
+      policySelect.innerHTML = `<option value="ALL">ALL</option>${uniqSorted(state.items.map((x) => x.policyVersion)).map((x) => `<option value="${x}">${x}</option>`).join("")}`;
+      outcomeSelect.innerHTML = `<option value="ALL">ALL</option>${uniqSorted(state.items.map((x) => x.outcomeFields.decision)).map((x) => `<option value="${x}">${x}</option>`).join("")}`;
+      publisherSelect.innerHTML = `<option value="ALL">ALL</option>${uniqSorted(state.items.map((x) => x.publisher)).map((x) => `<option value="${x}">${x}</option>`).join("")}`;
+      authoritySelect.innerHTML = `<option value="ALL">ALL</option>${uniqSorted(state.items.map((x) => x.authority)).map((x) => `<option value="${x}">${x}</option>`).join("")}`;
+    }
+
+    function daysWindowMatches(dateRaw, windowKey) {
+      if (windowKey === "all") return true;
+      const dt = new Date(`${dateRaw}T00:00:00Z`);
+      if (!Number.isFinite(dt.getTime())) return false;
+      const diffMs = Date.now() - dt.getTime();
+      const days = diffMs / (24 * 60 * 60 * 1000);
+      if (windowKey === "30d") return days <= 30;
+      if (windowKey === "90d") return days <= 90;
+      if (windowKey === "180d") return days <= 180;
+      if (windowKey === "365d") return days <= 365;
+      return true;
+    }
+
+    function outcomeClass(value) {
+      if (value === "APPROVED") return "outcome-approved";
+      if (value === "REJECTED") return "outcome-rejected";
+      return "outcome-neutral";
+    }
+
+    function toggleButtons(buttons, enabled) {
+      buttons.forEach((btn) => {
+        if (!btn) return;
+        btn.disabled = !enabled;
+        if (enabled) {
+          btn.classList.remove("disabled");
+          btn.style.pointerEvents = "auto";
+        } else {
+          btn.classList.add("disabled");
+          btn.style.pointerEvents = "none";
+        }
+      });
+    }
+
+    function buildContext(mode, referenceDecision) {
+      const selectedClass = document.getElementById("filter-class").value;
+      const selectedPolicy = document.getElementById("filter-policy").value;
+      const selectedOutcome = document.getElementById("filter-outcome").value;
+      const targetClass = referenceDecision ? referenceDecision.decision_class : (selectedClass === "ALL" ? "" : selectedClass);
+      const targetPolicy = referenceDecision ? referenceDecision.policy_family : derivePolicyFamily({ policyVersion: selectedPolicy === "ALL" ? "" : selectedPolicy });
+      const targetReason = referenceDecision ? referenceDecision.reason_code : "";
+      const targetRisk = referenceDecision ? referenceDecision.risk_numeric : null;
+      const targetOutcome = referenceDecision ? referenceDecision.outcomeFields.decision : (selectedOutcome === "ALL" ? "" : selectedOutcome);
+
+      return {
+        mode,
+        targetClass,
+        targetPolicy: targetPolicy === "UNKNOWN" ? "" : targetPolicy,
+        targetReason,
+        targetRisk,
+        targetOutcome
+      };
+    }
+
+    function scoreCandidate(candidate, context) {
+      const classMatch = context.targetClass && candidate.decision_class === context.targetClass ? 1 : 0;
+      const policyMatch = context.targetPolicy && candidate.policy_family === context.targetPolicy ? 1 : 0;
+      const reasonMatch = context.targetReason && candidate.reason_code === context.targetReason ? 1 : 0;
+
+      let riskDistance = 0;
+      if (context.targetRisk !== null && candidate.risk_numeric !== null) {
+        riskDistance = Math.max(0, 1 - Math.min(1, Math.abs(context.targetRisk - candidate.risk_numeric)));
+      }
+
+      const score =
+        classMatch * SCORE_WEIGHTS.class_match +
+        policyMatch * SCORE_WEIGHTS.policy_family_match +
+        reasonMatch * SCORE_WEIGHTS.reason_code_match +
+        riskDistance * SCORE_WEIGHTS.risk_distance;
+
+      const basis = [];
+      if (classMatch) basis.push("same class");
+      if (policyMatch) basis.push("same policy_family");
+      if (reasonMatch) basis.push("same reason_code");
+      if (riskDistance >= 0.7) basis.push("close risk band");
+      if (!basis.length) basis.push("weak structural overlap");
+
+      if (context.mode === "outcome_change_context" && context.targetOutcome && candidate.outcomeFields.decision !== context.targetOutcome) {
+        basis.push("outcome divergence");
+      }
+
+      return {
+        score,
+        similarity_score: Number(score.toFixed(4)),
+        why_matched: basis.join(", "),
+        match_basis: basis
+      };
+    }
+
+    function applySearch() {
+      const mode = document.getElementById("search-mode").value;
+      const referenceInput = document.getElementById("reference-id").value.trim();
+      const publisher = document.getElementById("filter-publisher").value;
+      const authority = document.getElementById("filter-authority").value;
+      const policy = document.getElementById("filter-policy").value;
+      const outcome = document.getElementById("filter-outcome").value;
+      const selectedClass = document.getElementById("filter-class").value;
+      const dateRange = document.getElementById("filter-date-range").value;
+      const divergenceFilter = document.getElementById("filter-divergence").value;
+      const note = document.getElementById("precedent-mode-note");
+
+      const referenceDecision = referenceInput ? window.DeciRepoData.resolveDecision(referenceInput) : null;
+      state.referenceDecision = referenceDecision ? enrichDecision(referenceDecision) : null;
+
+      if (mode === "by_decision" && !state.referenceDecision) {
+        state.results = [];
+        state.selected = null;
+        note.textContent = "Mode: by decision id. Reference decision is required.";
+        renderResults();
+        renderSelected();
+        return;
+      }
+
+      if (mode === "outcome_change_context" && !state.referenceDecision && outcome === "ALL") {
+        state.results = [];
+        state.selected = null;
+        note.textContent = "Mode: outcome change context. Provide reference decision id or select an outcome.";
+        renderResults();
+        renderSelected();
+        return;
+      }
+
+      const context = buildContext(mode, state.referenceDecision);
+      note.textContent = `Mode: ${mode.replaceAll("_", " ")}${state.referenceDecision ? ` · reference=${state.referenceDecision.id}` : ""}`;
+
+      let candidates = state.items.slice();
+      if (state.referenceDecision) {
+        candidates = candidates.filter((item) => item.id !== state.referenceDecision.id);
+      }
+
+      candidates = candidates.filter((item) => {
+        if (publisher !== "ALL" && item.publisher !== publisher) return false;
+        if (authority !== "ALL" && item.authority !== authority) return false;
+        if (policy !== "ALL" && item.policyVersion !== policy) return false;
+        if (selectedClass !== "ALL" && item.decision_class !== selectedClass) return false;
+        if (outcome !== "ALL" && item.outcomeFields.decision !== outcome) return false;
+        if (!daysWindowMatches(item.date, dateRange)) return false;
+
+        if (divergenceFilter === "divergent_only" && state.referenceDecision) {
+          const isDivergent = item.outcomeFields.decision !== state.referenceDecision.outcomeFields.decision;
+          if (!isDivergent) return false;
+        }
+
+        return true;
+      });
+
+      if (mode === "outcome_change_context" && context.targetOutcome) {
+        candidates = candidates.filter((item) => item.outcomeFields.decision !== context.targetOutcome);
+      }
+
+      state.results = candidates
+        .map((item) => {
+          const score = scoreCandidate(item, context);
+          return { ...item, ...score };
+        })
+        .filter((item) => item.similarity_score > 0 || mode === "outcome_change_context")
+        .sort((a, b) => {
+          if (b.similarity_score !== a.similarity_score) return b.similarity_score - a.similarity_score;
+          return a.id.localeCompare(b.id);
+        });
+
+      state.selected = state.results[0] || null;
+      renderResults();
+      renderSelected();
+    }
+
+    function renderResults() {
+      const body = document.getElementById("precedent-body");
+      const meta = document.getElementById("precedent-meta");
+      if (!body || !meta) return;
+
+      if (!state.results.length) {
+        body.innerHTML = `<tr><td colspan="7">No precedents match current query context.</td></tr>`;
+        meta.textContent = "Returned: 0";
+        renderSummary();
+        return;
+      }
+
+      const rows = state.results.map((item) => {
+        const selectedClass = state.selected && state.selected.id === item.id ? "active" : "";
+        return `
+          <tr class="${selectedClass}" data-id="${item.id}">
+            <td>
+              <span class="canonical-id">${item.canonical_id}</span>
+              <span class="legacy-id">${item.id}</span>
+              <span class="legacy-id">${item.title}</span>
+            </td>
+            <td class="${outcomeClass(item.outcomeFields.decision)}">${item.outcomeFields.decision}</td>
+            <td>${item.decision_class}</td>
+            <td>${item.policyVersion}</td>
+            <td>${item.publisher_label}</td>
+            <td>${(item.similarity_score * 100).toFixed(1)}%</td>
+            <td>${item.why_matched}</td>
+          </tr>
+        `;
+      }).join("");
+
+      body.innerHTML = rows;
+      meta.textContent = `Returned: ${state.results.length}${state.referenceDecision ? ` · Reference: ${state.referenceDecision.id}` : ""}`;
+      renderSummary();
+
+      body.querySelectorAll("tr[data-id]").forEach((row) => {
+        row.addEventListener("click", () => {
+          const id = row.getAttribute("data-id");
+          state.selected = state.results.find((x) => x.id === id) || null;
+          renderResults();
+          renderSelected();
+        });
+      });
+    }
+
+    function renderSummary() {
+      const summary = document.getElementById("precedent-summary");
+      if (!summary) return;
+
+      if (!state.results.length) {
+        summary.innerHTML = `
+          <div class="kv-line">
+            <div class="kv-key">Search summary</div>
+            <div class="kv-value">No precedents returned.</div>
+          </div>
+        `;
+        return;
+      }
+
+      const approved = state.results.filter((item) => item.outcomeFields.decision === "APPROVED").length;
+      const rejected = state.results.filter((item) => item.outcomeFields.decision === "REJECTED").length;
+      const publisherMap = {};
+      state.results.forEach((item) => {
+        const key = item.publisher_label || item.publisher || "unknown";
+        publisherMap[key] = (publisherMap[key] || 0) + 1;
+      });
+      const publisherSummary = Object.entries(publisherMap)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 3)
+        .map(([name, count]) => `${name} (${count})`)
+        .join(", ");
+
+      summary.innerHTML = `
+        <div class="kv-line">
+          <div class="kv-key">Results</div>
+          <div class="kv-value mono">${state.results.length}</div>
+        </div>
+        <div class="kv-line">
+          <div class="kv-key">Approved</div>
+          <div class="kv-value outcome-approved">${approved}</div>
+        </div>
+        <div class="kv-line">
+          <div class="kv-key">Rejected</div>
+          <div class="kv-value outcome-rejected">${rejected}</div>
+        </div>
+        <div class="kv-line">
+          <div class="kv-key">Top Publishers</div>
+          <div class="kv-value">${publisherSummary || "N/A"}</div>
+        </div>
+      `;
+    }
+
+    function renderSelected() {
+      const selectedCard = document.getElementById("selected-card");
+      const selectedBasis = document.getElementById("selected-match-basis");
+      const note = document.getElementById("precedent-action-note");
+      const buttons = [
+        document.getElementById("action-open"),
+        document.getElementById("action-compare"),
+        document.getElementById("action-verify"),
+        document.getElementById("action-lineage"),
+        document.getElementById("action-use-reference"),
+        document.getElementById("action-report")
+      ];
+
+      const selected = state.selected;
+      if (!selected) {
+        selectedCard.innerHTML = "No selection.";
+        selectedBasis.innerHTML = `<div class="lineage-item muted">No precedent selected.</div>`;
+        note.textContent = "Select a row to enable actions.";
+        toggleButtons(buttons, false);
+        return;
+      }
+
+      selectedCard.innerHTML = `
+        <div class="kv-stack">
+          <div class="kv-line"><div class="kv-key">Decision ID</div><div class="kv-value mono">${selected.id}</div></div>
+          <div class="kv-line"><div class="kv-key">Canonical ID</div><div class="kv-value mono">${selected.canonical_id}</div></div>
+          <div class="kv-line"><div class="kv-key">Class</div><div class="kv-value">${selected.decision_class}</div></div>
+          <div class="kv-line"><div class="kv-key">Policy</div><div class="kv-value">${selected.policyVersion}</div></div>
+          <div class="kv-line"><div class="kv-key">Outcome</div><div class="kv-value ${outcomeClass(selected.outcomeFields.decision)}">${selected.outcomeFields.decision}</div></div>
+          <div class="kv-line"><div class="kv-key">Publisher</div><div class="kv-value">${selected.publisher_label}</div></div>
+          <div class="kv-line"><div class="kv-key">Reason Code</div><div class="kv-value mono">${selected.reason_code || "N/A"}</div></div>
+        </div>
+      `;
+
+      selectedBasis.innerHTML = selected.match_basis
+        .map((basis) => `<div class="lineage-item">${basis}</div>`)
+        .join("");
+
+      toggleButtons(buttons, true);
+
+      const [openBtn, compareBtn, verifyBtn, lineageBtn] = buttons;
+      const localDecision = window.DeciRepoData.getDecisionById(selected.id);
+      
+      if (!localDecision) {
+        toggleButtons([openBtn, compareBtn, lineageBtn], false);
+      }
+
+      if (!state.referenceDecision || state.referenceDecision.id === selected.id) {
+        toggleButtons([compareBtn], false);
+      }
+
+      note.textContent = `Similarity ${(selected.similarity_score * 100).toFixed(1)}% · ${selected.why_matched}`;
+    }
+
+    function bindActions() {
+      document.getElementById("run-search").addEventListener("click", applySearch);
+      document.getElementById("reset-filters").addEventListener("click", () => {
+        document.getElementById("search-mode").value = "by_decision";
+        document.getElementById("reference-id").value = "";
+        document.getElementById("filter-class").value = "ALL";
+        document.getElementById("filter-policy").value = "ALL";
+        document.getElementById("filter-outcome").value = "ALL";
+        document.getElementById("filter-publisher").value = "ALL";
+        document.getElementById("filter-authority").value = "ALL";
+        document.getElementById("filter-date-range").value = "all";
+        document.getElementById("filter-divergence").value = "all";
+        applySearch();
+      });
+
+      document.getElementById("search-mode").addEventListener("change", applySearch);
+      document.getElementById("filter-class").addEventListener("change", applySearch);
+      document.getElementById("filter-policy").addEventListener("change", applySearch);
+      document.getElementById("filter-outcome").addEventListener("change", applySearch);
+      document.getElementById("filter-publisher").addEventListener("change", applySearch);
+      document.getElementById("filter-authority").addEventListener("change", applySearch);
+      document.getElementById("filter-date-range").addEventListener("change", applySearch);
+      document.getElementById("filter-divergence").addEventListener("change", applySearch);
+      document.getElementById("reference-id").addEventListener("keydown", (event) => {
+        if (event.key === "Enter") applySearch();
+      });
+
+      document.getElementById("action-open").addEventListener("click", () => {
+        if (!state.selected) return;
+        window.location.href = `./decision.html?id=${encodeURIComponent(state.selected.id)}`;
+      });
+
+      document.getElementById("action-compare").addEventListener("click", () => {
+        if (!state.selected || !state.referenceDecision) return;
+        window.location.href = `./diff.html?left=${encodeURIComponent(state.referenceDecision.id)}&right=${encodeURIComponent(state.selected.id)}`;
+      });
+
+      document.getElementById("action-verify").addEventListener("click", () => {
+        if (!state.selected) return;
+        window.location.href = `./verify.html?q=${encodeURIComponent(state.selected.canonical_id)}`;
+      });
+
+      document.getElementById("action-lineage").addEventListener("click", () => {
+        if (!state.selected) return;
+        window.location.href = `./lineage.html?id=${encodeURIComponent(state.selected.id)}`;
+      });
+
+      document.getElementById("action-use-reference").addEventListener("click", () => {
+        if (!state.selected) return;
+        const input = document.getElementById("reference-id");
+        const mode = document.getElementById("search-mode");
+        input.value = state.selected.id;
+        mode.value = "by_decision";
+        applySearch();
+      });
+    }
+
+    function renderScoringModel() {
+      const root = document.getElementById("precedent-scoring-model");
+      if (!root) return;
+      const model = state.remoteSpec && state.remoteSpec.scoring_model ? state.remoteSpec.scoring_model : { model_id: "precedent-search-v0_1", weights: SCORE_WEIGHTS, tie_breaker: "decision_id_lexical" };
+      root.innerHTML = `
+        <div class="kv-line"><div class="kv-key">Model ID</div><div class="kv-value mono">${model.model_id || "precedent-search-v0_1"}</div></div>
+        <div class="kv-line"><div class="kv-key">Weight class_match</div><div class="kv-value mono">${Number(model.weights.class_match || SCORE_WEIGHTS.class_match).toFixed(2)}</div></div>
+        <div class="kv-line"><div class="kv-key">Weight policy_family_match</div><div class="kv-value mono">${Number(model.weights.policy_family_match || SCORE_WEIGHTS.policy_family_match).toFixed(2)}</div></div>
+        <div class="kv-line"><div class="kv-key">Weight reason_code_match</div><div class="kv-value mono">${Number(model.weights.reason_code_match || SCORE_WEIGHTS.reason_code_match).toFixed(2)}</div></div>
+        <div class="kv-line"><div class="kv-key">Weight risk_distance</div><div class="kv-value mono">${Number(model.weights.risk_distance || SCORE_WEIGHTS.risk_distance).toFixed(2)}</div></div>
+        <div class="kv-line"><div class="kv-key">Tie-breaker</div><div class="kv-value mono">${model.tie_breaker || "decision_id_lexical"}</div></div>
+      `;
+    }
+
+    async function loadRemoteSpec() {
+      const urls = ["../api/precedent-search", "../api/precedent-search.json"];
+      for (const url of urls) {
+        try {
+          const response = await fetch(url, { cache: "no-store" });
+          if (!response.ok) continue;
+          const payload = await response.json();
+          if (payload && payload.scoring_model) {
+            state.remoteSpec = payload;
+            break;
+          }
+        } catch (_err) {
+          // fallback to local model
+        }
+      }
+      renderScoringModel();
+    }
+
+    function bootstrap() {
+      state.items = window.DeciRepoData.decisions.map(enrichDecision);
+      populateFilters();
+      bindActions();
+      renderResults();
+      renderSelected();
+      applySearch();
+      loadRemoteSpec();
+    }
+
+    bootstrap();
+  </script>
+</body>
+</html>

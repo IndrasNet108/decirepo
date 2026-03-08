@@ -1,0 +1,27 @@
+DECISION EXPLANATION ARTIFACT v0.1
+
+Decision ID: DR-A-10492
+Generated At: 2026-03-07T14:00:00Z
+
+Policy Context:
+- Family: AML-KYC-OVERRIDES
+- Version: V3.1
+- Authority: Compliance Committee
+
+Precedent Context:
+- Reference Precedent: DR-A-10311
+- Match Basis: decision_class, policy_family
+- Similarity: 0.94
+
+Decision Outcome:
+- Outcome: APPROVED
+- Exception: high_net_worth_validation
+- Action: approve
+
+Explanation Basis:
+- same policy family precedent
+- matching decision class
+- exception pattern observed
+
+Protocol Version: v0.1
+Status: DETERMINISTIC EXPLANATION

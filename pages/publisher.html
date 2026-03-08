@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DeciRepo — Publisher Onboarding</title>
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="header-root"></div>
+
+    <main class="page-publisher">
+      <section class="panel">
+        <h1 class="section-title">Publish Decisions to DeciRepo</h1>
+        <p class="section-subtitle">Organizations can publish verifiable decision artifacts to the DeciRepo registry.</p>
+      </section>
+
+      <section class="content-grid">
+        <section class="panel">
+          <h2 class="section-title">Publishing Channels</h2>
+          <div class="publisher-grid">
+            <article class="publisher-card">
+              <h3 class="section-title">Manual Publish</h3>
+              <div class="section-subtitle">For pilot committees and controlled workflows.</div>
+              <div class="lineage-list">
+                <div class="lineage-item">Upload decision input</div>
+                <div class="lineage-item">Select policy version</div>
+                <div class="lineage-item">Generate artifact</div>
+                <div class="lineage-item">Publish</div>
+              </div>
+              <div class="button-row tight">
+                <button id="manual-generate" class="btn btn-gold" type="button">Generate Decision Artifact</button>
+              </div>
+            </article>
+
+            <article class="publisher-card">
+              <h3 class="section-title">API Push</h3>
+              <div class="section-subtitle">For internal systems and high-volume flows.</div>
+              <div class="code-block">
+POST /decisions
+{
+  "decision_id": "...",
+  "policy_version": "...",
+  "artifact_hash": "...",
+  "outcome": "..."
+}
+              </div>
+              <div class="button-row tight">
+                <button id="open-api-feed" class="btn" type="button">Open API Feed</button>
+              </div>
+            </article>
+
+            <article class="publisher-card">
+              <h3 class="section-title">Batch Import</h3>
+              <div class="section-subtitle">For historical archives and migrations.</div>
+              <div class="lineage-list">
+                <div class="lineage-item">Upload CSV / JSON / Ledger export</div>
+                <div class="lineage-item">Map fields to artifact schema</div>
+                <div class="lineage-item">Validate and publish batch</div>
+              </div>
+              <div class="button-row tight">
+                <button id="batch-import-simulate" class="btn" type="button">Simulate Batch Import</button>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <aside class="panel">
+          <h2 class="section-title">Publishing Status</h2>
+          <div class="snapshot-list">
+            <div class="snapshot-row"><div class="snapshot-label">Published</div><div id="publisher-published" class="snapshot-value">0</div></div>
+            <div class="snapshot-row"><div class="snapshot-label">Pending</div><div id="publisher-pending" class="snapshot-value">0</div></div>
+            <div class="snapshot-row"><div class="snapshot-label">Rejected</div><div id="publisher-rejected" class="snapshot-value">0</div></div>
+          </div>
+
+          <h3 class="section-title">Example Artifact</h3>
+          <div id="publisher-example" class="kv-stack"></div>
+          <div class="button-row tight">
+            <button id="publisher-verify-example" class="btn btn-gold" type="button">VERIFY</button>
+            <button id="publisher-open-example" class="btn" type="button">Open Decision</button>
+          </div>
+        </aside>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Public Feed</h2>
+        <p class="section-subtitle">Live publication stream</p>
+        <div id="publisher-feed-stream" class="publisher-stream"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-brand">DeciRepo</div>
+      <div class="footer-description">Decision infrastructure powered by DLX</div>
+      <div class="footer-legal">© 2026 IndrasNet OÜ</div>
+      <div class="footer-meta">DeciRepo Protocol v0.1</div>
+    </footer>
+  </div>
+
+  <script src="../assets/data.js"></script>
+  <script src="../components/header.js"></script>
+  <script src="../components/decision-block.js"></script>
+  <script>
+    window.DeciRepoHeader.mount("header-root", "publisher");
+
+    const decisions = window.DeciRepoData.decisions || [];
+    const published = decisions.length;
+    const pending = Math.max(2, Math.floor(published * 0.1));
+    const rejected = Math.max(1, Math.floor(published * 0.03));
+
+    document.getElementById("publisher-published").textContent = String(published);
+    document.getElementById("publisher-pending").textContent = String(pending);
+    document.getElementById("publisher-rejected").textContent = String(rejected);
+
+    const example = window.DeciRepoData.getDecisionById("DR-0001") || decisions[0];
+    const visualId = `◢${example.short_hash}`;
+    const exampleRows = window.DeciRepoDecisionBlock.toRows({
+      decision: `${visualId} (${example.id})`,
+      title: example.title,
+      outcome: example.outcomeFields.decision,
+      policy_version: example.policyVersion,
+      artifact_hash: example.artifact.artifact_hash
+    });
+    document.getElementById("publisher-example").innerHTML = window.DeciRepoDecisionBlock.renderStack(exampleRows, ["artifact_hash"]);
+
+    document.getElementById("publisher-verify-example").addEventListener("click", () => {
+      window.location.href = `./verify.html?q=${encodeURIComponent(visualId)}`;
+    });
+
+    document.getElementById("publisher-open-example").addEventListener("click", () => {
+      window.location.href = `./decision.html?id=${encodeURIComponent(example.id)}`;
+    });
+
+    document.getElementById("manual-generate").addEventListener("click", () => {
+      window.location.href = `./decision.html?id=${encodeURIComponent(example.id)}`;
+    });
+
+    document.getElementById("open-api-feed").addEventListener("click", () => {
+      window.location.href = "../api/feed";
+    });
+
+    document.getElementById("batch-import-simulate").addEventListener("click", () => {
+      window.location.href = "./feed.html";
+    });
+
+    const stream = document.getElementById("publisher-feed-stream");
+    const feedRows = [
+      `${visualId} published`,
+      `${visualId} verified`,
+      `◢${(window.DeciRepoData.getDecisionById("DR-0008") || example).short_hash} policy impact recalculated`
+    ];
+    stream.innerHTML = feedRows.map((entry) => `<div class="publisher-stream-item">${entry}</div>`).join("");
+  </script>
+</body>
+</html>

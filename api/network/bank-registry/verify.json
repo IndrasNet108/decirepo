@@ -1,0 +1,9 @@
+{
+  "registry_id": "bank-registry.eu",
+  "artifact_hash": "d2f08b9f2d241b7bb3e4f3453f58cd1947b0d41a7d19f013ba4a2fb2112767fb",
+  "decision_id": "DR-0008",
+  "rebuild_result": "MATCH",
+  "validator": "PASS",
+  "environment": "DLX v1.0",
+  "status": "VERIFIED"
+}

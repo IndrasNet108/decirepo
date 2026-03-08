@@ -1,0 +1,61 @@
+{
+  "protocol_id": "decirepo-decision-protocol-v0_1",
+  "protocol_version": "v0.1",
+  "freeze": {
+    "status": "frozen",
+    "effective_at": "2026-03-07",
+    "breaking_changes_allowed": false,
+    "compatibility_window_days": 14
+  },
+  "operating_model": {
+    "protocol_layer": {
+      "name": "DeciRepo Protocol",
+      "mode": "neutral_open_standard"
+    },
+    "commercial_layer": {
+      "name": "DeciRepo Cloud by IndrasNet",
+      "mode": "managed_commercial_registry"
+    }
+  },
+  "compatibility_badge": {
+    "label": "DeciRepo Protocol Compatible",
+    "status": "active",
+    "criteria": "passes mandatory conformance profile for declared protocol version"
+  },
+  "modules": [
+    {"module": "artifact_envelope", "version": "v0.1", "status": "active"},
+    {"module": "verify_contract", "version": "v0.1", "status": "active"},
+    {"module": "lineage_schema", "version": "v0.1", "status": "active"},
+    {"module": "signature_rules", "version": "v0.1", "status": "active"}
+  ],
+  "compatibility_matrix": [
+    {"from_version": "v0.1", "to_version": "v0.1", "status": "fully_compatible"},
+    {"from_version": "v0.0", "to_version": "v0.1", "status": "requires_migration"}
+  ],
+  "deprecated_fields_policy": {
+    "notice_period_days": 30,
+    "dual_support_days": 14,
+    "hard_removal_requires_major_version": true
+  },
+  "endpoints": {
+    "node_discovery": "/.well-known/decirepo-node",
+    "trust": "/api/trust",
+    "root_of_trust": "/api/root-of-trust",
+    "trust_score": "/api/trust-score",
+    "trust_score_perspectives": "/api/trust-score-perspectives",
+    "trust_events": "/api/trust-events",
+    "challenges": "/api/challenges",
+    "rechecks": "/api/rechecks",
+    "verification_graph": "/api/verification-graph",
+    "node_manifest": "/api/network/{registry}/node.json",
+    "network": "/api/network.json",
+    "conformance_report": "/api/conformance-report",
+    "precedent_search": "/api/precedent-search",
+    "precedent_search_report": "/api/precedent-search-report",
+    "policy_drift_detection": "/api/policy-drift-detection",
+    "feed": "/api/feed",
+    "decision": "/api/decision/{id}",
+    "verify": "/api/verify.json",
+    "lineage": "/api/lineage/{id}"
+  }
+}

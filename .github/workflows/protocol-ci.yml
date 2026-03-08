@@ -1,0 +1,36 @@
+name: DeciRepo Protocol CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  protocol-checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install deps (optional)
+        run: |
+          if [ -f package.json ]; then
+            npm ci
+          else
+            echo "No package.json; skipping dependency install."
+          fi
+
+      - name: DLX reference conformance
+        run: node dlx-ref/cli.js conformance dlx-ref/tests/conformance_v0_1.json
+
+      - name: Federation negative tests
+        run: node scripts/run_negative_federation_tests.js
+
+      - name: Registry sanity checks
+        run: node scripts/sanity_check_registry.js
+

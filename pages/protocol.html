@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DeciRepo — Decision Protocol</title>
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="header-root"></div>
+
+    <main class="page-protocol">
+      <section class="panel">
+        <h1 class="section-title">DeciRepo Decision Protocol</h1>
+        <p class="section-subtitle">Artifact specification, verify contract, lineage schema, and signature rules.</p>
+        <div class="banner valid">PROTOCOL FREEZE v0.1 · BREAKING CHANGES DISABLED</div>
+        <div class="banner valid">DECIREPO PROTOCOL COMPATIBLE</div>
+        <div class="banner">DUAL-TRACK: NEUTRAL PROTOCOL + MANAGED DECIREPO CLOUD</div>
+      </section>
+
+      <section class="content-grid">
+        <section class="panel">
+          <h2 class="section-title">Protocol Modules</h2>
+          <table class="lineage-table" role="grid">
+            <thead>
+              <tr>
+                <th>Module</th>
+                <th>Version</th>
+                <th>Status</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Artifact Envelope</td>
+                <td>v0.1</td>
+                <td>active</td>
+                <td>Decision identity, origin registry, policy version, and artifact hash.</td>
+              </tr>
+              <tr>
+                <td>Verify Contract</td>
+                <td>v0.1</td>
+                <td>active</td>
+                <td>Deterministic PASS/MATCH verification response format.</td>
+              </tr>
+              <tr>
+                <td>Lineage Schema</td>
+                <td>v0.1</td>
+                <td>active</td>
+                <td>Parent/child/relation edges for decision graph construction.</td>
+              </tr>
+              <tr>
+                <td>Signature Rules</td>
+                <td>v0.1</td>
+                <td>active</td>
+                <td>Registry key binding and signed publication/verification events.</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <aside class="panel">
+          <h2 class="section-title">Example Artifact</h2>
+          <pre class="code-block">{
+  "decision_id": "DR-0001",
+  "canonical_id": "◢A9D325",
+  "artifact_hash": "a9d325...",
+  "origin_registry": "decirepo.com",
+  "policy_version": "PROCUREMENT_RULES_V1",
+  "validator_profile": "DLX-CORE-V1",
+  "validator_result": "PASS",
+  "rebuild_result": "MATCH"
+}</pre>
+          <div class="button-row tight">
+            <a class="btn" href="../api/trust">Trust Registry</a>
+            <a class="btn" href="../api/root-of-trust">Root of Trust</a>
+            <a class="btn" href="../api/trust-score">Trust Score</a>
+            <a class="btn" href="../api/network.json">Network Spec</a>
+            <a class="btn" href="../api/conformance-report">Conformance Report</a>
+            <a class="btn" href="../FEDERATION_HANDSHAKE_V0_1.md">Handshake Spec</a>
+            <a class="btn btn-gold" href="./verify.html?q=DR-0001">Verify Example</a>
+          </div>
+        </aside>
+      </section>
+
+      <section class="content-grid">
+        <section class="panel">
+          <h2 class="section-title">Compatibility Matrix</h2>
+          <table class="lineage-table" role="grid">
+            <thead>
+              <tr>
+                <th>From</th>
+                <th>To</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>v0.1</td>
+                <td>v0.1</td>
+                <td>fully_compatible</td>
+              </tr>
+              <tr>
+                <td>v0.0</td>
+                <td>v0.1</td>
+                <td>requires_migration</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <aside class="panel">
+          <h2 class="section-title">Deprecated Fields Policy</h2>
+          <div class="lineage-list">
+            <div class="lineage-item">Notice period: 30 days</div>
+            <div class="lineage-item">Dual support window: 14 days</div>
+            <div class="lineage-item">Hard removal only via major protocol version</div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Protocol Endpoints</h2>
+        <div class="kv-stack">
+          <div class="kv-line">
+            <div class="kv-key">Trust Registry</div>
+            <div class="kv-value mono">GET /api/trust</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Root of Trust Policy</div>
+            <div class="kv-value mono">GET /api/root-of-trust</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Trust Score Model</div>
+            <div class="kv-value mono">GET /api/trust-score</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Perspective Scores</div>
+            <div class="kv-value mono">GET /api/trust-score-perspectives</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Trust Events Stream</div>
+            <div class="kv-value mono">GET /api/trust-events</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Challenges Stream</div>
+            <div class="kv-value mono">GET /api/challenges</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Rechecks Stream</div>
+            <div class="kv-value mono">GET /api/rechecks</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Verification Graph</div>
+            <div class="kv-value mono">GET /api/verification-graph</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Verification Network</div>
+            <div class="kv-value mono">GET /api/network.json</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Conformance Report</div>
+            <div class="kv-value mono">GET /api/conformance-report</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Precedent Search</div>
+            <div class="kv-value mono">GET /api/precedent-search</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Precedent Search Report</div>
+            <div class="kv-value mono">GET /api/precedent-search-report</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Policy Drift Detection</div>
+            <div class="kv-value mono">GET /api/policy-drift-detection</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Node Manifest</div>
+            <div class="kv-value mono">GET /api/network/{registry}/node.json</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Decision Feed</div>
+            <div class="kv-value mono">GET /api/feed</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Decision Artifact</div>
+            <div class="kv-value mono">GET /api/decision/{id}</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Lineage</div>
+            <div class="kv-value mono">GET /api/lineage/{id}</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-brand">DeciRepo</div>
+      <div class="footer-description">Decision infrastructure powered by DLX</div>
+      <div class="footer-legal">© 2026 IndrasNet OÜ</div>
+      <div class="footer-meta">DeciRepo Protocol v0.1</div>
+    </footer>
+  </div>
+
+  <script src="../components/header.js"></script>
+  <script>
+    window.DeciRepoHeader.mount("header-root", "protocol");
+  </script>
+</body>
+</html>

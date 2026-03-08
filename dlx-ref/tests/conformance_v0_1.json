@@ -1,0 +1,48 @@
+{
+  "suite_id": "dlx-ref-conformance-v0_1",
+  "protocol_version": "v0.1",
+  "cases": [
+    {
+      "id": "CONF-001",
+      "command": "verify",
+      "file": "../test-vectors/artifacts/valid_governance_artifact.json",
+      "expect": {
+        "status": "PASS"
+      }
+    },
+    {
+      "id": "CONF-002",
+      "command": "rebuild",
+      "file": "../test-vectors/artifacts/valid_governance_artifact.json",
+      "expect": {
+        "status": "PASS",
+        "match_expected": true
+      }
+    },
+    {
+      "id": "CONF-003",
+      "command": "validate",
+      "file": "../test-vectors/artifacts/transition_valid_artifact.json",
+      "expect": {
+        "status": "PASS"
+      }
+    },
+    {
+      "id": "CONF-004",
+      "command": "verify",
+      "file": "../test-vectors/artifacts/invalid_missing_fields_artifact.json",
+      "expect": {
+        "status": "FAIL"
+      }
+    },
+    {
+      "id": "CONF-005",
+      "command": "validate",
+      "file": "../test-vectors/artifacts/transition_invalid_artifact.json",
+      "expect": {
+        "status": "FAIL"
+      }
+    }
+  ]
+}
+

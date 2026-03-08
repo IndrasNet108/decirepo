@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DeciRepo — Policy Impact</title>
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="header-root"></div>
+
+    <main class="page-policy-impact">
+      <section class="panel">
+        <h1 class="section-title">Policy Impact Simulation</h1>
+        <p class="section-subtitle">What changes if policy execution rules are updated.</p>
+        <div class="policy-controls">
+          <label class="feed-field">
+            <span class="feed-label">Baseline policy</span>
+            <select id="baseline-policy" class="feed-select"></select>
+          </label>
+          <label class="feed-field">
+            <span class="feed-label">New policy</span>
+            <select id="new-policy" class="feed-select"></select>
+          </label>
+          <div class="policy-run-cell">
+            <button id="run-simulation" class="btn btn-gold" type="button">RUN SIMULATION</button>
+          </div>
+          <div class="policy-run-cell">
+            <button id="open-drift-report" class="btn" type="button">OPEN DRIFT REPORT</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="policy-metrics-grid">
+          <div class="policy-metric-card">
+            <div class="policy-metric-label">Decisions analyzed</div>
+            <div id="metric-analyzed" class="policy-metric-value">0</div>
+          </div>
+          <div class="policy-metric-card">
+            <div class="policy-metric-label">Changed outcomes</div>
+            <div id="metric-changed" class="policy-metric-value">0</div>
+          </div>
+          <div class="policy-metric-card">
+            <div class="policy-metric-label">Unchanged outcomes</div>
+            <div id="metric-unchanged" class="policy-metric-value">0</div>
+          </div>
+          <div class="policy-metric-card">
+            <div class="policy-metric-label">Approved → Rejected</div>
+            <div id="metric-a2r" class="policy-metric-value">0</div>
+          </div>
+          <div class="policy-metric-card">
+            <div class="policy-metric-label">Rejected → Approved</div>
+            <div id="metric-r2a" class="policy-metric-value">0</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-grid">
+        <section class="panel">
+          <h2 class="section-title">Affected Decisions</h2>
+          <table class="policy-impact-table" role="grid">
+            <thead>
+              <tr>
+                <th>Decision ID</th>
+                <th>Old Result</th>
+                <th>New Result</th>
+              </tr>
+            </thead>
+            <tbody id="impact-table-body"></tbody>
+          </table>
+        </section>
+
+        <aside class="panel">
+          <h2 class="section-title">Decision Detail</h2>
+          <div id="impact-detail" class="kv-stack"></div>
+          <div class="button-row tight">
+            <button id="impact-open-decision" class="btn" type="button">Open Decision</button>
+            <button id="impact-verify" class="btn btn-gold" type="button">Verify Artifact</button>
+            <button id="impact-compare" class="btn" type="button">Compare Pair</button>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-brand">DeciRepo</div>
+      <div class="footer-description">Decision infrastructure powered by DLX</div>
+      <div class="footer-legal">© 2026 IndrasNet OÜ</div>
+      <div class="footer-meta">DeciRepo Protocol v0.1</div>
+    </footer>
+  </div>
+
+  <script src="../assets/data.js"></script>
+  <script src="../components/header.js"></script>
+  <script src="../components/decision-block.js"></script>
+  <script>
+    window.DeciRepoHeader.mount("header-root", "policy-impact");
+
+    const decisions = (window.DeciRepoData.decisions || []).filter((decision) =>
+      String(decision.policyVersion || "").startsWith("PROCUREMENT_RULES")
+    );
+
+    const baselineSelect = document.getElementById("baseline-policy");
+    const newPolicySelect = document.getElementById("new-policy");
+    const runButton = document.getElementById("run-simulation");
+    const openDriftReportButton = document.getElementById("open-drift-report");
+    const tableBody = document.getElementById("impact-table-body");
+    const detailRoot = document.getElementById("impact-detail");
+
+    const openDecisionButton = document.getElementById("impact-open-decision");
+    const verifyButton = document.getElementById("impact-verify");
+    const compareButton = document.getElementById("impact-compare");
+
+    const metrics = {
+      analyzed: document.getElementById("metric-analyzed"),
+      changed: document.getElementById("metric-changed"),
+      unchanged: document.getElementById("metric-unchanged"),
+      a2r: document.getElementById("metric-a2r"),
+      r2a: document.getElementById("metric-r2a")
+    };
+
+    const policies = {
+      PROCUREMENT_POLICY_V3: {
+        label: "PROCUREMENT_POLICY_V3",
+        evaluate(decision) {
+          const amount = Number.parseInt(decision.input.estimated_amount || "0", 10);
+          const emergency = Boolean(decision.input.emergency_condition);
+          const exception = Boolean(decision.input.exception_requested);
+          const isUnverifiedVendor = /unverified vendor/i.test(decision.title);
+
+          if (isUnverifiedVendor) {
+            return { outcome: "REJECTED", reason_code: "UNVERIFIED_VENDOR", rule: "verified_vendor_required_for_waiver" };
+          }
+          if (exception && emergency) {
+            return { outcome: "APPROVED", reason_code: "EMERGENCY_OVERRIDE_ALLOWED", rule: "emergency_override_allowed" };
+          }
+          if (!exception && amount <= 200000) {
+            return { outcome: "APPROVED", reason_code: "STANDARD_BELOW_THRESHOLD", rule: "below_threshold_standard_process" };
+          }
+          if (amount > 250000 && !emergency) {
+            return { outcome: "REJECTED", reason_code: "ABOVE_THRESHOLD_TENDER_REQUIRED", rule: "open_tender_required_above_threshold" };
+          }
+          return { outcome: "REJECTED", reason_code: "STANDARD_TENDER_REQUIRED", rule: "no_waiver_without_emergency" };
+        }
+      },
+      PROCUREMENT_POLICY_V4: {
+        label: "PROCUREMENT_POLICY_V4",
+        evaluate(decision) {
+          const amount = Number.parseInt(decision.input.estimated_amount || "0", 10);
+          const emergency = Boolean(decision.input.emergency_condition);
+          const exception = Boolean(decision.input.exception_requested);
+          const isUnverifiedVendor = /unverified vendor/i.test(decision.title);
+          const hasFormalDeclaration = !/Policy V1/i.test(decision.title) && decision.id !== "DR-0008";
+
+          if (isUnverifiedVendor) {
+            return { outcome: "REJECTED", reason_code: "UNVERIFIED_VENDOR", rule: "verified_vendor_required_for_waiver" };
+          }
+          if (exception && emergency) {
+            if (amount > 220000) {
+              return { outcome: "REJECTED", reason_code: "EMERGENCY_OVERRIDE_REQUIRES_BUDGET_CAP", rule: "emergency_override_requires_budget_cap" };
+            }
+            if (!hasFormalDeclaration) {
+              return { outcome: "REJECTED", reason_code: "MISSING_FORMAL_EMERGENCY_DECLARATION", rule: "formal_emergency_declaration_required" };
+            }
+            return { outcome: "APPROVED", reason_code: "EMERGENCY_OVERRIDE_WITH_CAP", rule: "emergency_override_with_budget_cap" };
+          }
+          if (!exception && amount <= 180000) {
+            return { outcome: "APPROVED", reason_code: "STANDARD_BELOW_THRESHOLD", rule: "below_threshold_standard_process_v4" };
+          }
+          return { outcome: "REJECTED", reason_code: "STANDARD_TENDER_REQUIRED_V4", rule: "strict_tender_enforcement" };
+        }
+      }
+    };
+
+    function visualId(decision) {
+      return `◢${decision.short_hash}`;
+    }
+
+    function outcomeClass(outcome) {
+      if (outcome === "APPROVED") return "outcome-approved";
+      if (outcome === "REJECTED") return "outcome-rejected";
+      return "outcome-neutral";
+    }
+
+    function setMetricValues({ analyzed, changed, unchanged, a2r, r2a }) {
+      metrics.analyzed.textContent = String(analyzed);
+      metrics.changed.textContent = String(changed);
+      metrics.unchanged.textContent = String(unchanged);
+      metrics.a2r.textContent = String(a2r);
+      metrics.r2a.textContent = String(r2a);
+    }
+
+    function renderDetail(row, baselinePolicy, newPolicy) {
+      if (!row) {
+        detailRoot.innerHTML = window.DeciRepoDecisionBlock.renderStack([{ key: "status", value: "Select a decision to inspect impact." }]);
+        return;
+      }
+
+      const rows = window.DeciRepoDecisionBlock.toRows({
+        decision: `${visualId(row.decision)} (${row.decision.id})`,
+        old_policy: baselinePolicy,
+        old_rule: row.old.rule,
+        new_policy: newPolicy,
+        new_rule: row.next.rule,
+        outcome_change: `${row.old.outcome} → ${row.next.outcome}`,
+        reason_change: `${row.old.reason_code} → ${row.next.reason_code}`
+      });
+      detailRoot.innerHTML = window.DeciRepoDecisionBlock.renderStack(rows);
+    }
+
+    function renderTableRows(rows, baselinePolicy, newPolicy) {
+      if (!rows.length) {
+        tableBody.innerHTML = `<tr><td colspan="3">No outcome changes for selected policy pair.</td></tr>`;
+        renderDetail(null, baselinePolicy, newPolicy);
+        return;
+      }
+
+      tableBody.innerHTML = rows.map((row) => `
+        <tr class="policy-impact-row" data-id="${row.decision.id}">
+          <td>
+            <div class="index-id">${visualId(row.decision)}</div>
+            <div class="legacy-id">${row.decision.id}</div>
+          </td>
+          <td class="${outcomeClass(row.old.outcome)}">${row.old.outcome}</td>
+          <td class="${outcomeClass(row.next.outcome)}">${row.next.outcome}</td>
+        </tr>
+      `).join("");
+
+      let selected = rows[0];
+      renderDetail(selected, baselinePolicy, newPolicy);
+
+      tableBody.querySelectorAll(".policy-impact-row").forEach((rowElement) => {
+        rowElement.addEventListener("click", () => {
+          const id = rowElement.getAttribute("data-id");
+          const found = rows.find((entry) => entry.decision.id === id);
+          if (!found) return;
+          selected = found;
+          renderDetail(selected, baselinePolicy, newPolicy);
+          bindActionButtons(selected);
+        });
+      });
+
+      bindActionButtons(selected);
+    }
+
+    function bindActionButtons(selected) {
+      if (!selected) return;
+      openDecisionButton.onclick = () => {
+        window.location.href = `./decision.html?id=${encodeURIComponent(selected.decision.id)}`;
+      };
+      verifyButton.onclick = () => {
+        window.location.href = `./verify.html?q=${encodeURIComponent(visualId(selected.decision))}`;
+      };
+      compareButton.onclick = () => {
+        const pair = window.DeciRepoData.getPairId(selected.decision.id);
+        if (!pair) return;
+        window.location.href = `./diff.html?left=${encodeURIComponent(selected.decision.id)}&right=${encodeURIComponent(pair)}`;
+      };
+      const hasPair = Boolean(window.DeciRepoData.getPairId(selected.decision.id));
+      compareButton.disabled = !hasPair;
+      compareButton.classList.toggle("disabled", !hasPair);
+    }
+
+    function runSimulation() {
+      const baselinePolicy = baselineSelect.value;
+      const newPolicy = newPolicySelect.value;
+      const baseline = policies[baselinePolicy];
+      const next = policies[newPolicy];
+      if (!baseline || !next) return;
+
+      const evaluated = decisions.map((decision) => {
+        const oldEval = baseline.evaluate(decision);
+        const nextEval = next.evaluate(decision);
+        return {
+          decision,
+          old: oldEval,
+          next: nextEval,
+          changed: oldEval.outcome !== nextEval.outcome
+        };
+      });
+
+      const changedRows = evaluated.filter((row) => row.changed);
+      const unchangedCount = evaluated.length - changedRows.length;
+      const a2r = changedRows.filter((row) => row.old.outcome === "APPROVED" && row.next.outcome === "REJECTED").length;
+      const r2a = changedRows.filter((row) => row.old.outcome === "REJECTED" && row.next.outcome === "APPROVED").length;
+
+      setMetricValues({
+        analyzed: evaluated.length,
+        changed: changedRows.length,
+        unchanged: unchangedCount,
+        a2r,
+        r2a
+      });
+
+      renderTableRows(changedRows, baselinePolicy, newPolicy);
+    }
+
+    baselineSelect.innerHTML = Object.values(policies)
+      .map((policy) => `<option value="${policy.label}">${policy.label}</option>`)
+      .join("");
+    newPolicySelect.innerHTML = Object.values(policies)
+      .map((policy) => `<option value="${policy.label}">${policy.label}</option>`)
+      .join("");
+
+    baselineSelect.value = "PROCUREMENT_POLICY_V3";
+    newPolicySelect.value = "PROCUREMENT_POLICY_V4";
+
+    runButton.addEventListener("click", runSimulation);
+    openDriftReportButton.addEventListener("click", () => {
+      window.location.href = "../api/policy-drift-detection";
+    });
+    runSimulation();
+
+    const params = new URLSearchParams(window.location.search);
+    const preset = params.get("id");
+    if (preset) {
+      const row = Array.from(tableBody.querySelectorAll(".policy-impact-row")).find((element) => element.getAttribute("data-id") === preset);
+      if (row) row.click();
+    }
+  </script>
+</body>
+</html>

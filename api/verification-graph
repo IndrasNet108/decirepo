@@ -1,0 +1,55 @@
+{
+  "graph_id": "decirepo-verification-graph-v0_1",
+  "perspectives": ["decirepo.com", "bank-registry.eu", "municipal-registry.gov"],
+  "edges": [
+    {
+      "source_registry": "decirepo.com",
+      "target_registry": "bank-registry.eu",
+      "verify_success_rate": 0.976,
+      "rebuild_match_rate": 0.969,
+      "last_verified_at": "2026-03-07T18:12:00Z",
+      "edge_status": "healthy"
+    },
+    {
+      "source_registry": "decirepo.com",
+      "target_registry": "municipal-registry.gov",
+      "verify_success_rate": 0.955,
+      "rebuild_match_rate": 0.948,
+      "last_verified_at": "2026-03-07T18:10:00Z",
+      "edge_status": "watch"
+    },
+    {
+      "source_registry": "bank-registry.eu",
+      "target_registry": "decirepo.com",
+      "verify_success_rate": 0.984,
+      "rebuild_match_rate": 0.978,
+      "last_verified_at": "2026-03-07T18:08:00Z",
+      "edge_status": "healthy"
+    },
+    {
+      "source_registry": "bank-registry.eu",
+      "target_registry": "municipal-registry.gov",
+      "verify_success_rate": 0.951,
+      "rebuild_match_rate": 0.944,
+      "last_verified_at": "2026-03-07T18:07:00Z",
+      "edge_status": "watch"
+    },
+    {
+      "source_registry": "municipal-registry.gov",
+      "target_registry": "decirepo.com",
+      "verify_success_rate": 0.979,
+      "rebuild_match_rate": 0.972,
+      "last_verified_at": "2026-03-07T18:06:00Z",
+      "edge_status": "healthy"
+    },
+    {
+      "source_registry": "municipal-registry.gov",
+      "target_registry": "bank-registry.eu",
+      "verify_success_rate": 0.958,
+      "rebuild_match_rate": 0.949,
+      "last_verified_at": "2026-03-07T18:04:00Z",
+      "edge_status": "watch"
+    }
+  ],
+  "generated_at": "2026-03-07T18:20:00Z"
+}

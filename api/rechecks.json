@@ -1,0 +1,28 @@
+{
+  "stream_id": "decirepo-rechecks-v0_1",
+  "items": [
+    {
+      "recheck_id": "RC-0001",
+      "challenge_id": "CH-0001",
+      "artifact_hash": "a10ed2a595d3ecf21338117408f99fd0f9adf7324f17b2d45bff320f97fca416",
+      "source_registry": "decirepo.com",
+      "target_registry": "municipal-registry.gov",
+      "first_result": "MISMATCH",
+      "recheck_result": "MATCH",
+      "final_action": "clear_incident",
+      "executed_at": "2026-03-07T18:05:00Z"
+    },
+    {
+      "recheck_id": "RC-0002",
+      "challenge_id": "CH-0002",
+      "artifact_hash": "d2f08b9f2d241b7bb3e4f3453f58cd1947b0d41a7d19f013ba4a2fb2112767fb",
+      "source_registry": "bank-registry.eu",
+      "target_registry": "municipal-registry.gov",
+      "first_result": "MISMATCH",
+      "recheck_result": "MISMATCH",
+      "final_action": "apply_penalty",
+      "executed_at": "2026-03-07T18:24:00Z"
+    }
+  ],
+  "last_updated": "2026-03-07T18:25:00Z"
+}

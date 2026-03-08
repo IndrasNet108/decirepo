@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DeciRepo — Verify</title>
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="header-root"></div>
+
+    <main class="page-verify">
+      <section class="verify-shell">
+        <section class="panel verify-panel">
+          <h1 class="section-title">Verify Decision Artifact</h1>
+          <div class="verify-input-row">
+            <input id="verify-input" class="verify-input" type="text" placeholder="Enter ◢HASH, Decision ID, or full hash" />
+            <button id="verify-button" class="btn btn-gold" type="button">Verify</button>
+          </div>
+          <div id="result-banner" class="banner valid">VALID</div>
+          <div id="verify-result"></div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-brand">DeciRepo</div>
+      <div class="footer-description">Decision infrastructure powered by DLX</div>
+      <div class="footer-legal">© 2026 IndrasNet OÜ</div>
+      <div class="footer-meta">DeciRepo Protocol v0.1</div>
+    </footer>
+  </div>
+
+  <script src="../assets/data.js"></script>
+  <script src="../components/header.js"></script>
+  <script src="../components/decision-block.js"></script>
+  <script>
+    window.DeciRepoHeader.mount("header-root", "verify");
+
+    const input = document.getElementById("verify-input");
+    const button = document.getElementById("verify-button");
+    const banner = document.getElementById("result-banner");
+    const resultRoot = document.getElementById("verify-result");
+    let lastDecision = null;
+
+    function renderPending() {
+      banner.textContent = "CHECKING";
+      banner.className = "banner";
+    }
+
+    function renderResult(decision, verification, query) {
+      const valid = Boolean(verification && verification.ok);
+      banner.textContent = valid ? "VALID" : "INVALID";
+      banner.className = valid ? "banner valid" : "banner invalid";
+
+      const visualId = decision ? `◢${decision.short_hash}` : (query || "N/A");
+      const originRegistry = decision && decision.artifact ? decision.artifact.origin_registry : "N/A";
+      const source = verification ? verification.source : "N/A";
+      const reason = verification && verification.reason ? verification.reason : "N/A";
+
+      const data = valid
+        ? {
+            Decision_ID: `${visualId} (${decision.id})`,
+            Origin_Registry: originRegistry,
+            Artifact_Hash: decision.artifact.artifact_hash,
+            Rebuild_Result: verification.rebuild_result || decision.artifact.rebuild_status,
+            Validator: verification.validator || decision.artifact.validator_result,
+            Environment: verification.environment || "DLX v1.0",
+            Verification_Source: source,
+            Policy_Version: decision.policyVersion
+          }
+        : {
+            Decision_ID: visualId,
+            Origin_Registry: originRegistry,
+            Artifact_Hash: query || "N/A",
+            Rebuild_Result: "NO MATCH",
+            Validator: verification && verification.validator ? verification.validator : "FAIL",
+            Environment: "N/A",
+            Verification_Source: source,
+            Failure_Reason: reason,
+            Policy_Version: "N/A"
+          };
+
+      const rows = Object.entries(data).map(([k, v]) => ({ key: k, value: String(v) }));
+      resultRoot.innerHTML = window.DeciRepoDecisionBlock.renderStack(rows, ["Artifact_Hash"]);
+    }
+
+    function resolveQuery(raw) {
+      const normalized = String(raw || "").trim();
+      if (!normalized) return null;
+      if (normalized.startsWith("◢")) {
+        return window.DeciRepoData.getDecisionByShortHash(normalized.slice(1));
+      }
+      return window.DeciRepoData.resolveDecision(normalized);
+    }
+
+    async function verify() {
+      const query = input.value.trim();
+      if (!query) {
+        renderResult(null, { ok: false, source: "local", reason: "EMPTY_QUERY" }, "");
+        return;
+      }
+
+      renderPending();
+      const decision = resolveQuery(query);
+      lastDecision = decision;
+
+      if (!decision) {
+        renderResult(null, { ok: false, source: "local", reason: "DECISION_NOT_FOUND" }, query);
+        return;
+      }
+
+      const verification = await window.DeciRepoData.verifyWithRegistry(decision, { timeout_ms: 3000 });
+
+      if (decision !== lastDecision) return;
+      renderResult(decision, verification, query);
+    }
+
+    button.addEventListener("click", verify);
+
+    const params = new URLSearchParams(window.location.search);
+    const preset = params.get("q") || params.get("hash") || "";
+    if (preset) {
+      input.value = preset;
+      verify();
+    } else {
+      renderResult(null, false, "");
+    }
+  </script>
+</body>
+</html>

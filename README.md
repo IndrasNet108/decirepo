@@ -11,5 +11,10 @@ DOI (version v1.0): https://doi.org/10.5281/zenodo.18862312
 See `PUBLIC_CHANGELOG.md` for public-facing status, governance, commerce mode,
 and protocol milestone updates.
 
+## Independent Verification
+
+Use `INDEPENDENT_VERIFICATION_NOTE_TEMPLATE_V0_1.md` to publish external
+recomputation evidence (MATCH/FAIL) from non-origin verifier nodes.
+
 ## Relationship
 Built on principles defined in [dlx-prior-art](../dlx-prior-art).

@@ -38,6 +38,8 @@ Excluded:
   - second verifier node operations
   - commerce readiness gate
   - release checklist
+- Public independent verification template published:
+  - `INDEPENDENT_VERIFICATION_NOTE_TEMPLATE_V0_1.md`
 
 ### Public protocol status
 - DeciRepo remains in Genesis-phase public deployment.

@@ -18,6 +18,7 @@ Next Governance Phase: `Co-Governance` (Trigger: First independent Mirror Verifi
 - Node discovery endpoint: `/.well-known/decirepo-node`
 - Public conformance report: `/api/conformance-report`
 - Network reference architecture: `DECIREPO_NETWORK_REFERENCE_ARCHITECTURE_V0_1.md`
+- Private/public boundary contract: `PRIVATE_PUBLIC_BOUNDARY_V0_1.md`
 - Category definition: `DECIREPO_CATEGORY_DEFINITION_V0_1.md`
 - Core narrative: `DECIREPO_CORE_NARRATIVE_V0_1.md`
 - Node deployment guide: `REFERENCE_NODE_DEPLOYMENT_GUIDE_V0_1.md`

@@ -11,6 +11,11 @@ DOI (version v1.0): https://doi.org/10.5281/zenodo.18862312
 See `PUBLIC_CHANGELOG.md` for public-facing status, governance, commerce mode,
 and protocol milestone updates.
 
+## Private/Public Boundary
+
+See `PRIVATE_PUBLIC_BOUNDARY_V0_1.md` for the normative boundary contract
+between private DLX runtime components and public DeciRepo protocol surfaces.
+
 ## Independent Verification
 
 Use `INDEPENDENT_VERIFICATION_NOTE_TEMPLATE_V0_1.md` to publish external

@@ -1,0 +1,25 @@
+EVIDENCE BUNDLE MANIFEST v0.1
+
+Bundle ID: EBM-GENESIS-20260309-0001
+Decision ID: DR-GENESIS-0001
+Generated At: 2026-03-09T00:00:00Z
+
+Included Artifacts:
+1. decision_record
+   URI: /api/decision/DR-GENESIS-0001.json
+   Hash: 1d0aee90dc6ff8e65ac5b341a9afe46ca0cb13e5c97e39e3c837bce1aac2b6a4
+2. artifact_envelope
+   URI: /artifacts/genesis/DR-GENESIS-0001.json
+   Hash: c276a3a1e24dc71a0e1f8293feddee06ca340b23d10fa7b1377d9c90327f1545
+3. artifact_envelope_sha256
+   URI: /artifacts/genesis/DR-GENESIS-0001.sha256
+   Hash: 3a39f952caa09fe09bb4afa472fabac6ce6c14e4d6bec8f389498a2c582f1095
+4. independent_verification_note_template
+   URI: /INDEPENDENT_VERIFICATION_NOTE_TEMPLATE_V0_1.md
+   Hash: e322f163a72b6be4bf7298096e46d3f257bcb4d95c95e354e906aa2412091eaa
+
+Manifest Identity:
+- Protocol: v0.1
+- Bundle Hash: ba479eec71bb7a675a425c5456aebe0559060df13c2f5333948cdcbd10c233fa
+
+Status: SEALED BUNDLE

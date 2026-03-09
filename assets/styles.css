@@ -1000,6 +1000,19 @@ a {
   border-color: rgba(214, 84, 84, 0.6);
 }
 
+.verify-hint {
+  border: 1px solid var(--divider);
+  background: #141416;
+  color: var(--secondary-gray);
+  padding: 8px 10px;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
+.verify-hint.mono {
+  font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
 .feed-page {
   display: grid;
   gap: 18px;

@@ -27,28 +27,35 @@ Status rule:
 ## Artifact Under Verification
 
 - Artifact ID: `DR-GENESIS-0001`
-- Artifact hash (SHA256): `<hash>`
-- Source URI: `<artifact_url>`
+- Artifact envelope URI: `/artifacts/genesis/DR-GENESIS-0001.json`
+- Artifact file SHA256: `<sha256_of_artifact_file>`
+- Decision record URI: `/api/decision/DR-GENESIS-0001.json`
 
 ## Procedure
 
-Command executed:
+Verification command executed:
 
 ```bash
-node dlx-ref/cli.js verify DR-GENESIS-0001
+node dlx-ref/cli.js verify artifacts/genesis/DR-GENESIS-0001.json
+```
+
+Deterministic rebuild command:
+
+```bash
+node dlx-ref/cli.js rebuild artifacts/genesis/DR-GENESIS-0001.json
 ```
 
 Optional conformance command:
 
 ```bash
-node dlx-ref/cli.js conformance DR-GENESIS-0001
+node dlx-ref/cli.js conformance dlx-ref/tests/conformance_v0_1.json
 ```
 
 ## Result
 
-- Verification result: `MATCH | FAIL`
-- Rebuild result: `<value>`
-- Validator result: `<value>`
+- Verification status: `PASS | FAIL`
+- Rebuild match: `MATCH | MISMATCH`
+- Overall publication result: `MATCH | FAIL`
 - Verifier node ID: `<node_id>`
 - Timestamp (UTC): `<YYYY-MM-DDTHH:MM:SSZ>`
 
@@ -72,4 +79,3 @@ It does **not** assert:
 - Published by: `IndrasNet OÜ`
 - Publication date (UTC): `<YYYY-MM-DD>`
 - Linked in: `PUBLIC_CHANGELOG.md`
-

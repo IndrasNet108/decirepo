@@ -344,7 +344,7 @@
       authority: "IndrasNet Protocol Steward",
       outcome: "APPROVED",
       policy: "V0.1",
-      policyVersion: "DECIREPO_PROTOCOL_V0_1",
+      policyVersion: "DECIREPO_PROTOCOL_CONSTITUTION_V0_1",
       date: "2026-03-07",
       publisher: GOVERNANCE_PUBLISHER_ID,
       input: {
@@ -356,10 +356,14 @@
         reason_code: "NETWORK_GENESIS_INITIALIZED"
       },
       artifact: {
-        artifact_hash: "7770000000000000000000000000000000000000000000000000000000000777",
+        artifact_hash: "c630adc482c72a19ef20254f80411d7bf2ad5075bdb58f2a82751761ac6d2a4e",
         validator_result: "PASS",
         rebuild_status: "MATCH",
-        origin_registry: LOCAL_REGISTRY_ID
+        origin_registry: LOCAL_REGISTRY_ID,
+        artifact_local_path: "artifacts/genesis/DR-GENESIS-0001.json",
+        artifact_public_uri: "../artifacts/genesis/DR-GENESIS-0001.json",
+        artifact_sha256_uri: "../artifacts/genesis/DR-GENESIS-0001.sha256",
+        decision_record_uri: "../api/decision/DR-GENESIS-0001.json"
       }
     },
     {

@@ -20,6 +20,7 @@
           </div>
           <div id="result-banner" class="banner valid">VALID</div>
           <div id="verify-result"></div>
+          <div id="verify-hint" class="verify-hint mono"></div>
         </section>
       </section>
     </main>
@@ -42,6 +43,7 @@
     const button = document.getElementById("verify-button");
     const banner = document.getElementById("result-banner");
     const resultRoot = document.getElementById("verify-result");
+    const hintRoot = document.getElementById("verify-hint");
     let lastDecision = null;
 
     function renderPending() {
@@ -58,12 +60,20 @@
       const originRegistry = decision && decision.artifact ? decision.artifact.origin_registry : "N/A";
       const source = verification ? verification.source : "N/A";
       const reason = verification && verification.reason ? verification.reason : "N/A";
+      const artifactLocalPath = decision && decision.artifact ? decision.artifact.artifact_local_path : null;
+      const artifactPublicUri = decision && decision.artifact ? decision.artifact.artifact_public_uri : null;
+      const decisionRecordUri = decision && decision.artifact ? decision.artifact.decision_record_uri : null;
+      const localRecomputeCommand = artifactLocalPath
+        ? `node dlx-ref/cli.js verify ${artifactLocalPath}`
+        : "Artifact envelope path not published";
 
       const data = valid
         ? {
             Decision_ID: `${visualId} (${decision.id})`,
             Origin_Registry: originRegistry,
             Artifact_Hash: decision.artifact.artifact_hash,
+            Artifact_Envelope_URI: artifactPublicUri || "N/A",
+            Decision_Record_URI: decisionRecordUri || "N/A",
             Rebuild_Result: verification.rebuild_result || decision.artifact.rebuild_status,
             Validator: verification.validator || decision.artifact.validator_result,
             Environment: verification.environment || "DLX v1.0",
@@ -83,7 +93,8 @@
           };
 
       const rows = Object.entries(data).map(([k, v]) => ({ key: k, value: String(v) }));
-      resultRoot.innerHTML = window.DeciRepoDecisionBlock.renderStack(rows, ["Artifact_Hash"]);
+      resultRoot.innerHTML = window.DeciRepoDecisionBlock.renderStack(rows, ["Artifact_Hash", "Artifact_Envelope_URI", "Decision_Record_URI"]);
+      hintRoot.textContent = `Local recompute: ${localRecomputeCommand}`;
     }
 
     function resolveQuery(raw) {

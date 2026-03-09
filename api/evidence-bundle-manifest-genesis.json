@@ -1,0 +1,31 @@
+{
+  "bundle_id": "EBM-GENESIS-20260309-0001",
+  "decision_id": "DR-GENESIS-0001",
+  "generated_at": "2026-03-09T00:00:00Z",
+  "artifacts": [
+    {
+      "type": "decision_record",
+      "uri": "/api/decision/DR-GENESIS-0001.json",
+      "hash": "1d0aee90dc6ff8e65ac5b341a9afe46ca0cb13e5c97e39e3c837bce1aac2b6a4"
+    },
+    {
+      "type": "artifact_envelope",
+      "uri": "/artifacts/genesis/DR-GENESIS-0001.json",
+      "hash": "c276a3a1e24dc71a0e1f8293feddee06ca340b23d10fa7b1377d9c90327f1545"
+    },
+    {
+      "type": "artifact_envelope_sha256",
+      "uri": "/artifacts/genesis/DR-GENESIS-0001.sha256",
+      "hash": "3a39f952caa09fe09bb4afa472fabac6ce6c14e4d6bec8f389498a2c582f1095"
+    },
+    {
+      "type": "independent_verification_note_template",
+      "uri": "/INDEPENDENT_VERIFICATION_NOTE_TEMPLATE_V0_1.md",
+      "hash": "e322f163a72b6be4bf7298096e46d3f257bcb4d95c95e354e906aa2412091eaa"
+    }
+  ],
+  "manifest_identity": {
+    "protocol_version": "v0.1",
+    "bundle_hash": "ba479eec71bb7a675a425c5456aebe0559060df13c2f5333948cdcbd10c233fa"
+  }
+}

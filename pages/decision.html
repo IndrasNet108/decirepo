@@ -124,7 +124,12 @@
       .join("");
 
     const artifactRows = window.DeciRepoDecisionBlock.toRows({
-      artifact_hash: decision.artifact.artifact_hash,
+      rebuild_result_hash: decision.artifact.rebuild_result_hash || decision.artifact.artifact_hash,
+      artifact_hash_semantics: decision.artifact.artifact_hash_semantics || "artifact_hash",
+      artifact_file_sha256: decision.artifact.artifact_file_sha256 || "N/A",
+      artifact_envelope_uri: decision.artifact.artifact_public_uri || "N/A",
+      decision_record_uri: decision.artifact.decision_record_uri || "N/A",
+      evidence_manifest_uri: decision.artifact.evidence_manifest_uri || "N/A",
       origin_registry: decision.artifact.origin_registry || window.DeciRepoData.LOCAL_REGISTRY_ID,
       validator_profile: decision.artifact.validator_profile || "DLX-CORE-V1",
       policy_version: decision.policyVersion,
@@ -133,7 +138,10 @@
       rebuild_result: decision.artifact.rebuild_status,
       runtime_identity: decision.artifact.runtime_identity
     });
-    document.getElementById("artifact-block").innerHTML = window.DeciRepoDecisionBlock.renderStack(artifactRows, ["artifact_hash"]);
+    document.getElementById("artifact-block").innerHTML = window.DeciRepoDecisionBlock.renderStack(
+      artifactRows,
+      ["rebuild_result_hash", "artifact_file_sha256", "artifact_envelope_uri", "decision_record_uri", "evidence_manifest_uri"]
+    );
 
     const inputRows = window.DeciRepoDecisionBlock.toRows(decision.input);
     document.getElementById("input-block").innerHTML = window.DeciRepoDecisionBlock.renderTwoColumnGrid(inputRows);

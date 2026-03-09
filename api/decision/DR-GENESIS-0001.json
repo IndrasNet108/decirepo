@@ -6,10 +6,14 @@
   "model_reference": "dlx-ref-v0.1",
   "policy_reference": "DECIREPO_PROTOCOL_CONSTITUTION_V0_1",
   "artifact_hash": "c630adc482c72a19ef20254f80411d7bf2ad5075bdb58f2a82751761ac6d2a4e",
+  "artifact_hash_semantics": "rebuild_result_hash",
+  "rebuild_result_hash": "c630adc482c72a19ef20254f80411d7bf2ad5075bdb58f2a82751761ac6d2a4e",
+  "artifact_file_sha256": "9e9c6d28a16fccc8459a20dba004e933c1cc05d43dd45d126848b06506326778",
   "validator_result": "PASS",
   "rebuild_result": "MATCH",
   "artifact_envelope_uri": "/artifacts/genesis/DR-GENESIS-0001.json",
   "artifact_envelope_sha256_uri": "/artifacts/genesis/DR-GENESIS-0001.sha256",
+  "decision_record_sha256_uri": "/api/decision/DR-GENESIS-0001.sha256",
   "input_set": {
     "network_status": "genesis",
     "steward_id": "indrasnet-steward-001",
@@ -23,5 +27,6 @@
   ],
   "result": "NETWORK_ACTIVE",
   "identity_hash": "◢GENESIS_777_HASH_MATCH_PROVED",
-  "evidence_bundle": "/api/evidence-bundle-manifest-genesis.json"
+  "evidence_bundle": "/api/evidence-bundle-manifest-genesis.json",
+  "evidence_bundle_sha256_uri": "/api/evidence-bundle-manifest-genesis.sha256"
 }

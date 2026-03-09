@@ -28,8 +28,14 @@ Status rule:
 
 - Artifact ID: `DR-GENESIS-0001`
 - Artifact envelope URI: `/artifacts/genesis/DR-GENESIS-0001.json`
+- Artifact envelope SHA256 URI: `/artifacts/genesis/DR-GENESIS-0001.sha256`
 - Artifact file SHA256: `<sha256_of_artifact_file>`
+- Rebuild result hash: `<rebuild_result_hash>`
+- Hash semantics: `artifact_hash` in the envelope is `rebuild_result_hash` in `v0.1`
 - Decision record URI: `/api/decision/DR-GENESIS-0001.json`
+- Decision record SHA256 URI: `/api/decision/DR-GENESIS-0001.sha256`
+- Evidence manifest URI: `/api/evidence-bundle-manifest-genesis.json`
+- Evidence manifest SHA256 URI: `/api/evidence-bundle-manifest-genesis.sha256`
 
 ## Procedure
 

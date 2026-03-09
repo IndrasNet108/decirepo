@@ -51,6 +51,13 @@ Next Governance Phase: `Co-Governance` (Trigger: First independent Mirror Verifi
 - Reference node status: active
 - Breaking change policy in `v0.x`: forbidden unless security-critical exception
 
+## Hash Contract Compatibility Note
+
+- In `v0.1`, `artifact_hash` is retained as a compatibility alias for `rebuild_result_hash`.
+- Canonical interpretation is controlled by `artifact_hash_semantics`.
+- File integrity must be published separately via explicit SHA256 sidecars and file-level fields.
+- Full hash-contract cleanup is deferred to a versioned protocol migration in `v0.2`.
+
 ## Phase Transition Target (to Co-Governance)
 
 Minimum transition actions:

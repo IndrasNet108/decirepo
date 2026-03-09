@@ -1,25 +1,36 @@
-EVIDENCE BUNDLE MANIFEST v0.1
-
-Bundle ID: EBM-GENESIS-20260309-0001
-Decision ID: DR-GENESIS-0001
-Generated At: 2026-03-09T00:00:00Z
-
-Included Artifacts:
-1. decision_record
-   URI: /api/decision/DR-GENESIS-0001.json
-   Hash: 1d0aee90dc6ff8e65ac5b341a9afe46ca0cb13e5c97e39e3c837bce1aac2b6a4
-2. artifact_envelope
-   URI: /artifacts/genesis/DR-GENESIS-0001.json
-   Hash: c276a3a1e24dc71a0e1f8293feddee06ca340b23d10fa7b1377d9c90327f1545
-3. artifact_envelope_sha256
-   URI: /artifacts/genesis/DR-GENESIS-0001.sha256
-   Hash: 3a39f952caa09fe09bb4afa472fabac6ce6c14e4d6bec8f389498a2c582f1095
-4. independent_verification_note_template
-   URI: /INDEPENDENT_VERIFICATION_NOTE_TEMPLATE_V0_1.md
-   Hash: e322f163a72b6be4bf7298096e46d3f257bcb4d95c95e354e906aa2412091eaa
-
-Manifest Identity:
-- Protocol: v0.1
-- Bundle Hash: ba479eec71bb7a675a425c5456aebe0559060df13c2f5333948cdcbd10c233fa
-
-Status: SEALED BUNDLE
+{
+  "bundle_id": "EBM-GENESIS-20260309-0001",
+  "decision_id": "DR-GENESIS-0001",
+  "generated_at": "2026-03-09T00:00:00Z",
+  "artifacts": [
+    {
+      "type": "decision_record",
+      "uri": "/api/decision/DR-GENESIS-0001.json",
+      "file_sha256": "e988b13a0ec89bfb65ed768910907a295a32dee26d6475d9172ee5ac878a8b8d",
+      "sha256_uri": "/api/decision/DR-GENESIS-0001.sha256"
+    },
+    {
+      "type": "artifact_envelope",
+      "uri": "/artifacts/genesis/DR-GENESIS-0001.json",
+      "file_sha256": "9e9c6d28a16fccc8459a20dba004e933c1cc05d43dd45d126848b06506326778",
+      "sha256_uri": "/artifacts/genesis/DR-GENESIS-0001.sha256",
+      "rebuild_result_hash": "c630adc482c72a19ef20254f80411d7bf2ad5075bdb58f2a82751761ac6d2a4e",
+      "hash_semantics": "rebuild_result_hash"
+    },
+    {
+      "type": "artifact_envelope_sha256",
+      "uri": "/artifacts/genesis/DR-GENESIS-0001.sha256",
+      "file_sha256": "435ceb519fae3de262204bfa39a11d9476e58279d2057f6a52d9c6a3f08d6116"
+    },
+    {
+      "type": "independent_verification_note_template",
+      "uri": "/INDEPENDENT_VERIFICATION_NOTE_TEMPLATE_V0_1.md",
+      "file_sha256": "59c9f3dd7bd5e67c70c05e224c83c574d3e9f28fa7ef9b0a30c7a21ba0d0fdf3"
+    }
+  ],
+  "manifest_identity": {
+    "protocol_version": "v0.1",
+    "bundle_hash_semantics": "sha256(canonical bundle descriptor without manifest_identity.bundle_hash)",
+    "bundle_hash": "ef5a70b6107516ab679b729a6105ad2f7231bee82687f9d5b7d243e6ed1f28ce"
+  }
+}

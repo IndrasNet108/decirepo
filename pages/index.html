@@ -199,12 +199,13 @@
     verifyLiveButton.addEventListener("click", () => {
       latestBanner.style.display = "block";
       const payload = window.DeciRepoDecisionBlock.toRows({
-        artifact_hash: latestVerified.artifact.artifact_hash,
+        rebuild_result_hash: latestVerified.artifact.rebuild_result_hash || latestVerified.artifact.artifact_hash,
+        artifact_file_sha256: latestVerified.artifact.artifact_file_sha256 || "N/A",
         rebuild_result: latestVerified.artifact.rebuild_status,
         validator: latestVerified.artifact.validator_result,
         environment: "DLX v1.0"
       });
-      latestResult.innerHTML = window.DeciRepoDecisionBlock.renderStack(payload, ["artifact_hash"]);
+      latestResult.innerHTML = window.DeciRepoDecisionBlock.renderStack(payload, ["rebuild_result_hash", "artifact_file_sha256"]);
     });
 
     openLatestDecision.addEventListener("click", () => {

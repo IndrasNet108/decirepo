@@ -22,6 +22,19 @@
     "status": "active",
     "criteria": "passes mandatory conformance profile for declared protocol version"
   },
+  "hash_contract_compatibility": {
+    "status": "active_in_v0_1",
+    "compatibility_alias": {
+      "field": "artifact_hash",
+      "maps_to": "rebuild_result_hash"
+    },
+    "semantics_field": "artifact_hash_semantics",
+    "file_integrity_fields": [
+      "file_sha256",
+      "artifact_file_sha256"
+    ],
+    "planned_cleanup_version": "v0.2"
+  },
   "modules": [
     {"module": "artifact_envelope", "version": "v0.1", "status": "active"},
     {"module": "verify_contract", "version": "v0.1", "status": "active"},

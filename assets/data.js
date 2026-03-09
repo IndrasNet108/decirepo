@@ -357,13 +357,19 @@
       },
       artifact: {
         artifact_hash: "c630adc482c72a19ef20254f80411d7bf2ad5075bdb58f2a82751761ac6d2a4e",
+        artifact_hash_semantics: "rebuild_result_hash",
+        rebuild_result_hash: "c630adc482c72a19ef20254f80411d7bf2ad5075bdb58f2a82751761ac6d2a4e",
         validator_result: "PASS",
         rebuild_status: "MATCH",
         origin_registry: LOCAL_REGISTRY_ID,
+        artifact_file_sha256: "9e9c6d28a16fccc8459a20dba004e933c1cc05d43dd45d126848b06506326778",
         artifact_local_path: "artifacts/genesis/DR-GENESIS-0001.json",
         artifact_public_uri: "../artifacts/genesis/DR-GENESIS-0001.json",
         artifact_sha256_uri: "../artifacts/genesis/DR-GENESIS-0001.sha256",
-        decision_record_uri: "../api/decision/DR-GENESIS-0001.json"
+        decision_record_uri: "../api/decision/DR-GENESIS-0001.json",
+        decision_record_sha256_uri: "../api/decision/DR-GENESIS-0001.sha256",
+        evidence_manifest_uri: "../api/evidence-bundle-manifest-genesis.json",
+        evidence_manifest_sha256_uri: "../api/evidence-bundle-manifest-genesis.sha256"
       }
     },
     {

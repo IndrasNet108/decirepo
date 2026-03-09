@@ -17,6 +17,7 @@
         <div class="banner valid">PROTOCOL FREEZE v0.1 · BREAKING CHANGES DISABLED</div>
         <div class="banner valid">DECIREPO PROTOCOL COMPATIBLE</div>
         <div class="banner">DUAL-TRACK: NEUTRAL PROTOCOL + MANAGED DECIREPO CLOUD</div>
+        <div class="banner">HASH CONTRACT v0.1: <span class="mono">artifact_hash</span> is a compatibility alias for <span class="mono">rebuild_result_hash</span></div>
       </section>
 
       <section class="content-grid">
@@ -66,6 +67,9 @@
   "decision_id": "DR-0001",
   "canonical_id": "◢A9D325",
   "artifact_hash": "a9d325...",
+  "artifact_hash_semantics": "rebuild_result_hash",
+  "rebuild_result_hash": "a9d325...",
+  "artifact_file_sha256": "f0ab12...",
   "origin_registry": "decirepo.com",
   "policy_version": "PROCUREMENT_RULES_V1",
   "validator_profile": "DLX-CORE-V1",
@@ -118,6 +122,28 @@
             <div class="lineage-item">Hard removal only via major protocol version</div>
           </div>
         </aside>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Hash Contract Compatibility</h2>
+        <div class="kv-stack">
+          <div class="kv-line">
+            <div class="kv-key">Compatibility alias</div>
+            <div class="kv-value mono">artifact_hash -> rebuild_result_hash</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Semantics field</div>
+            <div class="kv-value mono">artifact_hash_semantics</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">File integrity fields</div>
+            <div class="kv-value mono">file_sha256 / artifact_file_sha256</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Cleanup plan</div>
+            <div class="kv-value mono">Versioned migration in v0.2</div>
+          </div>
+        </div>
       </section>
 
       <section class="panel">

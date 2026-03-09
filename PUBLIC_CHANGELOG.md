@@ -20,6 +20,43 @@ Excluded:
 
 ## 2026-03-09
 
+### First external recomputation published
+Independent external recomputation of `DR-GENESIS-0001` was completed and published.
+
+Result:
+- Verification status: PASS
+- Rebuild result: MATCH
+- Conformance status: PASS
+
+Published references:
+- Decision Record: `https://decirepo.com/api/decision/DR-GENESIS-0001.json`
+- Artifact Envelope: `https://decirepo.com/artifacts/genesis/DR-GENESIS-0001.json`
+- Evidence Manifest: `https://decirepo.com/api/evidence-bundle-manifest-genesis.json`
+
+Primary public evidence package:
+- University Lab A
+- Commit: `15fd8961687a1559a0b103e857fcdefa9126645b`
+- Timestamp (UTC): `2026-03-09T14:04:08Z`
+- Archive SHA256: `3c9741816db4e5831f93c8a050d5e6a6c6799724ead0abc9357bc85e1b2ded3c`
+
+### Second independent recomputation confirmed
+A second independent recomputation of `DR-GENESIS-0001` was also completed successfully.
+
+Result:
+- Verification status: PASS
+- Rebuild result: MATCH
+- Conformance status: PASS
+
+Additional evidence package:
+- OpenAI-Codex
+- Commit: `15fd8961687a1559a0b103e857fcdefa9126645b`
+- Timestamp (UTC): `2026-03-09T12:50:31Z`
+- Archive SHA256: `b70517bbcc1c1afd3593b6bd11d94fa01d4a37480a3e397783b468013738be21`
+
+Shared verification values across both runs:
+- Expected rebuild hash: `c630adc482c72a19ef20254f80411d7bf2ad5075bdb58f2a82751761ac6d2a4e`
+- Published artifact file SHA256: `9e9c6d28a16fccc8459a20dba004e933c1cc05d43dd45d126848b06506326778`
+
 ### Public site posture updated
 - Main site moved to `Request Pilot` mode.
 - Public self-serve checkout remains disabled.
@@ -44,7 +81,7 @@ Excluded:
 ### Public protocol status
 - DeciRepo remains in Genesis-phase public deployment.
 - Public surface is live.
-- Independent verifier node bootstrap is in progress.
+- Independent external recomputation has been confirmed by two evidence packages.
 
 ---
 
@@ -81,4 +118,4 @@ Current public status:
 - Verification posture: public
 - Commerce posture: pilot-by-agreement
 - Public self-serve checkout: disabled
-- Independent verifier network: bootstrapping
+- Independent verifier network: two external recomputation packages confirmed

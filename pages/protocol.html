@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
   <title>DeciRepo — Decision Protocol</title>
   <link rel="stylesheet" href="../assets/styles.css" />
 </head>
@@ -79,12 +84,13 @@
   "rebuild_result": "MATCH"
 }</pre>
           <div class="button-row tight protocol-button-row">
-            <a class="btn" href="../api/trust">Trust Registry</a>
-            <a class="btn" href="../api/root-of-trust">Root of Trust</a>
-            <a class="btn" href="../api/trust-score">Trust Score</a>
-            <a class="btn" href="../api/network.json">Network Spec</a>
-            <a class="btn" href="../api/conformance-report">Conformance Report</a>
-            <a class="btn" href="../FEDERATION_HANDSHAKE_V0_1.md">Handshake Spec</a>
+            <a class="btn" href="../api/trust.json" target="_blank" rel="noopener noreferrer">Trust Registry</a>
+            <a class="btn" href="../api/root-of-trust.json" target="_blank" rel="noopener noreferrer">Root of Trust</a>
+            <a class="btn" href="../api/trust-score.json" target="_blank" rel="noopener noreferrer">Trust Score</a>
+            <a class="btn" href="../api/network.json" target="_blank" rel="noopener noreferrer">Network Spec</a>
+            <a class="btn" href="../api/conformance-report.json" target="_blank" rel="noopener noreferrer">Conformance Report</a>
+            <a class="btn" href="../FEDERATION_HANDSHAKE_V0_1.md" target="_blank" rel="noopener noreferrer">Handshake Spec</a>
+            <a class="btn" href="https://github.com/IndrasNet108/decirepo/blob/main/INDEPENDENT_VERIFICATION_NOTE_TEMPLATE_V0_1.md" target="_blank" rel="noopener noreferrer">Independent Verification Template</a>
             <a class="btn btn-gold" href="./verify.html?q=DR-0001">Verify Example</a>
           </div>
         </aside>
@@ -155,35 +161,35 @@
         <div class="kv-stack">
           <div class="kv-line">
             <div class="kv-key">Trust Registry</div>
-            <div class="kv-value mono">GET /api/trust</div>
+            <div class="kv-value mono">GET /api/trust.json</div>
           </div>
           <div class="kv-line">
             <div class="kv-key">Root of Trust Policy</div>
-            <div class="kv-value mono">GET /api/root-of-trust</div>
+            <div class="kv-value mono">GET /api/root-of-trust.json</div>
           </div>
           <div class="kv-line">
             <div class="kv-key">Trust Score Model</div>
-            <div class="kv-value mono">GET /api/trust-score</div>
+            <div class="kv-value mono">GET /api/trust-score.json</div>
           </div>
           <div class="kv-line">
             <div class="kv-key">Perspective Scores</div>
-            <div class="kv-value mono">GET /api/trust-score-perspectives</div>
+            <div class="kv-value mono">GET /api/trust-score-perspectives.json</div>
           </div>
           <div class="kv-line">
             <div class="kv-key">Trust Events Stream</div>
-            <div class="kv-value mono">GET /api/trust-events</div>
+            <div class="kv-value mono">GET /api/trust-events.json</div>
           </div>
           <div class="kv-line">
             <div class="kv-key">Challenges Stream</div>
-            <div class="kv-value mono">GET /api/challenges</div>
+            <div class="kv-value mono">GET /api/challenges.json</div>
           </div>
           <div class="kv-line">
             <div class="kv-key">Rechecks Stream</div>
-            <div class="kv-value mono">GET /api/rechecks</div>
+            <div class="kv-value mono">GET /api/rechecks.json</div>
           </div>
           <div class="kv-line">
             <div class="kv-key">Verification Graph</div>
-            <div class="kv-value mono">GET /api/verification-graph</div>
+            <div class="kv-value mono">GET /api/verification-graph.json</div>
           </div>
           <div class="kv-line">
             <div class="kv-key">Verification Network</div>
@@ -191,19 +197,23 @@
           </div>
           <div class="kv-line">
             <div class="kv-key">Conformance Report</div>
-            <div class="kv-value mono">GET /api/conformance-report</div>
+            <div class="kv-value mono">GET /api/conformance-report.json</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Independent Verification Note Template</div>
+            <div class="kv-value mono">https://github.com/IndrasNet108/decirepo/blob/main/INDEPENDENT_VERIFICATION_NOTE_TEMPLATE_V0_1.md</div>
           </div>
           <div class="kv-line">
             <div class="kv-key">Precedent Search</div>
-            <div class="kv-value mono">GET /api/precedent-search</div>
+            <div class="kv-value mono">GET /api/precedent-search.json</div>
           </div>
           <div class="kv-line">
             <div class="kv-key">Precedent Search Report</div>
-            <div class="kv-value mono">GET /api/precedent-search-report</div>
+            <div class="kv-value mono">GET /api/precedent-search-report.json</div>
           </div>
           <div class="kv-line">
             <div class="kv-key">Policy Drift Detection</div>
-            <div class="kv-value mono">GET /api/policy-drift-detection</div>
+            <div class="kv-value mono">GET /api/policy-drift-detection.json</div>
           </div>
           <div class="kv-line">
             <div class="kv-key">Node Manifest</div>
@@ -211,7 +221,7 @@
           </div>
           <div class="kv-line">
             <div class="kv-key">Decision Feed</div>
-            <div class="kv-value mono">GET /api/feed</div>
+            <div class="kv-value mono">GET /api/feed.json</div>
           </div>
           <div class="kv-line">
             <div class="kv-key">Decision Artifact</div>
@@ -228,9 +238,22 @@
     <footer class="footer">
       <div class="footer-brand">DeciRepo</div>
       <div class="footer-description">Decision infrastructure powered by DLX</div>
+      <div class="footer-engine">
+        <img class="footer-dlx-logo" src="../assets/brand/dlx-logo.png" alt="DLX logo" />
+        <div class="footer-engine-text">DLX deterministic engine</div>
+      </div>
+      <div class="footer-links">
+        <a class="menu-link" href="./privacy.html">Privacy Policy</a>
+        <a class="menu-link" href="./terms.html">Terms of Use</a>
+        <a class="menu-link" href="./disclaimer.html">Disclaimer</a>
+        <a class="menu-link" href="./billing.html">Billing & Refunds</a>
+        <a class="menu-link" href="mailto:info@indrasnet.ee">Contact</a>
+      </div>
       <div class="footer-legal">© 2026 IndrasNet OÜ</div>
+      <div class="footer-meta">IndrasNet Protocol Steward · Estonia</div>
       <div class="footer-meta">DeciRepo Protocol v0.1</div>
     </footer>
+
   </div>
 
   <script src="../components/header.js"></script>

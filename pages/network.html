@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
   <title>DeciRepo — Verification Network</title>
   <link rel="stylesheet" href="../assets/styles.css" />
 </head>
@@ -15,14 +20,15 @@
         <h1 class="section-title">Verification Network</h1>
         <p class="section-subtitle">Connected registries, signed manifests, and cross-registry verification graph.</p>
         <div class="button-row tight">
-          <a class="btn" href="../api/network.json">Network API</a>
-          <a class="btn" href="../api/verification-graph">Verification Graph API</a>
-          <a class="btn" href="../FEDERATION_HANDSHAKE_V0_1.md">Handshake Spec</a>
+          <a class="btn" href="../api/network.json" target="_blank" rel="noopener noreferrer">Network API</a>
+          <a class="btn" href="../api/verification-graph.json" target="_blank" rel="noopener noreferrer">Verification Graph API</a>
+          <a class="btn" href="../FEDERATION_HANDSHAKE_V0_1.md" target="_blank" rel="noopener noreferrer">Handshake Spec</a>
         </div>
       </section>
 
       <section class="panel">
         <h2 class="section-title">Connected Registries</h2>
+        <p class="section-subtitle">Demo Network Surface: simulated registry entries are shown for protocol illustration and are not claims of live institutional integration.</p>
         <table class="lineage-table" role="grid">
           <thead>
             <tr>
@@ -47,7 +53,7 @@
           </label>
           <div></div>
           <div class="policy-run-cell">
-            <a class="btn" href="../api/verification-graph">Open Graph API</a>
+            <a class="btn" href="../api/verification-graph.json" target="_blank" rel="noopener noreferrer">Open Graph API</a>
           </div>
         </div>
         <table class="lineage-table" role="grid">
@@ -74,9 +80,22 @@
     <footer class="footer">
       <div class="footer-brand">DeciRepo</div>
       <div class="footer-description">Decision infrastructure powered by DLX</div>
+      <div class="footer-engine">
+        <img class="footer-dlx-logo" src="../assets/brand/dlx-logo.png" alt="DLX logo" />
+        <div class="footer-engine-text">DLX deterministic engine</div>
+      </div>
+      <div class="footer-links">
+        <a class="menu-link" href="./privacy.html">Privacy Policy</a>
+        <a class="menu-link" href="./terms.html">Terms of Use</a>
+        <a class="menu-link" href="./disclaimer.html">Disclaimer</a>
+        <a class="menu-link" href="./billing.html">Billing & Refunds</a>
+        <a class="menu-link" href="mailto:info@indrasnet.ee">Contact</a>
+      </div>
       <div class="footer-legal">© 2026 IndrasNet OÜ</div>
+      <div class="footer-meta">IndrasNet Protocol Steward · Estonia</div>
       <div class="footer-meta">DeciRepo Protocol v0.1</div>
     </footer>
+
   </div>
 
   <script src="../assets/data.js"></script>
@@ -115,7 +134,7 @@
     }
 
     async function loadTrustEvents() {
-      const candidates = ["../api/trust-events", "../api/trust-events.json"];
+      const candidates = ["../api/trust-events.json", "../api/trust-events"];
       for (const url of candidates) {
         try {
           const res = await fetch(url, { cache: "no-store" });
@@ -130,7 +149,7 @@
     }
 
     async function loadVerificationGraph() {
-      const candidates = ["../api/verification-graph", "../api/verification-graph.json"];
+      const candidates = ["../api/verification-graph.json", "../api/verification-graph"];
       for (const url of candidates) {
         try {
           const res = await fetch(url, { cache: "no-store" });
@@ -183,20 +202,24 @@
     async function renderNetworkRegistries(network) {
       const body = document.getElementById("network-registries-body");
       const rows = [];
+      const localRegistryId = window.DeciRepoData.LOCAL_REGISTRY_ID;
 
       for (const registry of network.connected_registries || []) {
         const manifest = await loadManifest(registry.node_endpoint || registry.manifest_endpoint);
         const protocolVersion = manifest && manifest.protocol_version ? manifest.protocol_version : "N/A";
         const signatureState = manifest && manifest.signature && manifest.signature.value ? "present" : "missing";
         const status = manifest && manifest.status ? manifest.status : (registry.status || "unknown");
+        const isDemo = String(registry.registry_id || "").toLowerCase() !== String(localRegistryId || "").toLowerCase();
+        const registryLabel = isDemo ? `${registry.registry_id} (demo)` : registry.registry_id;
+        const renderedStatus = isDemo ? `${status} (simulated)` : status;
         rows.push(`
           <tr>
-            <td>${registry.registry_id}</td>
+            <td>${registryLabel}</td>
             <td class="kv-value mono">${registry.verify_endpoint}</td>
             <td class="kv-value mono">${registry.manifest_endpoint || registry.node_endpoint || "N/A"}</td>
             <td>${protocolVersion}</td>
             <td>${signatureState}</td>
-            <td>${status}</td>
+            <td>${renderedStatus}</td>
           </tr>
         `);
       }

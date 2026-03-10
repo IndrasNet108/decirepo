@@ -14,6 +14,7 @@
 <body>
   <div class="page-shell">
     <div id="header-root"></div>
+    <div id="context-nav-root"></div>
 
     <main class="page-verify">
       <section class="verify-shell">
@@ -53,6 +54,7 @@
 
   <script src="../assets/data.js"></script>
   <script src="../components/header.js"></script>
+  <script src="../components/context-nav.js"></script>
   <script src="../components/decision-block.js"></script>
   <script>
     window.DeciRepoHeader.mount("header-root", "verify");
@@ -64,8 +66,36 @@
     const hintRoot = document.getElementById("verify-hint");
     let lastDecision = null;
 
+    function mountContextNav(decision) {
+      let hint = "Suggested next: open a decision or paste a published hash to verify.";
+      const links = [
+        { label: "Open Genesis", href: "./decision.html?id=DR-GENESIS-0001", primary: true },
+        { label: "Back to Repository", href: "./index.html" },
+        { label: "Feed", href: "./feed.html" },
+        { label: "Protocol", href: "./protocol.html" }
+      ];
+      if (decision) {
+        hint = "Suggested next: inspect lineage now that the artifact verification result is visible.";
+        links.splice(0, links.length,
+          { label: "Open Lineage", href: `./lineage.html?id=${encodeURIComponent(decision.id)}`, primary: true },
+          { label: "Back to Decision", href: `./decision.html?id=${encodeURIComponent(decision.id)}` },
+          { label: "Policy Impact", href: `./policy-impact.html?id=${encodeURIComponent(decision.id)}` },
+          { label: "Back to Repository", href: "./index.html" },
+          { label: "Feed", href: "./feed.html" },
+          { label: "Protocol", href: "./protocol.html" }
+        );
+      }
+      window.DeciRepoContextNav.mount("context-nav-root", {
+        current: "Verify",
+        meta: decision ? decision.id : "lookup",
+        hint,
+        links
+      });
+    }
+
     function renderEmpty() {
       lastDecision = null;
+      mountContextNav(null);
       banner.textContent = "READY";
       banner.className = "banner";
       resultRoot.innerHTML = window.DeciRepoDecisionBlock.renderStack([
@@ -80,6 +110,7 @@
     }
 
     function renderResult(decision, verification, query) {
+      mountContextNav(decision || null);
       const valid = Boolean(verification && verification.ok);
       banner.textContent = valid ? "VALID" : "INVALID";
       banner.className = valid ? "banner valid" : "banner invalid";

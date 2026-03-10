@@ -34,7 +34,7 @@
           <div class="proof-strip-title">Latest verification</div>
           <div class="proof-strip-line mono">DR-GENESIS-0001 · MATCH · DeciRepo v0.1</div>
           <div class="proof-strip-note">Deterministic recomputation · No consensus · No blockchain</div>
-          <div class="proof-strip-meta">Machine-readable feed: <a class="proof-strip-link" href="../api/feed.json">/api/feed.json</a></div>
+          <div class="proof-strip-meta">Machine-readable feed: <a class="proof-strip-link" href="../api/feed.json" target="_blank" rel="noopener noreferrer">/api/feed.json</a></div>
           <div class="button-row tight">
             <a class="btn" href="./verify.html?q=DR-GENESIS-0001">View verification record</a>
           </div>
@@ -55,8 +55,8 @@ status=PASS
 rebuild=MATCH</div>
         <div class="button-row tight">
           <a class="btn btn-gold" href="./verify.html?q=DR-GENESIS-0001">Open Verify Console</a>
-          <a class="btn" href="../artifacts/genesis/DR-GENESIS-0001.json">Open Artifact Envelope</a>
-          <a class="btn" href="../api/decision/DR-GENESIS-0001.json">Open Decision Record</a>
+          <a class="btn" href="../artifacts/genesis/DR-GENESIS-0001.json" target="_blank" rel="noopener noreferrer">Open Artifact Envelope</a>
+          <a class="btn" href="../api/decision/DR-GENESIS-0001.json" target="_blank" rel="noopener noreferrer">Open Decision Record</a>
         </div>
       </section>
 
@@ -95,6 +95,40 @@ rebuild=MATCH</div>
             <div class="kv-key">Commerce</div>
             <div class="kv-value">pilot-by-agreement</div>
           </div>
+        </div>
+      </section>
+
+      <section class="panel review-path-panel">
+        <h2 class="section-title">Suggested Review Path</h2>
+        <p class="section-subtitle section-wrap">If this is your first pass through the system, follow this sequence.</p>
+        <div class="review-path-steps">
+          <div class="review-path-step">
+            <div class="review-path-step-id">Step 1</div>
+            <div class="review-path-step-text">Open the Genesis decision record to see the canonical public artifact chain.</div>
+          </div>
+          <div class="review-path-step">
+            <div class="review-path-step-id">Step 2</div>
+            <div class="review-path-step-text">Verify the published artifact and confirm the deterministic recomputation result.</div>
+          </div>
+          <div class="review-path-step">
+            <div class="review-path-step-id">Step 3</div>
+            <div class="review-path-step-text">Inspect lineage to see how the decision connects to related records and transitions.</div>
+          </div>
+          <div class="review-path-step">
+            <div class="review-path-step-id">Step 4</div>
+            <div class="review-path-step-text">Review policy impact to understand what changes when execution rules move.</div>
+          </div>
+          <div class="review-path-step">
+            <div class="review-path-step-id">Step 5</div>
+            <div class="review-path-step-text">Read protocol and trust references only after the artifact flow is clear.</div>
+          </div>
+        </div>
+        <div class="button-row tight">
+          <a class="btn btn-gold" href="./decision.html?id=DR-GENESIS-0001">Start with Genesis</a>
+          <a class="btn" href="./verify.html?q=DR-GENESIS-0001">Verify Artifact</a>
+          <a class="btn" href="./lineage.html?id=DR-GENESIS-0001">Inspect Lineage</a>
+          <a class="btn" href="./policy-impact.html?id=DR-0001">Review Policy Impact</a>
+          <a class="btn" href="./protocol.html">Read Protocol</a>
         </div>
       </section>
 
@@ -182,9 +216,9 @@ rebuild=MATCH</div>
         <h2 class="section-title">Public References</h2>
         <p class="section-subtitle section-wrap">Canonical public records for protocol status, boundaries, and machine-readable outputs.</p>
         <div class="bottom-links repo-links-wrap">
-          <a class="menu-link" href="../PUBLIC_CHANGELOG.md">PUBLIC_CHANGELOG.md</a>
-          <a class="menu-link" href="../PRIVATE_PUBLIC_BOUNDARY_V0_1.md">PRIVATE_PUBLIC_BOUNDARY_V0_1.md</a>
-          <a class="menu-link" href="../api/feed.json">/api/feed.json</a>
+          <a class="menu-link" href="../PUBLIC_CHANGELOG.md" target="_blank" rel="noopener noreferrer">PUBLIC_CHANGELOG.md</a>
+          <a class="menu-link" href="../PRIVATE_PUBLIC_BOUNDARY_V0_1.md" target="_blank" rel="noopener noreferrer">PRIVATE_PUBLIC_BOUNDARY_V0_1.md</a>
+          <a class="menu-link" href="../api/feed.json" target="_blank" rel="noopener noreferrer">/api/feed.json</a>
           <a class="menu-link" href="https://github.com/IndrasNet108/decirepo" target="_blank" rel="noopener noreferrer">decirepo</a>
         </div>
       </section>
@@ -280,7 +314,7 @@ rebuild=MATCH</div>
           </td>
           <td class="${outcomeClass(decision.outcome)}">${decision.outcome}</td>
           <td>
-            <button class="btn small btn-gold" type="button" data-verify-short="${decision.short_hash}">VERIFY</button>
+            <button class="btn small btn-gold" type="button" data-verify-short="${decision.short_hash}">Verify</button>
           </td>
         </tr>
       `).join("") || `<tr><td colspan="4">No decisions matched your search.</td></tr>`;

@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
   <title>DeciRepo — Root of Trust</title>
   <link rel="stylesheet" href="../assets/styles.css" />
 </head>
@@ -26,7 +31,7 @@
           </label>
           <div></div>
           <div class="policy-run-cell">
-            <a class="btn" href="../api/trust-events">Open Trust Events</a>
+            <a class="btn" href="../api/trust-events.json" target="_blank" rel="noopener noreferrer">Open Trust Events</a>
           </div>
         </div>
         <table class="lineage-table" role="grid">
@@ -85,7 +90,7 @@
           <div class="button-row tight">
             <a class="btn" href="./trust.html">Open Trust Registry</a>
             <a class="btn" href="./protocol.html">Open Protocol</a>
-            <a class="btn btn-gold" href="../api/root-of-trust">Open Root API</a>
+            <a class="btn btn-gold" href="../api/root-of-trust.json" target="_blank" rel="noopener noreferrer">Open Root API</a>
           </div>
         </aside>
       </section>
@@ -110,9 +115,22 @@
     <footer class="footer">
       <div class="footer-brand">DeciRepo</div>
       <div class="footer-description">Decision infrastructure powered by DLX</div>
+      <div class="footer-engine">
+        <img class="footer-dlx-logo" src="../assets/brand/dlx-logo.png" alt="DLX logo" />
+        <div class="footer-engine-text">DLX deterministic engine</div>
+      </div>
+      <div class="footer-links">
+        <a class="menu-link" href="./privacy.html">Privacy Policy</a>
+        <a class="menu-link" href="./terms.html">Terms of Use</a>
+        <a class="menu-link" href="./disclaimer.html">Disclaimer</a>
+        <a class="menu-link" href="./billing.html">Billing & Refunds</a>
+        <a class="menu-link" href="mailto:info@indrasnet.ee">Contact</a>
+      </div>
       <div class="footer-legal">© 2026 IndrasNet OÜ</div>
+      <div class="footer-meta">IndrasNet Protocol Steward · Estonia</div>
       <div class="footer-meta">DeciRepo Protocol v0.1</div>
     </footer>
+
   </div>
 
   <script src="../assets/data.js"></script>
@@ -172,9 +190,9 @@
         ]
       },
       operation_endpoints: {
-        trust_events: "/api/trust-events",
-        verification_graph: "/api/verification-graph",
-        trust_score: "/api/trust-score"
+        trust_events: "/api/trust-events.json",
+        verification_graph: "/api/verification-graph.json",
+        trust_score: "/api/trust-score.json"
       },
       parameters: {
         trust_score_minimum: 85,
@@ -187,8 +205,8 @@
         formula: "trust_score = 100 * (0.35*verify_success_rate + 0.30*rebuild_match_rate + 0.20*uptime_score + 0.10*policy_compatibility + 0.05*incident_penalty)"
       },
       challenge_endpoints: {
-        challenges: "/api/challenges",
-        rechecks: "/api/rechecks"
+        challenges: "/api/challenges.json",
+        rechecks: "/api/rechecks.json"
       }
     };
 
@@ -244,7 +262,7 @@
     };
 
     async function loadPolicy() {
-      const candidates = ["../api/root-of-trust", "../api/root-of-trust.json"];
+      const candidates = ["../api/root-of-trust.json", "../api/root-of-trust"];
       for (const url of candidates) {
         try {
           const res = await fetch(url, { cache: "no-store" });
@@ -259,7 +277,7 @@
     }
 
     async function loadTrustScores() {
-      const candidates = ["../api/trust-score", "../api/trust-score.json"];
+      const candidates = ["../api/trust-score.json", "../api/trust-score"];
       for (const url of candidates) {
         try {
           const res = await fetch(url, { cache: "no-store" });

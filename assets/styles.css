@@ -864,6 +864,22 @@ a {
   flex: 0 0 auto;
 }
 
+.page-root-of-trust .button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.page-root-of-trust .button-row .btn {
+  flex: 1 1 160px;
+  min-width: 0;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
 .btn {
   border: 1px solid var(--divider);
   background: #151516;

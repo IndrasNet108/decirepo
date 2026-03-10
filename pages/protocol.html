@@ -20,50 +20,52 @@
         <div class="banner">HASH CONTRACT v0.1: <span class="mono">artifact_hash</span> is a compatibility alias for <span class="mono">rebuild_result_hash</span></div>
       </section>
 
-      <section class="content-grid">
+      <section class="content-grid protocol-main-grid">
         <section class="panel">
           <h2 class="section-title">Protocol Modules</h2>
-          <table class="lineage-table" role="grid">
-            <thead>
-              <tr>
-                <th>Module</th>
-                <th>Version</th>
-                <th>Status</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Artifact Envelope</td>
-                <td>v0.1</td>
-                <td>active</td>
-                <td>Decision identity, origin registry, policy version, and artifact hash.</td>
-              </tr>
-              <tr>
-                <td>Verify Contract</td>
-                <td>v0.1</td>
-                <td>active</td>
-                <td>Deterministic PASS/MATCH verification response format.</td>
-              </tr>
-              <tr>
-                <td>Lineage Schema</td>
-                <td>v0.1</td>
-                <td>active</td>
-                <td>Parent/child/relation edges for decision graph construction.</td>
-              </tr>
-              <tr>
-                <td>Signature Rules</td>
-                <td>v0.1</td>
-                <td>active</td>
-                <td>Registry key binding and signed publication/verification events.</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="protocol-table-wrap">
+            <table class="lineage-table" role="grid">
+              <thead>
+                <tr>
+                  <th>Module</th>
+                  <th>Version</th>
+                  <th>Status</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Artifact Envelope</td>
+                  <td>v0.1</td>
+                  <td>active</td>
+                  <td>Decision identity, origin registry, policy version, and artifact hash.</td>
+                </tr>
+                <tr>
+                  <td>Verify Contract</td>
+                  <td>v0.1</td>
+                  <td>active</td>
+                  <td>Deterministic PASS/MATCH verification response format.</td>
+                </tr>
+                <tr>
+                  <td>Lineage Schema</td>
+                  <td>v0.1</td>
+                  <td>active</td>
+                  <td>Parent/child/relation edges for decision graph construction.</td>
+                </tr>
+                <tr>
+                  <td>Signature Rules</td>
+                  <td>v0.1</td>
+                  <td>active</td>
+                  <td>Registry key binding and signed publication/verification events.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </section>
 
-        <aside class="panel">
+        <aside class="panel protocol-artifact-panel">
           <h2 class="section-title">Example Artifact</h2>
-          <pre class="code-block">{
+          <pre class="code-block protocol-code-block">{
   "decision_id": "DR-0001",
   "canonical_id": "◢A9D325",
   "artifact_hash": "a9d325...",
@@ -76,7 +78,7 @@
   "validator_result": "PASS",
   "rebuild_result": "MATCH"
 }</pre>
-          <div class="button-row tight">
+          <div class="button-row tight protocol-button-row">
             <a class="btn" href="../api/trust">Trust Registry</a>
             <a class="btn" href="../api/root-of-trust">Root of Trust</a>
             <a class="btn" href="../api/trust-score">Trust Score</a>
@@ -88,30 +90,32 @@
         </aside>
       </section>
 
-      <section class="content-grid">
+      <section class="content-grid protocol-support-grid">
         <section class="panel">
           <h2 class="section-title">Compatibility Matrix</h2>
-          <table class="lineage-table" role="grid">
-            <thead>
-              <tr>
-                <th>From</th>
-                <th>To</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>v0.1</td>
-                <td>v0.1</td>
-                <td>fully_compatible</td>
-              </tr>
-              <tr>
-                <td>v0.0</td>
-                <td>v0.1</td>
-                <td>requires_migration</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="protocol-table-wrap">
+            <table class="lineage-table" role="grid">
+              <thead>
+                <tr>
+                  <th>From</th>
+                  <th>To</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>v0.1</td>
+                  <td>v0.1</td>
+                  <td>fully_compatible</td>
+                </tr>
+                <tr>
+                  <td>v0.0</td>
+                  <td>v0.1</td>
+                  <td>requires_migration</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </section>
 
         <aside class="panel">

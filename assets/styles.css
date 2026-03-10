@@ -360,6 +360,66 @@ a {
   gap: 8px;
 }
 
+.page-index .index-hero-panel,
+.page-index .proof-strip,
+.page-index .live-table td,
+.page-index .live-main,
+.page-index .live-sub,
+.page-index .proof-strip-line,
+.page-index .proof-strip-note,
+.page-index .proof-strip-meta {
+  min-width: 0;
+}
+
+.page-index .button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.page-index .button-row .btn {
+  flex: 1 1 170px;
+  min-width: 0;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.page-index .proof-strip-line,
+.page-index .proof-strip-note,
+.page-index .proof-strip-meta,
+.page-index .proof-strip-link,
+.page-index .live-main,
+.page-index .live-sub {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.page-index .live-table {
+  table-layout: fixed;
+}
+
+.page-network .button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.page-network .button-row .btn {
+  flex: 1 1 180px;
+  min-width: 0;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
 .page-lineage {
   display: grid;
   gap: 18px;
@@ -861,7 +921,26 @@ a {
 }
 
 .protocol-button-row .btn {
-  flex: 0 0 auto;
+  flex: 1 1 180px;
+  min-width: 0;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.page-protocol .banner {
+  width: auto;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.protocol-code-block {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .page-root-of-trust .button-row {
@@ -1280,6 +1359,13 @@ a {
     margin: 0 -4px;
     padding-bottom: 6px;
   }
+
+  .page-index .hero-line.mono,
+  .page-index .code-block {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
 }
 
 .diff-head-grid {
@@ -1355,12 +1441,13 @@ a {
 }
 
 .verify-panel {
-  width: 760px;
+  width: min(760px, 100%);
+  min-width: 0;
 }
 
 .verify-input-row {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   gap: 12px;
 }
 
@@ -1420,6 +1507,24 @@ a {
 
 .verify-hint.mono {
   font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+.page-verify .banner,
+.page-verify .verify-hint,
+.page-verify .kv-value {
+  width: auto;
+  max-width: 100%;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.page-verify .kv-line {
+  grid-template-columns: 1fr;
+  gap: 6px;
+  align-items: start;
 }
 
 .feed-page {
@@ -1557,12 +1662,11 @@ a {
 }
 
 .feed-table tbody tr {
-  height: 56px;
   border-bottom: 1px solid var(--divider);
 }
 
 .feed-table td {
-  padding: 0 12px;
+  padding: 12px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1593,6 +1697,25 @@ a {
   font-family: "SFMono-Regular", Menlo, Consolas, monospace;
   color: var(--secondary-gray);
   font-size: 12px;
+}
+
+.feed-page .feed-table {
+  table-layout: fixed;
+}
+
+.feed-page .feed-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.feed-page .feed-actions .btn {
+  flex: 1 1 92px;
+  min-width: 0;
+  white-space: normal;
+  text-align: center;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .policy-impact-list {
@@ -1785,7 +1908,8 @@ a {
   .live-table,
   .policy-impact-table,
   .lineage-table,
-  .repo-table {
+  .repo-table,
+  .feed-table {
     display: block;
     overflow-x: auto;
     max-width: 100%;
@@ -1801,10 +1925,31 @@ a {
   .impact-flow,
   .graph-node-meta,
   .graph-group-title,
-  .snapshot-value {
+  .snapshot-value,
+  .feed-table td,
+  .feed-meta {
     white-space: normal;
     overflow: visible;
     text-overflow: clip;
+  }
+
+  .feed-filter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feed-page .feed-table tbody tr {
+    height: auto;
+  }
+
+  .feed-page .feed-table td,
+  .feed-page .feed-label,
+  .feed-page .canonical-id,
+  .feed-page .legacy-id {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 
   .footer {

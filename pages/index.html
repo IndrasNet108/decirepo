@@ -32,11 +32,11 @@
         </div>
         <div class="proof-strip" aria-label="Latest verification">
           <div class="proof-strip-title">Latest verification</div>
-          <div class="proof-strip-line mono">DR-GENESIS-0001 · MATCH · DeciRepo v0.1</div>
-          <div class="proof-strip-note">Deterministic recomputation · No consensus · No blockchain</div>
-          <div class="proof-strip-meta">Machine-readable feed: <a class="proof-strip-link" href="../api/feed.json" target="_blank" rel="noopener noreferrer">/api/feed.json</a></div>
+          <div id="proof-strip-line" class="proof-strip-line mono">DR-GENESIS-0001 · MATCH · DeciRepo v0.1</div>
+          <div id="proof-strip-note" class="proof-strip-note">Deterministic recomputation · No consensus · No blockchain</div>
+          <div id="proof-strip-meta" class="proof-strip-meta">Machine-readable feed: <a class="proof-strip-link" href="../api/feed.json" target="_blank" rel="noopener noreferrer">/api/feed.json</a></div>
           <div class="button-row tight">
-            <a class="btn" href="./verify.html?q=DR-GENESIS-0001">View verification record</a>
+            <a id="proof-strip-link" class="btn" href="./verify.html?q=DR-GENESIS-0001">View verification record</a>
           </div>
         </div>
         <div class="button-row tight">
@@ -155,9 +155,10 @@ rebuild=MATCH</div>
           <h2 class="section-title">Latest Verified Artifact</h2>
           <div id="latest-decision-line" class="preview-line">DR-GENESIS-0001</div>
           <div id="latest-decision-title" class="section-subtitle section-wrap">Genesis anchor for deterministic network verification.</div>
+          <div id="latest-decision-meta" class="legacy-id">Source: local snapshot</div>
           <div class="button-row tight">
-            <a class="btn btn-gold" href="./verify.html?q=DR-GENESIS-0001">Open Verify Console</a>
-            <a class="btn" href="./decision.html?id=DR-GENESIS-0001">Open Decision</a>
+            <a id="latest-verify-link" class="btn btn-gold" href="./verify.html?q=DR-GENESIS-0001">Open Verify Console</a>
+            <a id="latest-open-link" class="btn" href="./decision.html?id=DR-GENESIS-0001">Open Decision</a>
           </div>
           <div id="latest-verify-banner" class="banner valid">VERIFIED</div>
           <div id="latest-verify-result" class="kv-stack"></div>
@@ -261,104 +262,119 @@ rebuild=MATCH</div>
       return "outcome-neutral";
     }
 
-    const latest = window.DeciRepoData.decisions
-      .slice()
-      .sort((a, b) => b.id.localeCompare(a.id));
-
-    const listRoot = document.getElementById("live-registry-body");
-    const searchInput = document.getElementById("index-search-input");
-
-    function syntheticTimestamp(decision, idx) {
-      const hour = String(14 - (idx % 5)).padStart(2, "0");
-      const minute = String((idx * 11) % 60).padStart(2, "0");
-      return `${decision.date} ${hour}:${minute} UTC`;
+    function toFeedItem(raw) {
+      const localDecision = raw.legacy_id ? window.DeciRepoData.getDecisionById(raw.legacy_id) : null;
+      const publisherId = raw.publisher_id || raw.publisher || (localDecision ? localDecision.publisher : "unknown");
+      const publisherLabel = raw.publisher_label || (localDecision ? localDecision.publisher_label : publisherId);
+      const rfcRef = raw.rfc_ref || (localDecision ? localDecision.rfc_ref : "");
+      return {
+        decision_id: raw.decision_id || raw.canonical_id || "",
+        canonical_id: raw.canonical_id || raw.decision_id || "",
+        legacy_id: raw.legacy_id || "",
+        artifact_hash: raw.artifact_hash || "",
+        policy_version: raw.policy_version || "",
+        outcome: raw.outcome || "UNKNOWN",
+        validator: raw.validator || "UNKNOWN",
+        rebuild: raw.rebuild || "UNKNOWN",
+        authority: raw.authority || "UNKNOWN",
+        publisher_id: publisherId,
+        publisher_label: publisherLabel,
+        rfc_ref: rfcRef,
+        timestamp: raw.timestamp || "1970-01-01T00:00:00Z"
+      };
     }
 
-    function renderDecisionIndex(query = "") {
-      const q = String(query || "").trim().toLowerCase();
-      const rows = latest
-        .map((decision, idx) => ({ decision, time: syntheticTimestamp(decision, idx) }))
-        .filter(({ decision }) => {
-          if (!q) return true;
-          const haystack = [
-            decision.id,
-            decision.short_hash,
-            decision.title,
-            decision.authority,
-            decision.publisher_label || decision.publisher,
-            decision.outcome,
-            decision.policyVersion
-          ]
-            .join(" ")
-            .toLowerCase();
-          return haystack.includes(q);
-        });
-
-      listRoot.innerHTML = rows.map(({ decision, time }) => `
-        <tr class="live-row" data-id="${decision.id}">
-          <td>
-            <div class="index-id">${visualId(decision)}</div>
-            <div class="legacy-id">${decision.id}</div>
-          </td>
-          <td>
-            <div class="live-main">${decision.authority}</div>
-            <div class="live-sub">${decision.title}</div>
-            <div class="live-sub">Publisher: ${decision.publisher_label || decision.publisher || "unknown"}</div>
-            <div class="live-sub">${time}</div>
-            <div class="live-hover-meta">
-              artifact_hash: ${decision.artifact.artifact_hash.slice(0, 14)}...<br/>
-              policy_version: ${decision.policyVersion}<br/>
-              publisher: ${decision.publisher || "unknown"}<br/>
-              validator: DLX v1.0
-            </div>
-          </td>
-          <td class="${outcomeClass(decision.outcome)}">${decision.outcome}</td>
-          <td>
-            <button class="btn small btn-gold" type="button" data-verify-short="${decision.short_hash}">Verify</button>
-          </td>
-        </tr>
-      `).join("") || `<tr><td colspan="4">No decisions matched your search.</td></tr>`;
-
-      listRoot.querySelectorAll(".live-row").forEach((row) => {
-        row.addEventListener("click", (event) => {
-          if (event.target && event.target.closest("button")) return;
-          const id = row.getAttribute("data-id");
-          if (!id) return;
-          window.location.href = `./decision.html?id=${encodeURIComponent(id)}`;
-        });
-      });
-
-      listRoot.querySelectorAll("[data-verify-short]").forEach((button) => {
-        button.addEventListener("click", () => {
-          const short = button.getAttribute("data-verify-short");
-          window.location.href = `./verify.html?q=${encodeURIComponent(`◢${short}`)}`;
-        });
+    function fallbackFeedItems() {
+      return window.DeciRepoData.decisions.map((d, idx) => {
+        const day = String(7 - Math.floor(idx / 2)).padStart(2, "0");
+        const hour = String(23 - idx).padStart(2, "0");
+        return {
+          decision_id: d.canonical_id,
+          canonical_id: d.canonical_id,
+          legacy_id: d.id,
+          artifact_hash: d.artifact.artifact_hash,
+          policy_version: d.policyVersion,
+          outcome: d.outcomeFields.decision,
+          validator: d.artifact.validator_result,
+          rebuild: d.artifact.rebuild_status,
+          authority: d.authority,
+          publisher_id: d.publisher || "unknown",
+          publisher_label: d.publisher_label || d.publisher || "unknown",
+          rfc_ref: d.rfc_ref || "",
+          timestamp: `2026-03-${day}T${hour}:00:00Z`
+        };
       });
     }
 
-    renderDecisionIndex("");
-    searchInput.addEventListener("input", () => renderDecisionIndex(searchInput.value));
+    async function loadFeedSnapshot() {
+      const candidates = ["../api/feed.json", "../api/feed"];
+      for (const url of candidates) {
+        try {
+          const res = await fetch(url, { cache: "no-store" });
+          if (!res.ok) continue;
+          const payload = await res.json();
+          if (!payload || !Array.isArray(payload.items)) continue;
+          return {
+            items: payload.items.map(toFeedItem),
+            source: "feed",
+            generatedAt: payload.meta && payload.meta.generated_at ? payload.meta.generated_at : "",
+            feedVersion: payload.meta && payload.meta.feed_version ? payload.meta.feed_version : ""
+          };
+        } catch (_err) {
+          // continue fallback chain
+        }
+      }
 
-    const genesisDecision = window.DeciRepoData.getDecisionById("DR-GENESIS-0001") || latest[0];
-    const latestLine = document.getElementById("latest-decision-line");
-    const latestTitle = document.getElementById("latest-decision-title");
-    const latestBanner = document.getElementById("latest-verify-banner");
-    const latestResult = document.getElementById("latest-verify-result");
+      return {
+        items: fallbackFeedItems().map(toFeedItem),
+        source: "fallback",
+        generatedAt: "",
+        feedVersion: "local-snapshot"
+      };
+    }
 
-    latestLine.textContent = `${visualId(genesisDecision)} · ${genesisDecision.id}`;
-    latestTitle.textContent = genesisDecision.title;
-    latestBanner.style.display = "block";
-    latestResult.innerHTML = window.DeciRepoDecisionBlock.renderStack(
-      window.DeciRepoDecisionBlock.toRows({
-        rebuild_result_hash: genesisDecision.artifact.rebuild_result_hash || genesisDecision.artifact.artifact_hash,
-        artifact_file_sha256: genesisDecision.artifact.artifact_file_sha256 || "N/A",
-        validator: genesisDecision.artifact.validator_result,
-        rebuild_result: genesisDecision.artifact.rebuild_status,
-        policy_version: genesisDecision.policyVersion
-      }),
-      ["rebuild_result_hash", "artifact_file_sha256"]
-    );
+    function formatTimestamp(timestamp) {
+      const raw = String(timestamp || "").trim();
+      if (!raw) return "timestamp unavailable";
+      return raw.replace("T", " ").replace("Z", " UTC");
+    }
 
+    function visualIdFromFeedItem(item) {
+      const short = item.artifact_hash ? item.artifact_hash.slice(0, 6).toUpperCase() : "";
+      return short ? `◢${short}` : (item.canonical_id || item.decision_id || item.legacy_id || "UNKNOWN");
+    }
+
+    function displayIdForFeedItem(item) {
+      return item.legacy_id || item.canonical_id || item.decision_id || "UNKNOWN";
+    }
+
+    function resolveLocalDecision(item) {
+      return window.DeciRepoData.resolveDecision(item.legacy_id || item.decision_id || item.canonical_id || item.artifact_hash || "");
+    }
+
+    function verifyQueryForItem(item, localDecision) {
+      if (localDecision && localDecision.id) return localDecision.id;
+      if (item.legacy_id) return item.legacy_id;
+      if (item.decision_id) return item.decision_id;
+      if (item.canonical_id) return item.canonical_id;
+      return visualIdFromFeedItem(item);
+    }
+
+    function decisionHrefForItem(item, localDecision) {
+      if (localDecision && localDecision.id) {
+        return `./decision.html?id=${encodeURIComponent(localDecision.id)}`;
+      }
+      if (item.legacy_id && window.DeciRepoData.getDecisionById(item.legacy_id)) {
+        return `./decision.html?id=${encodeURIComponent(item.legacy_id)}`;
+      }
+      return "./feed.html";
+    }
+
+    function latestVerifiedItem(items) {
+      return items.find((item) => item.validator === "PASS" && item.rebuild === "MATCH") || items[0] || null;
+    }
+
+    const genesisDecision = window.DeciRepoData.getDecisionById("DR-GENESIS-0001");
     const networkGenesis = document.getElementById("network-genesis-preview");
     networkGenesis.innerHTML = window.DeciRepoDecisionBlock.renderStack(
       window.DeciRepoDecisionBlock.toRows({
@@ -370,6 +386,141 @@ rebuild=MATCH</div>
       }),
       ["rebuild_result_hash", "artifact_file_sha256"]
     );
+
+    const listRoot = document.getElementById("live-registry-body");
+    const searchInput = document.getElementById("index-search-input");
+    const state = {
+      items: [],
+      source: "fallback",
+      generatedAt: "",
+      feedVersion: ""
+    };
+
+    function renderDecisionIndex(query = "") {
+      const q = String(query || "").trim().toLowerCase();
+      const rows = state.items
+        .map((item) => ({ item, localDecision: resolveLocalDecision(item) }))
+        .filter(({ item, localDecision }) => {
+          if (!q) return true;
+          const haystack = [
+            item.legacy_id,
+            item.canonical_id,
+            item.artifact_hash,
+            item.authority,
+            item.publisher_label,
+            item.outcome,
+            item.policy_version,
+            item.timestamp,
+            localDecision ? localDecision.title : ""
+          ]
+            .join(" ")
+            .toLowerCase();
+          return haystack.includes(q);
+        });
+
+      listRoot.innerHTML = rows.map(({ item, localDecision }) => `
+        <tr class="live-row" data-id="${item.legacy_id || ""}" data-fallback-href="${decisionHrefForItem(item, localDecision)}">
+          <td>
+            <div class="index-id">${visualIdFromFeedItem(item)}</div>
+            <div class="legacy-id">${displayIdForFeedItem(item)}</div>
+            ${item.rfc_ref ? `<div class="legacy-id">${item.rfc_ref}</div>` : ""}
+          </td>
+          <td>
+            <div class="live-main">${item.authority}</div>
+            <div class="live-sub">${localDecision ? localDecision.title : item.policy_version}</div>
+            <div class="live-sub">Publisher: ${item.publisher_label || item.publisher_id || "unknown"}</div>
+            <div class="live-sub">${formatTimestamp(item.timestamp)}</div>
+            <div class="live-hover-meta">
+              artifact_hash: ${(item.artifact_hash || "unknown").slice(0, 14)}...<br/>
+              policy_version: ${item.policy_version}<br/>
+              publisher: ${item.publisher_id || "unknown"}<br/>
+              validator: ${item.validator} · ${item.rebuild}
+            </div>
+          </td>
+          <td class="${outcomeClass(item.outcome)}">${item.outcome}</td>
+          <td>
+            <button class="btn small btn-gold" type="button" data-verify-query="${verifyQueryForItem(item, localDecision)}">Verify</button>
+          </td>
+        </tr>
+      `).join("") || `<tr><td colspan="4">No decisions matched your search.</td></tr>`;
+
+      listRoot.querySelectorAll(".live-row").forEach((row) => {
+        row.addEventListener("click", (event) => {
+          if (event.target && event.target.closest("button")) return;
+          const id = row.getAttribute("data-id");
+          if (id && window.DeciRepoData.getDecisionById(id)) {
+            window.location.href = `./decision.html?id=${encodeURIComponent(id)}`;
+            return;
+          }
+          const fallbackHref = row.getAttribute("data-fallback-href");
+          if (fallbackHref) {
+            window.location.href = fallbackHref;
+          }
+        });
+      });
+
+      listRoot.querySelectorAll("[data-verify-query]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const queryValue = button.getAttribute("data-verify-query");
+          window.location.href = `./verify.html?q=${encodeURIComponent(queryValue)}`;
+        });
+      });
+    }
+
+    searchInput.addEventListener("input", () => renderDecisionIndex(searchInput.value));
+
+    function renderLatestPanels(snapshot) {
+      const item = latestVerifiedItem(state.items);
+      if (!item) return;
+
+      const localDecision = resolveLocalDecision(item);
+      const displayId = displayIdForFeedItem(item);
+      const visual = visualIdFromFeedItem(item);
+      const verifyQuery = verifyQueryForItem(item, localDecision);
+      const sourceLabel = snapshot.source === "feed" ? "live feed" : "snapshot fallback";
+      const detailHref = decisionHrefForItem(item, localDecision);
+      const proofMetaParts = [sourceLabel];
+      if (snapshot.generatedAt) {
+        proofMetaParts.push(`generated ${formatTimestamp(snapshot.generatedAt)}`);
+      }
+
+      document.getElementById("proof-strip-line").textContent = `${visual} · ${displayId} · ${item.rebuild}`;
+      document.getElementById("proof-strip-note").textContent = `${item.authority} · ${item.outcome} · ${item.policy_version}`;
+      document.getElementById("proof-strip-meta").innerHTML = `${proofMetaParts.join(" · ")} · <a class="proof-strip-link" href="../api/feed.json" target="_blank" rel="noopener noreferrer">/api/feed.json</a>`;
+      document.getElementById("proof-strip-link").href = `./verify.html?q=${encodeURIComponent(verifyQuery)}`;
+
+      document.getElementById("latest-decision-line").textContent = `${visual} · ${displayId}`;
+      document.getElementById("latest-decision-title").textContent = localDecision ? localDecision.title : `${item.authority} · ${item.policy_version}`;
+      document.getElementById("latest-decision-meta").textContent = `${sourceLabel} · ${formatTimestamp(item.timestamp)} · ${item.publisher_label}`;
+      document.getElementById("latest-verify-link").href = `./verify.html?q=${encodeURIComponent(verifyQuery)}`;
+
+      const openLink = document.getElementById("latest-open-link");
+      openLink.href = detailHref;
+      openLink.textContent = localDecision ? "Open Decision" : "Open Feed";
+
+      const latestResult = document.getElementById("latest-verify-result");
+      if (localDecision) {
+        latestResult.innerHTML = window.DeciRepoDecisionBlock.renderStack(
+          window.DeciRepoDecisionBlock.toRows({
+            rebuild_result_hash: localDecision.artifact.rebuild_result_hash || localDecision.artifact.artifact_hash,
+            artifact_file_sha256: localDecision.artifact.artifact_file_sha256 || "N/A",
+            validator: item.validator,
+            rebuild_result: item.rebuild,
+            policy_version: item.policy_version
+          }),
+          ["rebuild_result_hash", "artifact_file_sha256"]
+        );
+      } else {
+        latestResult.innerHTML = window.DeciRepoDecisionBlock.renderStack([
+          { key: "timestamp", value: formatTimestamp(item.timestamp) },
+          { key: "authority", value: item.authority },
+          { key: "policy_version", value: item.policy_version },
+          { key: "publisher", value: item.publisher_label },
+          { key: "validator", value: item.validator },
+          { key: "rebuild_result", value: item.rebuild }
+        ]);
+      }
+    }
 
     const impactBase = window.DeciRepoData.getDecisionById("DR-0007");
     const impactTarget = window.DeciRepoData.getDecisionById("DR-0008");
@@ -386,22 +537,33 @@ rebuild=MATCH</div>
       window.location.href = "./policy-impact.html?id=DR-0007";
     });
 
-    function buildNetworkEvents() {
-      const sorted = latest.slice().sort((a, b) => b.id.localeCompare(a.id));
-      const events = sorted.slice(0, 4).map((decision) => {
-        const origin = decision.artifact.origin_registry || "decirepo.com";
-        const visual = `◢${decision.short_hash}`;
-        const source = decision.publisher_label || decision.publisher || "unknown";
-        const action = origin === "decirepo.com" ? "published and locally verified" : `remote-verified from ${origin}`;
-        return `${visual} ${decision.id} (${source}) ${action}`;
+    function buildNetworkEvents(items) {
+      const events = items.slice(0, 4).map((item) => {
+        const visual = visualIdFromFeedItem(item);
+        const source = item.publisher_label || item.publisher_id || "unknown";
+        const status = `${item.validator}/${item.rebuild}`;
+        return `${visual} ${displayIdForFeedItem(item)} (${source}) ${item.outcome} · ${status}`;
       });
       events.push("Policy Impact recalculated for PROCUREMENT_RULES_V1 → PROCUREMENT_RULES_V2");
       return events;
     }
 
-    document.getElementById("network-activity-stream").innerHTML = buildNetworkEvents()
-      .map((entry) => `<div class="publisher-stream-item">${entry}</div>`)
-      .join("");
+    async function initIndex() {
+      const snapshot = await loadFeedSnapshot();
+      state.items = snapshot.items.slice().sort((a, b) => Date.parse(b.timestamp) - Date.parse(a.timestamp));
+      state.source = snapshot.source;
+      state.generatedAt = snapshot.generatedAt;
+      state.feedVersion = snapshot.feedVersion;
+
+      renderDecisionIndex("");
+      renderLatestPanels(snapshot);
+
+      document.getElementById("network-activity-stream").innerHTML = buildNetworkEvents(state.items)
+        .map((entry) => `<div class="publisher-stream-item">${entry}</div>`)
+        .join("");
+    }
+
+    initIndex();
   </script>
 </body>
 </html>

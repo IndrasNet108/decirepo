@@ -32,11 +32,11 @@
         </div>
         <div class="proof-strip" aria-label="Latest verification">
           <div class="proof-strip-title">Latest verification</div>
-          <div id="proof-strip-line" class="proof-strip-line mono">DR-GENESIS-0001 · MATCH · DeciRepo v0.1</div>
-          <div id="proof-strip-note" class="proof-strip-note">Deterministic recomputation · No consensus · No blockchain</div>
+          <div id="proof-strip-line" class="proof-strip-line mono">Loading latest verification...</div>
+          <div id="proof-strip-note" class="proof-strip-note">Awaiting live feed snapshot.</div>
           <div id="proof-strip-meta" class="proof-strip-meta">Machine-readable feed: <a class="proof-strip-link" href="../api/feed.json" target="_blank" rel="noopener noreferrer">/api/feed.json</a></div>
           <div class="button-row tight">
-            <a id="proof-strip-link" class="btn" href="./verify.html?q=DR-GENESIS-0001">View verification record</a>
+            <a id="proof-strip-link" class="btn" href="./feed.html">Open feed</a>
           </div>
         </div>
         <div class="button-row tight">
@@ -153,14 +153,14 @@ rebuild=MATCH</div>
       <section class="content-grid">
         <section class="panel">
           <h2 class="section-title">Latest Verified Artifact</h2>
-          <div id="latest-decision-line" class="preview-line">DR-GENESIS-0001</div>
-          <div id="latest-decision-title" class="section-subtitle section-wrap">Genesis anchor for deterministic network verification.</div>
-          <div id="latest-decision-meta" class="legacy-id">Source: local snapshot</div>
+          <div id="latest-decision-line" class="preview-line">Loading latest artifact...</div>
+          <div id="latest-decision-title" class="section-subtitle section-wrap">Waiting for the current verified feed item.</div>
+          <div id="latest-decision-meta" class="legacy-id">Source: feed pending</div>
           <div class="button-row tight">
-            <a id="latest-verify-link" class="btn btn-gold" href="./verify.html?q=DR-GENESIS-0001">Open Verify Console</a>
-            <a id="latest-open-link" class="btn" href="./decision.html?id=DR-GENESIS-0001">Open Decision</a>
+            <a id="latest-verify-link" class="btn btn-gold" href="./feed.html">Open Verify Console</a>
+            <a id="latest-open-link" class="btn" href="./feed.html">Open Feed</a>
           </div>
-          <div id="latest-verify-banner" class="banner valid">VERIFIED</div>
+          <div id="latest-verify-banner" class="banner">AWAITING FEED</div>
           <div id="latest-verify-result" class="kv-stack"></div>
         </section>
 
@@ -497,6 +497,15 @@ rebuild=MATCH</div>
       const openLink = document.getElementById("latest-open-link");
       openLink.href = detailHref;
       openLink.textContent = localDecision ? "Open Decision" : "Open Feed";
+
+      const latestBanner = document.getElementById("latest-verify-banner");
+      if (item.validator === "PASS" && item.rebuild === "MATCH") {
+        latestBanner.className = "banner valid";
+        latestBanner.textContent = "VERIFIED";
+      } else {
+        latestBanner.className = "banner";
+        latestBanner.textContent = `${item.validator} / ${item.rebuild}`;
+      }
 
       const latestResult = document.getElementById("latest-verify-result");
       if (localDecision) {

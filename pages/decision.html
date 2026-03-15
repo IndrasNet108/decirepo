@@ -143,6 +143,12 @@
       .map(([label, value]) => `<div class="decision-header-line"><span class="label">${label}:</span>${value}</div>`)
       .join("");
 
+    function compactObject(obj) {
+      return Object.fromEntries(
+        Object.entries(obj || {}).filter(([, value]) => value !== undefined && value !== null && String(value).trim() !== "")
+      );
+    }
+
     function mountContextNav() {
       const verifyQuery = `◢${decision.short_hash}`;
       const pairId = window.DeciRepoData.getPairId(decision.id);
@@ -164,7 +170,7 @@
 
     mountContextNav();
 
-    const artifactRows = window.DeciRepoDecisionBlock.toRows({
+    const artifactRows = window.DeciRepoDecisionBlock.toRows(compactObject({
       rebuild_result_hash: decision.artifact.rebuild_result_hash || decision.artifact.artifact_hash,
       artifact_hash_semantics: decision.artifact.artifact_hash_semantics || "artifact_hash",
       artifact_file_sha256: decision.artifact.artifact_file_sha256 || "N/A",
@@ -178,19 +184,21 @@
       validator_status: decision.artifact.validator_result,
       rebuild_result: decision.artifact.rebuild_status,
       runtime_identity: decision.artifact.runtime_identity
-    });
+    }));
     document.getElementById("artifact-block").innerHTML = window.DeciRepoDecisionBlock.renderStack(
       artifactRows,
       ["rebuild_result_hash", "artifact_file_sha256", "artifact_envelope_uri", "decision_record_uri", "evidence_manifest_uri"]
     );
 
-    const inputRows = window.DeciRepoDecisionBlock.toRows(decision.input);
+    const inputRows = window.DeciRepoDecisionBlock.toRows(compactObject(decision.input));
     document.getElementById("input-block").innerHTML = window.DeciRepoDecisionBlock.renderTwoColumnGrid(inputRows);
 
-    const policyRows = window.DeciRepoDecisionBlock.toRows(decision.policyContext);
-    document.getElementById("policy-block").innerHTML = window.DeciRepoDecisionBlock.renderStack(policyRows);
+    const policyRows = window.DeciRepoDecisionBlock.toRows(compactObject(decision.policyContext));
+    document.getElementById("policy-block").innerHTML = policyRows.length
+      ? window.DeciRepoDecisionBlock.renderStack(policyRows)
+      : `<div class="lineage-item muted">No explicit policy context attached to this decision record.</div>`;
 
-    const outcomeRows = window.DeciRepoDecisionBlock.toRows(decision.outcomeFields);
+    const outcomeRows = window.DeciRepoDecisionBlock.toRows(compactObject(decision.outcomeFields));
     document.getElementById("outcome-block").innerHTML = window.DeciRepoDecisionBlock.renderStack(outcomeRows);
 
     async function loadDecisionExplanation() {
@@ -199,6 +207,10 @@
         const response = await fetch("../api/decision-explanation.json", { cache: "no-store" });
         if (!response.ok) throw new Error("no explanation");
         const explanation = await response.json();
+        if (explanation.decision_id !== decision.id) {
+          container.innerHTML = `<div class="lineage-item muted">No structured explanation available for this specific decision.</div>`;
+          return;
+        }
         
         container.innerHTML = `
           <div class="kv-stack">
@@ -280,6 +292,10 @@
         const response = await fetch("../api/precedent-search-report.json", { cache: "no-store" });
         if (!response.ok) throw new Error("no report");
         const report = await response.json();
+        if (!report.query_context || report.query_context.decision_id !== decisionId) {
+          container.innerHTML = `<div class="lineage-item muted">No precedent report available for this specific decision.</div>`;
+          return;
+        }
         
         container.innerHTML = `
           <div class="kv-stack">

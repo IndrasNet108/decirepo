@@ -4,25 +4,22 @@ on:
   push:
   pull_request:
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
-
 jobs:
   protocol-checks:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Checkout site mirror
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: IndrasNet108/decirepo-site
           path: decirepo-site-seed
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 20
 
@@ -41,7 +38,7 @@ jobs:
         run: bash scripts/run-conformance.sh
 
       - name: Upload protocol conformance report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: decirepo-protocol-conformance-v0_1
           path: out/conformance/v0_1/CONFORMANCE_REPORT.json

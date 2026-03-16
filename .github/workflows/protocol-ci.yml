@@ -35,7 +35,13 @@ jobs:
         run: node dlx-ref/cli.js conformance dlx-ref/tests/conformance_v0_1.json
 
       - name: Protocol conformance baseline
-        run: node scripts/run_protocol_conformance_v0_1.js
+        run: bash scripts/run-conformance.sh
+
+      - name: Upload protocol conformance report
+        uses: actions/upload-artifact@v4
+        with:
+          name: decirepo-protocol-conformance-v0_1
+          path: out/conformance/v0_1/CONFORMANCE_REPORT.json
 
       - name: Federation negative tests
         run: node scripts/run_negative_federation_tests.js

@@ -7,5 +7,7 @@
   "canonicalization": "decirepo-json-c14n-v1",
   "result_canonicalization": "decirepo-result-c14n-v1",
   "hash_function": "SHA256",
-  "normalized_result_schema": "decirepo-verifier-result-v0.1"
+  "normalized_result_schema": "decirepo-verifier-result-v0.1",
+  "verification_command": "verify",
+  "description": "Canonical Genesis baseline PASS case."
 }

@@ -12,6 +12,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Checkout site mirror
+        uses: actions/checkout@v4
+        with:
+          repository: IndrasNet108/decirepo-site
+          path: decirepo-site-seed
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -34,3 +40,5 @@ jobs:
       - name: Registry sanity checks
         run: node scripts/sanity_check_registry.js
 
+      - name: Protocol exact-match guard
+        run: bash scripts/check_protocol_sync.sh decirepo-site-seed

@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "decirepo:conformance-report-schema:v0.1",
+  "title": "DeciRepo Conformance Report v0.1",
+  "type": "object",
+  "required": [
+    "report_schema",
+    "implementation_name",
+    "implementation_version",
+    "conformance_profile",
+    "protocol_specification",
+    "protocol_semantics",
+    "vectors_total",
+    "vectors_passed",
+    "vectors_failed",
+    "overall_verdict",
+    "results"
+  ],
+  "properties": {
+    "report_schema": {
+      "const": "decirepo-conformance-report-v0.1"
+    },
+    "implementation_name": {
+      "type": "string"
+    },
+    "implementation_version": {
+      "type": "string"
+    },
+    "conformance_profile": {
+      "const": "V0_1"
+    },
+    "protocol_specification": {
+      "const": "v0.2"
+    },
+    "protocol_semantics": {
+      "const": "v0.1"
+    },
+    "vectors_total": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "vectors_passed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "vectors_failed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "overall_verdict": {
+      "type": "string",
+      "enum": ["PASS", "FAIL", "CONFORMANCE_ERROR"]
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "vector_id",
+          "command",
+          "verdict",
+          "reason",
+          "identity_check",
+          "verification_check",
+          "result_bytes_check"
+        ],
+        "properties": {
+          "vector_id": {
+            "type": "string"
+          },
+          "command": {
+            "type": "string"
+          },
+          "verdict": {
+            "type": "string",
+            "enum": ["PASS", "FAIL", "CONFORMANCE_ERROR"]
+          },
+          "reason": {
+            "type": "string"
+          },
+          "identity_check": {
+            "type": "boolean"
+          },
+          "verification_check": {
+            "type": "boolean"
+          },
+          "result_bytes_check": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}

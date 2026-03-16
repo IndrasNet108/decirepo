@@ -1,0 +1,256 @@
+{
+  "report_schema": "decirepo-conformance-report-v0.1",
+  "implementation_name": "decirepo-reference-node",
+  "implementation_version": "0.1.0",
+  "conformance_profile": "V0_1",
+  "protocol_specification": "v0.2",
+  "protocol_semantics": "v0.1",
+  "vectors_total": 4,
+  "vectors_passed": 4,
+  "vectors_failed": 0,
+  "overall_verdict": "PASS",
+  "status": "PASS",
+  "total": 4,
+  "passed": 4,
+  "failed": 0,
+  "results": [
+    {
+      "vector_id": "vector_001_genesis",
+      "command": "verify",
+      "ok": true,
+      "verdict": "PASS",
+      "reason": "matched_expected_outputs",
+      "identity_check": true,
+      "verification_check": true,
+      "result_bytes_check": true,
+      "checks": {
+        "vector_consistency_ok": true,
+        "canonical_identity_bytes_match": true,
+        "artifact_id_match": true,
+        "normalized_result_match": true,
+        "unmapped_errors_empty": true
+      },
+      "failures": [],
+      "manifest": {
+        "vector_id": "vector_001_genesis",
+        "conformance_profile": "V0_1",
+        "protocol_specification": "v0.2",
+        "protocol_semantics": "v0.1",
+        "identity_surface": "artifact.rebuild_source",
+        "canonicalization": "decirepo-json-c14n-v1",
+        "result_canonicalization": "decirepo-result-c14n-v1",
+        "hash_function": "SHA256",
+        "normalized_result_schema": "decirepo-verifier-result-v0.1",
+        "verification_command": "verify",
+        "description": "Canonical Genesis baseline PASS case."
+      },
+      "raw_result": {
+        "command": "verify",
+        "status": "PASS",
+        "errors": [],
+        "warnings": [],
+        "derived": {
+          "computed_rebuild_hash": "c630adc482c72a19ef20254f80411d7bf2ad5075bdb58f2a82751761ac6d2a4e"
+        }
+      },
+      "expected_normalized_result": {
+        "artifact_id": "c630adc482c72a19ef20254f80411d7bf2ad5075bdb58f2a82751761ac6d2a4e",
+        "protocol_version": "v0.1",
+        "reason_codes": [],
+        "status": "PASS",
+        "verifier_result_schema": "decirepo-verifier-result-v0.1"
+      },
+      "actual_normalized_result": {
+        "status": "PASS",
+        "artifact_id": "c630adc482c72a19ef20254f80411d7bf2ad5075bdb58f2a82751761ac6d2a4e",
+        "reason_codes": [],
+        "protocol_version": "v0.1",
+        "verifier_result_schema": "decirepo-verifier-result-v0.1"
+      },
+      "unmapped_errors": []
+    },
+    {
+      "vector_id": "vector_002_invalid_structure",
+      "command": "verify",
+      "ok": true,
+      "verdict": "PASS",
+      "reason": "matched_expected_outputs",
+      "identity_check": true,
+      "verification_check": true,
+      "result_bytes_check": true,
+      "checks": {
+        "vector_consistency_ok": true,
+        "canonical_identity_bytes_match": true,
+        "artifact_id_match": true,
+        "normalized_result_match": true,
+        "unmapped_errors_empty": true
+      },
+      "failures": [],
+      "manifest": {
+        "vector_id": "vector_002_invalid_structure",
+        "conformance_profile": "V0_1",
+        "protocol_specification": "v0.2",
+        "protocol_semantics": "v0.1",
+        "identity_surface": "artifact.rebuild_source",
+        "canonicalization": "decirepo-json-c14n-v1",
+        "result_canonicalization": "decirepo-result-c14n-v1",
+        "hash_function": "SHA256",
+        "normalized_result_schema": "decirepo-verifier-result-v0.1",
+        "verification_command": "verify",
+        "description": "Artifact structure is invalid due to unsupported schema version."
+      },
+      "raw_result": {
+        "command": "verify",
+        "status": "FAIL",
+        "errors": [
+          "schema_version must be dlx-artifact-v0.1"
+        ],
+        "warnings": [],
+        "derived": {
+          "computed_rebuild_hash": "d5164fc02e8122c132eafb4ddb1377b60501d9e3fbd6a08c39f07ee3d877c7cd"
+        }
+      },
+      "expected_normalized_result": {
+        "artifact_id": "d5164fc02e8122c132eafb4ddb1377b60501d9e3fbd6a08c39f07ee3d877c7cd",
+        "protocol_version": "v0.1",
+        "reason_codes": [
+          "SCHEMA_VERSION_INVALID"
+        ],
+        "status": "FAIL",
+        "verifier_result_schema": "decirepo-verifier-result-v0.1"
+      },
+      "actual_normalized_result": {
+        "status": "FAIL",
+        "artifact_id": "d5164fc02e8122c132eafb4ddb1377b60501d9e3fbd6a08c39f07ee3d877c7cd",
+        "reason_codes": [
+          "SCHEMA_VERSION_INVALID"
+        ],
+        "protocol_version": "v0.1",
+        "verifier_result_schema": "decirepo-verifier-result-v0.1"
+      },
+      "unmapped_errors": []
+    },
+    {
+      "vector_id": "vector_003_identity_mismatch",
+      "command": "verify",
+      "ok": true,
+      "verdict": "PASS",
+      "reason": "matched_expected_outputs",
+      "identity_check": true,
+      "verification_check": true,
+      "result_bytes_check": true,
+      "checks": {
+        "vector_consistency_ok": true,
+        "canonical_identity_bytes_match": true,
+        "artifact_id_match": true,
+        "normalized_result_match": true,
+        "unmapped_errors_empty": true
+      },
+      "failures": [],
+      "manifest": {
+        "vector_id": "vector_003_identity_mismatch",
+        "conformance_profile": "V0_1",
+        "protocol_specification": "v0.2",
+        "protocol_semantics": "v0.1",
+        "identity_surface": "artifact.rebuild_source",
+        "canonicalization": "decirepo-json-c14n-v1",
+        "result_canonicalization": "decirepo-result-c14n-v1",
+        "hash_function": "SHA256",
+        "normalized_result_schema": "decirepo-verifier-result-v0.1",
+        "verification_command": "verify",
+        "description": "Declared expected rebuild hash does not match canonical identity derivation."
+      },
+      "raw_result": {
+        "command": "verify",
+        "status": "FAIL",
+        "errors": [
+          "rebuild_hash_expected does not match computed rebuild hash"
+        ],
+        "warnings": [],
+        "derived": {
+          "computed_rebuild_hash": "6282b0a0ad6094775dbff43cf48542e5f165aa8402728c2dc34f53fe8830a98d"
+        }
+      },
+      "expected_normalized_result": {
+        "artifact_id": "6282b0a0ad6094775dbff43cf48542e5f165aa8402728c2dc34f53fe8830a98d",
+        "protocol_version": "v0.1",
+        "reason_codes": [
+          "REBUILD_HASH_EXPECTED_MISMATCH"
+        ],
+        "status": "FAIL",
+        "verifier_result_schema": "decirepo-verifier-result-v0.1"
+      },
+      "actual_normalized_result": {
+        "status": "FAIL",
+        "artifact_id": "6282b0a0ad6094775dbff43cf48542e5f165aa8402728c2dc34f53fe8830a98d",
+        "reason_codes": [
+          "REBUILD_HASH_EXPECTED_MISMATCH"
+        ],
+        "protocol_version": "v0.1",
+        "verifier_result_schema": "decirepo-verifier-result-v0.1"
+      },
+      "unmapped_errors": []
+    },
+    {
+      "vector_id": "vector_004_verification_failure",
+      "command": "verify",
+      "ok": true,
+      "verdict": "PASS",
+      "reason": "matched_expected_outputs",
+      "identity_check": true,
+      "verification_check": true,
+      "result_bytes_check": true,
+      "checks": {
+        "vector_consistency_ok": true,
+        "canonical_identity_bytes_match": true,
+        "artifact_id_match": true,
+        "normalized_result_match": true,
+        "unmapped_errors_empty": true
+      },
+      "failures": [],
+      "manifest": {
+        "vector_id": "vector_004_verification_failure",
+        "conformance_profile": "V0_1",
+        "protocol_specification": "v0.2",
+        "protocol_semantics": "v0.1",
+        "identity_surface": "artifact.rebuild_source",
+        "canonicalization": "decirepo-json-c14n-v1",
+        "result_canonicalization": "decirepo-result-c14n-v1",
+        "hash_function": "SHA256",
+        "normalized_result_schema": "decirepo-verifier-result-v0.1",
+        "verification_command": "verify",
+        "description": "Artifact declares PASS while rebuild_result is MISMATCH."
+      },
+      "raw_result": {
+        "command": "verify",
+        "status": "FAIL",
+        "errors": [
+          "PASS validator_result requires MATCH rebuild_result"
+        ],
+        "warnings": [],
+        "derived": {
+          "computed_rebuild_hash": "0878fc1e6aca94b93fb68267e6c2c3a2e93e5e0deb940fd97912f7dd72646239"
+        }
+      },
+      "expected_normalized_result": {
+        "artifact_id": "0878fc1e6aca94b93fb68267e6c2c3a2e93e5e0deb940fd97912f7dd72646239",
+        "protocol_version": "v0.1",
+        "reason_codes": [
+          "PASS_REQUIRES_MATCH"
+        ],
+        "status": "FAIL",
+        "verifier_result_schema": "decirepo-verifier-result-v0.1"
+      },
+      "actual_normalized_result": {
+        "status": "FAIL",
+        "artifact_id": "0878fc1e6aca94b93fb68267e6c2c3a2e93e5e0deb940fd97912f7dd72646239",
+        "reason_codes": [
+          "PASS_REQUIRES_MATCH"
+        ],
+        "protocol_version": "v0.1",
+        "verifier_result_schema": "decirepo-verifier-result-v0.1"
+      },
+      "unmapped_errors": []
+    }
+  ]
+}

@@ -16,6 +16,7 @@
     "overall_verdict",
     "results"
   ],
+  "additionalProperties": false,
   "properties": {
     "report_schema": {
       "const": "decirepo-conformance-report-v0.1"
@@ -57,26 +58,20 @@
         "type": "object",
         "required": [
           "vector_id",
-          "command",
           "verdict",
-          "reason",
           "identity_check",
           "verification_check",
-          "result_bytes_check"
+          "result_bytes_check",
+          "diagnostics"
         ],
+        "additionalProperties": false,
         "properties": {
           "vector_id": {
-            "type": "string"
-          },
-          "command": {
             "type": "string"
           },
           "verdict": {
             "type": "string",
             "enum": ["PASS", "FAIL", "CONFORMANCE_ERROR"]
-          },
-          "reason": {
-            "type": "string"
           },
           "identity_check": {
             "type": "boolean"
@@ -86,6 +81,54 @@
           },
           "result_bytes_check": {
             "type": "boolean"
+          },
+          "diagnostics": {
+            "type": "object",
+            "required": [
+              "command",
+              "reason_text",
+              "failure_keys",
+              "checks"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "command": {
+                "type": "string"
+              },
+              "reason_text": {
+                "type": "string"
+              },
+              "failure_keys": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "checks": {
+                "type": "object"
+              },
+              "manifest": {
+                "type": "object"
+              },
+              "raw_result": {
+                "type": "object"
+              },
+              "expected_normalized_result": {
+                "type": "object"
+              },
+              "actual_normalized_result": {
+                "type": "object"
+              },
+              "unmapped_errors": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "error": {
+                "type": "string"
+              }
+            }
           }
         }
       }

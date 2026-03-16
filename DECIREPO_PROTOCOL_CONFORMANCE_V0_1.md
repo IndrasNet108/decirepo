@@ -360,3 +360,37 @@ Future protocol revisions MAY introduce:
 - protocol-version-specific result schemas.
 
 Backward compatibility rules will be defined by future protocol versions and their corresponding conformance profiles.
+
+## 15. Conformance Report Surface
+
+A machine-runnable conformance harness MAY emit diagnostic data in addition to the protocol compatibility verdict.
+
+For this baseline, the conformance report surface is divided into:
+
+1. normative report fields;
+2. diagnostic report fields.
+
+Normative top-level report fields are:
+
+- `report_schema`
+- `implementation_name`
+- `implementation_version`
+- `conformance_profile`
+- `protocol_specification`
+- `protocol_semantics`
+- `vectors_total`
+- `vectors_passed`
+- `vectors_failed`
+- `overall_verdict`
+- `results`
+
+Normative per-vector fields are:
+
+- `vector_id`
+- `verdict`
+- `identity_check`
+- `verification_check`
+- `result_bytes_check`
+
+Diagnostic fields MAY be included only inside a dedicated diagnostics object.
+Diagnostic fields MUST NOT alter normative report interpretation.

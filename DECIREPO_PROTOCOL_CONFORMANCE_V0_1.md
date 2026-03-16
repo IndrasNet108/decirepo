@@ -121,6 +121,7 @@ vector_003_identity_mismatch
 vector_004_verification_failure
 vector_005_transition_chain_invalid
 vector_006_rebuild_source_invalid
+vector_007_unknown_envelope_field
 ```
 
 Published vector purposes:
@@ -131,6 +132,7 @@ Published vector purposes:
 - `vector_004_verification_failure`: rule-level verification failure on otherwise structured artifact
 - `vector_005_transition_chain_invalid`: invalid transition-chain semantics under `validate`
 - `vector_006_rebuild_source_invalid`: invalid rebuild-source surface under `rebuild`
+- `vector_007_unknown_envelope_field`: single unknown top-level field outside `artifact.rebuild_source` does not affect baseline `verify` identity or normalized result
 
 Published vectors MUST NOT be modified once released.
 New vectors MUST be added as new fixtures rather than by rewriting an existing canonical vector.

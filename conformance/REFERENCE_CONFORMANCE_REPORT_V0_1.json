@@ -5,13 +5,13 @@
   "conformance_profile": "V0_1",
   "protocol_specification": "v0.2",
   "protocol_semantics": "v0.1",
-  "vectors_total": 6,
-  "vectors_passed": 6,
+  "vectors_total": 7,
+  "vectors_passed": 7,
   "vectors_failed": 0,
   "overall_verdict": "PASS",
   "status": "PASS",
-  "total": 6,
-  "passed": 6,
+  "total": 7,
+  "passed": 7,
   "failed": 0,
   "results": [
     {
@@ -366,6 +366,63 @@
           "reason_codes": [
             "REBUILD_SOURCE_INVALID"
           ],
+          "protocol_version": "v0.1",
+          "verifier_result_schema": "decirepo-verifier-result-v0.1"
+        },
+        "unmapped_errors": []
+      }
+    },
+    {
+      "vector_id": "vector_007_unknown_envelope_field",
+      "verdict": "PASS",
+      "identity_check": true,
+      "verification_check": true,
+      "result_bytes_check": true,
+      "diagnostics": {
+        "command": "verify",
+        "reason_text": "matched_expected_outputs",
+        "failure_keys": [],
+        "checks": {
+          "vector_consistency_ok": true,
+          "canonical_identity_bytes_match": true,
+          "artifact_id_match": true,
+          "normalized_result_match": true,
+          "unmapped_errors_empty": true
+        },
+        "manifest": {
+          "vector_id": "vector_007_unknown_envelope_field",
+          "conformance_profile": "V0_1",
+          "protocol_specification": "v0.2",
+          "protocol_semantics": "v0.1",
+          "identity_surface": "artifact.rebuild_source",
+          "canonicalization": "decirepo-json-c14n-v1",
+          "result_canonicalization": "decirepo-result-c14n-v1",
+          "hash_function": "SHA256",
+          "normalized_result_schema": "decirepo-verifier-result-v0.1",
+          "verification_command": "verify",
+          "description": "Single unknown top-level field outside artifact.rebuild_source does not affect baseline verify identity or normalized result.",
+          "canonical_bytes_source": "artifact.rebuild_source"
+        },
+        "raw_result": {
+          "command": "verify",
+          "status": "PASS",
+          "errors": [],
+          "warnings": [],
+          "derived": {
+            "computed_rebuild_hash": "c630adc482c72a19ef20254f80411d7bf2ad5075bdb58f2a82751761ac6d2a4e"
+          }
+        },
+        "expected_normalized_result": {
+          "artifact_id": "c630adc482c72a19ef20254f80411d7bf2ad5075bdb58f2a82751761ac6d2a4e",
+          "protocol_version": "v0.1",
+          "reason_codes": [],
+          "status": "PASS",
+          "verifier_result_schema": "decirepo-verifier-result-v0.1"
+        },
+        "actual_normalized_result": {
+          "status": "PASS",
+          "artifact_id": "c630adc482c72a19ef20254f80411d7bf2ad5075bdb58f2a82751761ac6d2a4e",
+          "reason_codes": [],
           "protocol_version": "v0.1",
           "verifier_result_schema": "decirepo-verifier-result-v0.1"
         },

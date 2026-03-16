@@ -119,6 +119,8 @@ vector_001_genesis
 vector_002_invalid_structure
 vector_003_identity_mismatch
 vector_004_verification_failure
+vector_005_transition_chain_invalid
+vector_006_rebuild_source_invalid
 ```
 
 Published vector purposes:
@@ -127,6 +129,8 @@ Published vector purposes:
 - `vector_002_invalid_structure`: invalid artifact structure
 - `vector_003_identity_mismatch`: expected identity or rebuild-hash mismatch
 - `vector_004_verification_failure`: rule-level verification failure on otherwise structured artifact
+- `vector_005_transition_chain_invalid`: invalid transition-chain semantics under `validate`
+- `vector_006_rebuild_source_invalid`: invalid rebuild-source surface under `rebuild`
 
 Published vectors MUST NOT be modified once released.
 New vectors MUST be added as new fixtures rather than by rewriting an existing canonical vector.

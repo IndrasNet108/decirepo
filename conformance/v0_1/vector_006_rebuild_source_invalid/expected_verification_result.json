@@ -1,0 +1,9 @@
+{
+  "artifact_id": "fb11196165df95f5e7aff8318281c2347cede7e95a7c7b435a90dd87da164dc0",
+  "protocol_version": "v0.1",
+  "reason_codes": [
+    "REBUILD_SOURCE_INVALID"
+  ],
+  "status": "FAIL",
+  "verifier_result_schema": "decirepo-verifier-result-v0.1"
+}

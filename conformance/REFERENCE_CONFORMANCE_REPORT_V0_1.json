@@ -5,13 +5,13 @@
   "conformance_profile": "V0_1",
   "protocol_specification": "v0.2",
   "protocol_semantics": "v0.1",
-  "vectors_total": 4,
-  "vectors_passed": 4,
+  "vectors_total": 6,
+  "vectors_passed": 6,
   "vectors_failed": 0,
   "overall_verdict": "PASS",
   "status": "PASS",
-  "total": 4,
-  "passed": 4,
+  "total": 6,
+  "passed": 6,
   "failed": 0,
   "results": [
     {
@@ -249,6 +249,122 @@
           "artifact_id": "0878fc1e6aca94b93fb68267e6c2c3a2e93e5e0deb940fd97912f7dd72646239",
           "reason_codes": [
             "PASS_REQUIRES_MATCH"
+          ],
+          "protocol_version": "v0.1",
+          "verifier_result_schema": "decirepo-verifier-result-v0.1"
+        },
+        "unmapped_errors": []
+      }
+    },
+    {
+      "vector_id": "vector_005_transition_chain_invalid",
+      "verdict": "PASS",
+      "identity_check": true,
+      "verification_check": true,
+      "result_bytes_check": true,
+      "diagnostics": {
+        "command": "validate",
+        "reason_text": "matched_expected_outputs",
+        "failure_keys": [],
+        "checks": {
+          "vector_consistency_ok": true,
+          "canonical_identity_bytes_match": true,
+          "artifact_id_match": true,
+          "normalized_result_match": true,
+          "unmapped_errors_empty": true
+        },
+        "manifest": {
+          "vector_id": "vector_005_transition_chain_invalid",
+          "conformance_profile": "V0_1",
+          "protocol_specification": "v0.2",
+          "protocol_semantics": "v0.1",
+          "identity_surface": "artifact.rebuild_source",
+          "canonicalization": "decirepo-json-c14n-v1",
+          "result_canonicalization": "decirepo-result-c14n-v1",
+          "hash_function": "SHA256",
+          "normalized_result_schema": "decirepo-verifier-result-v0.1",
+          "verification_command": "validate",
+          "description": "Transition chain contains an invalid protocol transition."
+        },
+        "raw_result": {
+          "command": "validate",
+          "status": "FAIL",
+          "errors": [
+            "transition_chain[1] invalid transition PROPOSED -> PUBLISHED"
+          ]
+        },
+        "expected_normalized_result": {
+          "artifact_id": "0de52240c27f599d86b00cf1cc4e7778af59a9fd27ea79d4a015b2a925c930e3",
+          "protocol_version": "v0.1",
+          "reason_codes": [
+            "TRANSITION_CHAIN_INVALID"
+          ],
+          "status": "FAIL",
+          "verifier_result_schema": "decirepo-verifier-result-v0.1"
+        },
+        "actual_normalized_result": {
+          "status": "FAIL",
+          "artifact_id": "0de52240c27f599d86b00cf1cc4e7778af59a9fd27ea79d4a015b2a925c930e3",
+          "reason_codes": [
+            "TRANSITION_CHAIN_INVALID"
+          ],
+          "protocol_version": "v0.1",
+          "verifier_result_schema": "decirepo-verifier-result-v0.1"
+        },
+        "unmapped_errors": []
+      }
+    },
+    {
+      "vector_id": "vector_006_rebuild_source_invalid",
+      "verdict": "PASS",
+      "identity_check": true,
+      "verification_check": true,
+      "result_bytes_check": true,
+      "diagnostics": {
+        "command": "rebuild",
+        "reason_text": "matched_expected_outputs",
+        "failure_keys": [],
+        "checks": {
+          "vector_consistency_ok": true,
+          "canonical_identity_bytes_match": true,
+          "artifact_id_match": true,
+          "normalized_result_match": true,
+          "unmapped_errors_empty": true
+        },
+        "manifest": {
+          "vector_id": "vector_006_rebuild_source_invalid",
+          "conformance_profile": "V0_1",
+          "protocol_specification": "v0.2",
+          "protocol_semantics": "v0.1",
+          "identity_surface": "artifact.rebuild_source",
+          "canonicalization": "decirepo-json-c14n-v1",
+          "result_canonicalization": "decirepo-result-c14n-v1",
+          "hash_function": "SHA256",
+          "normalized_result_schema": "decirepo-verifier-result-v0.1",
+          "verification_command": "rebuild",
+          "description": "Rebuild source is not a protocol-valid object for rebuild execution."
+        },
+        "raw_result": {
+          "command": "rebuild",
+          "status": "FAIL",
+          "errors": [
+            "rebuild_source object is required"
+          ]
+        },
+        "expected_normalized_result": {
+          "artifact_id": "fb11196165df95f5e7aff8318281c2347cede7e95a7c7b435a90dd87da164dc0",
+          "protocol_version": "v0.1",
+          "reason_codes": [
+            "REBUILD_SOURCE_INVALID"
+          ],
+          "status": "FAIL",
+          "verifier_result_schema": "decirepo-verifier-result-v0.1"
+        },
+        "actual_normalized_result": {
+          "status": "FAIL",
+          "artifact_id": "fb11196165df95f5e7aff8318281c2347cede7e95a7c7b435a90dd87da164dc0",
+          "reason_codes": [
+            "REBUILD_SOURCE_INVALID"
           ],
           "protocol_version": "v0.1",
           "verifier_result_schema": "decirepo-verifier-result-v0.1"

@@ -62,7 +62,8 @@ An external team may claim baseline DeciRepo compatibility only if all of the fo
 2. the implementation reproduces the expected artifact identities;
 3. the implementation reproduces the expected normalized verification results byte-for-byte;
 4. the implementation can emit a conformance report matching `conformance/CONFORMANCE_REPORT_SCHEMA.json`;
-5. the implementation does not require `dlx-ref` code to execute its own verifier logic.
+5. the implementation does not require `dlx-ref` code to execute its own verifier logic;
+6. the baseline compatible conformance path is evaluated only on artifacts for which `artifact.rebuild_source` is present and usable as the published identity surface.
 
 The public reference report:
 
@@ -70,6 +71,9 @@ The public reference report:
 
 is a reference example of successful baseline output.
 It is not an independent source of protocol truth and must not be treated as a hidden oracle overriding the vectors or the conformance profile.
+
+A local verifier may still expose operational behavior outside the published baseline compatible path.
+Such behavior does not become a compatibility anchor unless it is fixed by published vectors and the conformance profile.
 
 ## 4. Verifier vs Harness Boundary
 
@@ -227,9 +231,10 @@ Consequences:
 
 For the current published baseline:
 
+- the published baseline compatible conformance path requires `artifact.rebuild_source` to be present and usable as the identity surface;
 - under `rebuild`, `rebuild_source` must be present and must be an object;
 - under `rebuild`, `null`, absence, or non-object values are rebuild-surface failures;
-- under `verify`, no published positive vector yet fixes absent `rebuild_source` as compatible behavior;
+- local `verify` behavior without `rebuild_source` is not a published compatibility anchor for baseline conformance;
 - an empty object is canonically serializable, but no current published vector defines it as a meaningful successful business artifact.
 
 ### 8.3 Stage Boundary

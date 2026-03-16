@@ -1,0 +1,9 @@
+{
+  "artifact_id": "0878fc1e6aca94b93fb68267e6c2c3a2e93e5e0deb940fd97912f7dd72646239",
+  "protocol_version": "v0.1",
+  "reason_codes": [
+    "PASS_REQUIRES_MATCH"
+  ],
+  "status": "FAIL",
+  "verifier_result_schema": "decirepo-verifier-result-v0.1"
+}

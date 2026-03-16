@@ -88,7 +88,7 @@ The expected normalized verification output.
 The canonical serialized byte sequence of the normalized verification result object.
 
 `vector_manifest.json`
-The vector metadata binding the fixture to a protocol baseline, canonicalization rule, and hash function.
+The vector metadata binding the fixture to a protocol baseline, canonicalization rules, hash function, and verification command.
 
 ## 4. Canonical Test Vector Set
 

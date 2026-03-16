@@ -1,0 +1,9 @@
+{
+  "command": "verify",
+  "status": "PASS",
+  "errors": [],
+  "warnings": [],
+  "derived": {
+    "computed_rebuild_hash": "c630adc482c72a19ef20254f80411d7bf2ad5075bdb58f2a82751761ac6d2a4e"
+  }
+}

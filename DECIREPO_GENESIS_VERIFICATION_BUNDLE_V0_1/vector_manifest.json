@@ -1,0 +1,11 @@
+{
+  "vector_id": "vector_001_genesis",
+  "conformance_profile": "V0_1",
+  "protocol_specification": "v0.2",
+  "protocol_semantics": "v0.1",
+  "identity_surface": "artifact.rebuild_source",
+  "canonicalization": "decirepo-json-c14n-v1",
+  "result_canonicalization": "decirepo-result-c14n-v1",
+  "hash_function": "SHA256",
+  "normalized_result_schema": "decirepo-verifier-result-v0.1"
+}

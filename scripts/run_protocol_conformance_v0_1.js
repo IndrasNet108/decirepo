@@ -159,50 +159,53 @@ function main() {
         rawResult.status === expectedResult.status &&
         JSON.stringify(normalized.reason_codes) === JSON.stringify(expectedResult.reason_codes);
       const resultBytesCheck = checks.normalized_result_match;
+      const failureKeys = failKeys(checks);
       reportRow = {
         vector_id: vectorId,
-        command,
-        ok,
         verdict: ok ? "PASS" : "FAIL",
-        reason: ok ? "matched_expected_outputs" : failKeys(checks).join(","),
         identity_check: identityCheck,
         verification_check: verificationCheck,
         result_bytes_check: resultBytesCheck,
-        checks,
-        failures: failKeys(checks),
-        manifest,
-        raw_result: rawResult,
-        expected_normalized_result: expectedResult,
-        actual_normalized_result: normalized,
-        unmapped_errors
+        diagnostics: {
+          command,
+          reason_text: ok ? "matched_expected_outputs" : failureKeys.join(","),
+          failure_keys: failureKeys,
+          checks,
+          manifest,
+          raw_result: rawResult,
+          expected_normalized_result: expectedResult,
+          actual_normalized_result: normalized,
+          unmapped_errors
+        }
       };
     } catch (error) {
       reportRow = {
         vector_id: vectorId,
-        command,
-        ok: false,
         verdict: "CONFORMANCE_ERROR",
-        reason: "runner_error",
         identity_check: false,
         verification_check: false,
         result_bytes_check: false,
-        checks: {
-          runner_ok: false
-        },
-        failures: ["runner_error"],
-        error: String(error && error.message ? error.message : error)
+        diagnostics: {
+          command,
+          reason_text: "runner_error",
+          failure_keys: ["runner_error"],
+          checks: {
+            runner_ok: false
+          },
+          error: String(error && error.message ? error.message : error)
+        }
       };
     }
 
-    const mark = reportRow.ok ? "PASS" : "FAIL";
-    process.stdout.write(`${mark} ${reportRow.vector_id} command=${reportRow.command}\n`);
-    if (!reportRow.ok) {
-      process.stdout.write(`  failures=${reportRow.failures.join(",")}\n`);
+    const mark = reportRow.verdict;
+    process.stdout.write(`${mark} ${reportRow.vector_id} command=${reportRow.diagnostics.command}\n`);
+    if (reportRow.verdict !== "PASS") {
+      process.stdout.write(`  failures=${reportRow.diagnostics.failure_keys.join(",")}\n`);
     }
     results.push(reportRow);
   }
 
-  const failed = results.filter((row) => !row.ok).length;
+  const failed = results.filter((row) => row.verdict !== "PASS").length;
   const hasConformanceError = results.some((row) => row.verdict === "CONFORMANCE_ERROR");
   const overallVerdict = hasConformanceError ? "CONFORMANCE_ERROR" : failed === 0 ? "PASS" : "FAIL";
   const report = {

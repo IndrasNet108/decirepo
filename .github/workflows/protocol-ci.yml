@@ -34,6 +34,9 @@ jobs:
       - name: DLX reference conformance
         run: node dlx-ref/cli.js conformance dlx-ref/tests/conformance_v0_1.json
 
+      - name: Protocol conformance baseline
+        run: node scripts/run_protocol_conformance_v0_1.js
+
       - name: Federation negative tests
         run: node scripts/run_negative_federation_tests.js
 

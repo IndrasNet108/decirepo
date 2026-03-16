@@ -7,6 +7,7 @@
   "license": "SEE LICENSE IN LICENSE FILE",
   "dependencies": {},
   "scripts": {
-    "test": "bash scripts/validate_all.sh"
+    "test": "bash scripts/validate_all.sh",
+    "conformance:protocol:v0_1": "node scripts/run_protocol_conformance_v0_1.js"
   }
 }

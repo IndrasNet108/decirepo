@@ -32,6 +32,22 @@ The purpose of this document is to ensure that independent implementations:
 This document does not define the protocol itself.
 It defines how protocol conformance is verified.
 
+## Scope Support Artifacts
+
+The bounded-completeness support artifacts for this profile are:
+
+- `DECIREPO_SEMANTICS_KERNEL_V0_1.md`
+- `conformance/SEMANTICS_KERNEL_V0_1.json`
+- `conformance/DOMAIN_PROFILE_V0_1.json`
+- `conformance/CASE_CLASS_MATRIX_V0_1.json`
+- `conformance/GAP_CLASSIFICATION_V0_1.json`
+- `conformance/generated_corpus_v0_1/manifest.json`
+- `conformance/boundary_corpus_v0_1/manifest.json`
+- `conformance/adversarial_corpus_v0_1/manifest.json`
+
+These artifacts clarify domain membership, bounded evaluation order, case-class coverage, and the remaining open claim boundary for profile `V0_1`.
+They do not override published canonical vectors.
+
 ## 1. Conformance Definition
 
 An implementation is considered DeciRepo-compatible for the `v0.1` baseline if and only if it satisfies all of the following conditions:
@@ -242,6 +258,12 @@ Local codes MUST:
 3. NOT alter the normalized verification result surface.
 
 Reason codes in the normalized verification result object MUST be ordered lexicographically.
+
+Coverage status for protocol-defined reason-code classes is declared in:
+
+```text
+conformance/CASE_CLASS_MATRIX_V0_1.json
+```
 
 ## 7. Canonicalization Identifier Registry
 

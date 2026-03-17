@@ -37,6 +37,30 @@ jobs:
       - name: Protocol conformance baseline
         run: bash scripts/run-conformance.sh
 
+      - name: Oracle vector tests
+        run: python3 oracle/tests/test_vectors_v0_1.py
+
+      - name: Kernel contract tests
+        run: python3 oracle/tests/test_kernel_contract_v0_1.py
+
+      - name: Gap classification tests
+        run: python3 oracle/tests/test_gap_classification_v0_1.py
+
+      - name: Generate bounded corpus
+        run: python3 oracle/gen_corpus_v0_1.py
+
+      - name: Generate boundary corpus
+        run: python3 oracle/gen_boundary_corpus_v0_1.py
+
+      - name: Generate adversarial corpus
+        run: python3 oracle/gen_adversarial_corpus_v0_1.py
+
+      - name: Partition tests
+        run: python3 oracle/tests/test_partition_v0_1.py
+
+      - name: Boundary and adversarial tests
+        run: python3 oracle/tests/test_boundary_adversarial_v0_1.py
+
       - name: Upload protocol conformance report
         uses: actions/upload-artifact@v6
         with:

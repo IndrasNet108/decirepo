@@ -6,6 +6,19 @@
   "framework_status": "bounded_conformance_framework_present",
   "known_gap_boundary_status": "sealed_known_gap_boundary",
   "bounded_completeness_proven": false,
+  "blocker_set_stability": {
+    "status": "unstable_under_active_exploration",
+    "iterations_without_new_claim_blockers": 0,
+    "minimum_iterations_before_claim_ceiling_raise": 3,
+    "claim_ceiling_raise_permitted": false,
+    "last_claim_blocker_set_change_discovered_by": [
+      "adversarial",
+      "contract_test"
+    ],
+    "last_non_blocker_defect_discovered_by": [
+      "domain_guided"
+    ]
+  },
   "claim_ceiling": {
     "ceiling_id": "V0_1_EXECUTABLE_FRAMEWORK_WITH_KNOWN_GAPS",
     "allowed_claims": [

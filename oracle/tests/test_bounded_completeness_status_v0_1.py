@@ -30,6 +30,23 @@ class BoundedCompletenessStatusV01Test(unittest.TestCase):
         self.assertEqual(self.status["known_gap_boundary_status"], "sealed_known_gap_boundary")
         self.assertFalse(self.status["bounded_completeness_proven"])
 
+    def test_blocker_set_stability_gate_prevents_premature_ceiling_raise(self) -> None:
+        stability = self.status["blocker_set_stability"]
+        self.assertEqual(stability["status"], "unstable_under_active_exploration")
+        self.assertFalse(stability["claim_ceiling_raise_permitted"])
+        self.assertLess(
+            stability["iterations_without_new_claim_blockers"],
+            stability["minimum_iterations_before_claim_ceiling_raise"],
+        )
+        self.assertEqual(
+            stability["last_claim_blocker_set_change_discovered_by"],
+            ["adversarial", "contract_test"],
+        )
+        self.assertEqual(
+            stability["last_non_blocker_defect_discovered_by"],
+            ["domain_guided"],
+        )
+
     def test_claim_ceiling_has_allowed_and_disallowed_claims(self) -> None:
         ceiling = self.status["claim_ceiling"]
         self.assertTrue(ceiling["allowed_claims"])

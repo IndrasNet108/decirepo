@@ -1,0 +1,163 @@
+{
+  "profile_id": "V0_1",
+  "status": "draft",
+  "protocol_specification": "v0.2",
+  "protocol_semantics": "v0.1",
+  "published_vector_set": "conformance/v0_1",
+  "published_vectors": [
+    "vector_001_genesis",
+    "vector_002_invalid_structure",
+    "vector_003_identity_mismatch",
+    "vector_004_verification_failure",
+    "vector_005_transition_chain_invalid",
+    "vector_006_rebuild_source_invalid",
+    "vector_007_unknown_envelope_field"
+  ],
+  "verification_commands": [
+    "verify",
+    "validate",
+    "rebuild"
+  ],
+  "artifact_domain": {
+    "artifact_encoding": "json-object",
+    "identity_surface": "artifact.rebuild_source",
+    "canonical_bytes_source": "artifact.rebuild_source",
+    "identity_canonicalization": "decirepo-json-c14n-v1",
+    "artifact_id_function": "SHA256(decirepo-json-c14n-v1(artifact.rebuild_source))",
+    "baseline_compatible_conformance_path": {
+      "requires_rebuild_source_present": true,
+      "requires_rebuild_source_usable_as_identity_surface": true,
+      "requires_supported_command": true,
+      "notes": [
+        "Published baseline compatibility is claimed only on artifacts whose identity surface resolves to artifact.rebuild_source.",
+        "Local verifier behavior outside that path does not become a compatibility anchor unless fixed by published vectors."
+      ]
+    },
+    "known_top_level_fields": [
+      "schema_version",
+      "decision_id",
+      "publisher",
+      "policy_version",
+      "artifact_hash",
+      "artifact_hash_semantics",
+      "rebuild_result_hash",
+      "validator_result",
+      "rebuild_result",
+      "artifact_file_sha256_uri",
+      "decision_record_uri",
+      "decision_record_sha256_uri",
+      "evidence_manifest_uri",
+      "evidence_manifest_sha256_uri",
+      "rebuild_source",
+      "rebuild_hash_expected",
+      "transition_chain"
+    ]
+  },
+  "normalized_result": {
+    "schema": "decirepo-verifier-result-v0.1",
+    "canonicalization": "decirepo-result-c14n-v1",
+    "statuses": [
+      "PASS",
+      "FAIL",
+      "CONFORMANCE_ERROR"
+    ],
+    "reason_code_ordering": {
+      "mode": "fixed_total_order",
+      "source": "explicit_table_v0_1",
+      "ordered_codes": [
+        "ARTIFACT_HASH_INVALID",
+        "PASS_REQUIRES_MATCH",
+        "REBUILD_HASH_EXPECTED_MISMATCH",
+        "REBUILD_RESULT_INVALID",
+        "REBUILD_SOURCE_INVALID",
+        "SCHEMA_VERSION_INVALID",
+        "TRANSITION_CHAIN_INVALID",
+        "VALIDATOR_RESULT_INVALID"
+      ]
+    },
+    "reason_code_normalization": {
+      "mode": "fixed_total_order_then_deduplicate",
+      "deduplicate_after_ordering": true,
+      "duplicate_policy": "collapse_duplicates_preserving_first_ordered_position"
+    }
+  },
+  "protocol_defined_reason_codes": [
+    "SCHEMA_VERSION_INVALID",
+    "ARTIFACT_HASH_INVALID",
+    "VALIDATOR_RESULT_INVALID",
+    "REBUILD_RESULT_INVALID",
+    "PASS_REQUIRES_MATCH",
+    "REBUILD_HASH_EXPECTED_MISMATCH",
+    "REBUILD_SOURCE_INVALID",
+    "TRANSITION_CHAIN_INVALID"
+  ],
+  "command_domain": {
+    "verify": {
+      "in_domain_when": [
+        "artifact is a JSON object",
+        "artifact.rebuild_source is present and usable as the published identity surface",
+        "verification command is verify"
+      ],
+      "baseline_rules": [
+        "schema_version must equal dlx-artifact-v0.1",
+        "if rebuild_hash_expected is present, it must equal the computed artifact_id",
+        "validator_result = PASS requires rebuild_result = MATCH"
+      ]
+    },
+    "validate": {
+      "in_domain_when": [
+        "artifact is a JSON object",
+        "artifact.rebuild_source is present and usable as the published identity surface",
+        "verification command is validate"
+      ],
+      "baseline_rules": [
+        "transition_chain must be a non-empty array",
+        "each transition step must contain from, to, and evidence_hash",
+        "allowed local transitions are DRAFT->PROPOSED, PROPOSED->VALIDATED, VALIDATED->PUBLISHED",
+        "transition_chain continuity is mandatory"
+      ]
+    },
+    "rebuild": {
+      "in_domain_when": [
+        "artifact is a JSON object",
+        "verification command is rebuild"
+      ],
+      "baseline_rules": [
+        "rebuild_source must be present",
+        "rebuild_source must be an object"
+      ]
+    }
+  },
+  "unknown_field_policy": {
+    "artifact_envelope_fields_outside_rebuild_source": {
+      "affect_identity_surface": false,
+      "affect_normalized_result_surface": false,
+      "published_anchor": "vector_007_unknown_envelope_field"
+    },
+    "fields_inside_rebuild_source": {
+      "participate_in_identity_surface": true,
+      "notes": [
+        "Fields inside rebuild_source are inside the identity surface unless a future profile states otherwise."
+      ]
+    },
+    "normalized_result_object": {
+      "unknown_fields_forbidden_in_conformance": true
+    }
+  },
+  "out_of_scope_cases": [
+    {
+      "case_id": "verify_without_rebuild_source",
+      "treatment": "outside_published_baseline_conformance_path"
+    },
+    {
+      "case_id": "unsupported_verification_command",
+      "treatment": "conformance_harness_error"
+    }
+  ],
+  "open_gaps": [
+    "No published canonical vector yet anchors a natural CONFORMANCE_ERROR case.",
+    "No published canonical vector yet anchors absent rebuild_source under verify.",
+    "No published canonical vector yet anchors multi-reason precedence behavior.",
+    "Reason-code coverage for ARTIFACT_HASH_INVALID, VALIDATOR_RESULT_INVALID, and REBUILD_RESULT_INVALID is registry-only at this profile stage."
+  ]
+}

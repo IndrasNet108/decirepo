@@ -48,7 +48,7 @@ The bounded-completeness support artifacts for this profile are:
 - `conformance/adversarial_corpus_v0_1/manifest.json`
 - `conformance/malformed_corpus_v0_1/manifest.json`
 
-These artifacts clarify domain membership, bounded evaluation order, case-class coverage, empirical corpus provenance, and the remaining open claim boundary for profile `V0_1`.
+These artifacts clarify domain membership, bounded evaluation order, case-class coverage, empirical corpus provenance, and the currently known gap boundary for profile `V0_1`.
 They do not override published canonical vectors.
 
 ## 1. Conformance Definition

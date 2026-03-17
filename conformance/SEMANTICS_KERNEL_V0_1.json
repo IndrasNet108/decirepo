@@ -1,0 +1,550 @@
+{
+  "profile_id": "V0_1",
+  "status": "draft",
+  "protocol_specification": "v0.2",
+  "protocol_semantics": "v0.1",
+  "semantic_position": {
+    "kind": "bounded_protocol_kernel",
+    "scope": "published baseline slice only",
+    "upstream_binding_status": "unbound",
+    "notes": [
+      "This kernel is normative for the published DeciRepo V0_1 baseline slice only.",
+      "Any future DLX binding must be explicit and pinned rather than inferred."
+    ]
+  },
+  "domain": {
+    "input_kind": "json_object",
+    "supported_commands": [
+      "verify",
+      "validate",
+      "rebuild"
+    ],
+    "identity_surface": {
+      "path": "artifact.rebuild_source",
+      "resolution_operator": "field_present",
+      "canonicalization": "decirepo-json-c14n-v1",
+      "artifact_id_function": "SHA256"
+    },
+    "baseline_compatible_path": {
+      "mode": "all_of",
+      "predicates": [
+        {
+          "operator": "input_is_json_object"
+        },
+        {
+          "operator": "field_present",
+          "field": "rebuild_source"
+        },
+        {
+          "operator": "supported_command"
+        }
+      ]
+    },
+    "out_of_scope_cases": [
+      {
+        "case_id": "verify_without_rebuild_source",
+        "treatment": "outside_published_baseline_conformance_path"
+      },
+      {
+        "case_id": "unsupported_verification_command",
+        "treatment": "conformance_harness_error"
+      }
+    ]
+  },
+  "normalized_result": {
+    "schema": "decirepo-verifier-result-v0.1",
+    "canonicalization": "decirepo-result-c14n-v1",
+    "protocol_version": "v0.1",
+    "statuses": [
+      "PASS",
+      "FAIL",
+      "CONFORMANCE_ERROR"
+    ],
+    "reason_code_ordering": {
+      "mode": "fixed_total_order",
+      "source": "explicit_table_v0_1",
+      "ordered_codes": [
+        "ARTIFACT_HASH_INVALID",
+        "PASS_REQUIRES_MATCH",
+        "REBUILD_HASH_EXPECTED_MISMATCH",
+        "REBUILD_RESULT_INVALID",
+        "REBUILD_SOURCE_INVALID",
+        "SCHEMA_VERSION_INVALID",
+        "TRANSITION_CHAIN_INVALID",
+        "VALIDATOR_RESULT_INVALID"
+      ]
+    },
+    "reason_code_normalization": {
+      "mode": "fixed_total_order_then_deduplicate",
+      "deduplicate_after_ordering": true,
+      "duplicate_policy": "collapse_duplicates_preserving_first_ordered_position"
+    }
+  },
+  "commands": {
+    "verify": {
+      "status": "published",
+      "entry_conditions": [
+        {
+          "operator": "input_is_json_object"
+        },
+        {
+          "operator": "field_present",
+          "field": "rebuild_source"
+        }
+      ],
+      "rule_order": [
+        "RULE_SCHEMA_VERSION_EQUALS_DLX_ARTIFACT_V0_1",
+        "RULE_REBUILD_HASH_EXPECTED_MATCHES_ARTIFACT_ID",
+        "RULE_PASS_REQUIRES_MATCH_REBUILD_RESULT"
+      ]
+    },
+    "validate": {
+      "status": "published",
+      "entry_conditions": [
+        {
+          "operator": "input_is_json_object"
+        },
+        {
+          "operator": "field_present",
+          "field": "rebuild_source"
+        }
+      ],
+      "rule_order": [
+        "RULE_TRANSITION_CHAIN_NON_EMPTY_ARRAY",
+        "RULE_TRANSITION_CHAIN_STEP_SHAPE",
+        "RULE_TRANSITION_CHAIN_ALLOWED_LOCAL_TRANSITIONS",
+        "RULE_TRANSITION_CHAIN_CONTINUITY"
+      ]
+    },
+    "rebuild": {
+      "status": "published",
+      "entry_conditions": [
+        {
+          "operator": "input_is_json_object"
+        }
+      ],
+      "rule_order": [
+        "RULE_REBUILD_SOURCE_PRESENT",
+        "RULE_REBUILD_SOURCE_OBJECT"
+      ]
+    }
+  },
+  "rules": [
+    {
+      "rule_id": "RULE_SCHEMA_VERSION_EQUALS_DLX_ARTIFACT_V0_1",
+      "status": "published",
+      "applies_to": [
+        "verify"
+      ],
+      "predicate": {
+        "field": "schema_version",
+        "operator": "equals",
+        "value": "dlx-artifact-v0.1"
+      },
+      "on_false_emit": "SCHEMA_VERSION_INVALID"
+    },
+    {
+      "rule_id": "RULE_REBUILD_HASH_EXPECTED_MATCHES_ARTIFACT_ID",
+      "status": "published",
+      "applies_to": [
+        "verify"
+      ],
+      "predicate": {
+        "field": "rebuild_hash_expected",
+        "operator": "optional_equals_artifact_id"
+      },
+      "on_false_emit": "REBUILD_HASH_EXPECTED_MISMATCH"
+    },
+    {
+      "rule_id": "RULE_PASS_REQUIRES_MATCH_REBUILD_RESULT",
+      "status": "published",
+      "applies_to": [
+        "verify"
+      ],
+      "predicate": {
+        "operator": "if_field_equals_then_field_equals",
+        "if_field": "validator_result",
+        "if_value": "PASS",
+        "then_field": "rebuild_result",
+        "then_value": "MATCH"
+      },
+      "on_false_emit": "PASS_REQUIRES_MATCH"
+    },
+    {
+      "rule_id": "RULE_TRANSITION_CHAIN_NON_EMPTY_ARRAY",
+      "status": "published",
+      "applies_to": [
+        "validate"
+      ],
+      "predicate": {
+        "field": "transition_chain",
+        "operator": "non_empty_array"
+      },
+      "on_false_emit": "TRANSITION_CHAIN_INVALID"
+    },
+    {
+      "rule_id": "RULE_TRANSITION_CHAIN_STEP_SHAPE",
+      "status": "published",
+      "applies_to": [
+        "validate"
+      ],
+      "predicate": {
+        "field": "transition_chain",
+        "operator": "each_step_has_keys",
+        "required_keys": [
+          "from",
+          "to",
+          "evidence_hash"
+        ]
+      },
+      "on_false_emit": "TRANSITION_CHAIN_INVALID"
+    },
+    {
+      "rule_id": "RULE_TRANSITION_CHAIN_ALLOWED_LOCAL_TRANSITIONS",
+      "status": "published",
+      "applies_to": [
+        "validate"
+      ],
+      "predicate": {
+        "field": "transition_chain",
+        "operator": "allowed_local_transitions",
+        "allowed": [
+          "DRAFT->PROPOSED",
+          "PROPOSED->VALIDATED",
+          "VALIDATED->PUBLISHED"
+        ]
+      },
+      "on_false_emit": "TRANSITION_CHAIN_INVALID"
+    },
+    {
+      "rule_id": "RULE_TRANSITION_CHAIN_CONTINUITY",
+      "status": "published",
+      "applies_to": [
+        "validate"
+      ],
+      "predicate": {
+        "field": "transition_chain",
+        "operator": "continuous_chain"
+      },
+      "on_false_emit": "TRANSITION_CHAIN_INVALID"
+    },
+    {
+      "rule_id": "RULE_REBUILD_SOURCE_PRESENT",
+      "status": "published",
+      "applies_to": [
+        "rebuild"
+      ],
+      "predicate": {
+        "field": "rebuild_source",
+        "operator": "present"
+      },
+      "on_false_emit": "REBUILD_SOURCE_INVALID"
+    },
+    {
+      "rule_id": "RULE_REBUILD_SOURCE_OBJECT",
+      "status": "published",
+      "applies_to": [
+        "rebuild"
+      ],
+      "predicate": {
+        "field": "rebuild_source",
+        "operator": "is_object"
+      },
+      "on_false_emit": "REBUILD_SOURCE_INVALID"
+    },
+    {
+      "rule_id": "RULE_ARTIFACT_HASH_64_HEX",
+      "status": "registry_only_gap",
+      "applies_to": [
+        "verify"
+      ],
+      "predicate": {
+        "field": "artifact_hash",
+        "operator": "is_64_hex"
+      },
+      "on_false_emit": "ARTIFACT_HASH_INVALID"
+    },
+    {
+      "rule_id": "RULE_VALIDATOR_RESULT_ENUM",
+      "status": "registry_only_gap",
+      "applies_to": [
+        "verify"
+      ],
+      "predicate": {
+        "field": "validator_result",
+        "operator": "enum",
+        "allowed": [
+          "PASS",
+          "FAIL"
+        ]
+      },
+      "on_false_emit": "VALIDATOR_RESULT_INVALID"
+    },
+    {
+      "rule_id": "RULE_REBUILD_RESULT_ENUM",
+      "status": "registry_only_gap",
+      "applies_to": [
+        "verify"
+      ],
+      "predicate": {
+        "field": "rebuild_result",
+        "operator": "enum",
+        "allowed": [
+          "MATCH",
+          "MISMATCH"
+        ]
+      },
+      "on_false_emit": "REBUILD_RESULT_INVALID"
+    }
+  ],
+  "verdict_function": {
+    "pass_when": "reason_codes_empty",
+    "fail_when": "reason_codes_non_empty",
+    "conformance_error_policy": {
+      "mode": "excluded_from_bounded_completeness_until_anchored",
+      "conditions": [
+        "unsupported verification command",
+        "identity surface cannot be resolved",
+        "normalized result cannot be canonicalized"
+      ]
+    }
+  },
+  "predicate_language": {
+    "dsl_id": "decirepo-predicate-dsl-v0.1",
+    "status": "published_for_bounded_profile",
+    "result_domain": [
+      "true",
+      "false",
+      "predicate_error"
+    ],
+    "evaluation_model": {
+      "true_condition": "operator evaluates successfully and the declared condition holds",
+      "false_condition": "operator evaluates successfully and the declared condition does not hold",
+      "predicate_error_condition": "kernel definition is malformed or references an unsupported operator or argument shape",
+      "sample_type_mismatch_treatment": "operator evaluates to false unless the operator contract states otherwise",
+      "oracle_contract": "bounded-profile oracles must reject malformed kernel definitions rather than silently reinterpret them"
+    },
+    "composition_registry": {
+      "all_of": {
+        "arity": "1+",
+        "short_circuit": false,
+        "true_when": "all child predicates evaluate to true",
+        "false_when": "at least one child predicate evaluates to false",
+        "predicate_error_when": "any child predicate evaluates to predicate_error"
+      },
+      "any_of": {
+        "arity": "1+",
+        "short_circuit": false,
+        "true_when": "at least one child predicate evaluates to true",
+        "false_when": "all child predicates evaluate to false",
+        "predicate_error_when": "any child predicate evaluates to predicate_error and no child predicate evaluates to true"
+      },
+      "not": {
+        "arity": "1",
+        "short_circuit": false,
+        "true_when": "the single child predicate evaluates to false",
+        "false_when": "the single child predicate evaluates to true",
+        "predicate_error_when": "the single child predicate evaluates to predicate_error"
+      }
+    },
+    "operator_registry": {
+      "input_is_json_object": {
+        "arity": "nullary",
+        "required_keys": [
+          "operator"
+        ],
+        "evaluation": "true iff the artifact input is a JSON object",
+        "false_semantics": "artifact is not a JSON object",
+        "predicate_error_semantics": "operator declaration contains unsupported extra arguments"
+      },
+      "supported_command": {
+        "arity": "nullary",
+        "required_keys": [
+          "operator"
+        ],
+        "evaluation": "true iff the active command is inside domain.supported_commands",
+        "false_semantics": "active command is outside the bounded profile command set",
+        "predicate_error_semantics": "supported command set cannot be resolved from the kernel"
+      },
+      "field_present": {
+        "arity": "unary",
+        "required_keys": [
+          "operator",
+          "field"
+        ],
+        "field_type": "top-level string key",
+        "evaluation": "true iff the named top-level field exists in the artifact object",
+        "false_semantics": "field is absent",
+        "predicate_error_semantics": "field key is missing or not a string"
+      },
+      "equals": {
+        "arity": "binary",
+        "required_keys": [
+          "operator",
+          "field",
+          "value"
+        ],
+        "field_type": "top-level string key",
+        "evaluation": "true iff artifact[field] equals value",
+        "false_semantics": "field differs from value or is absent",
+        "predicate_error_semantics": "field key is missing or malformed"
+      },
+      "optional_equals_artifact_id": {
+        "arity": "unary-with-context",
+        "required_keys": [
+          "operator",
+          "field"
+        ],
+        "field_type": "top-level string key",
+        "evaluation": "true iff artifact[field] is absent or equals the computed artifact_id",
+        "false_semantics": "field is present and does not equal the computed artifact_id",
+        "predicate_error_semantics": "artifact_id context cannot be resolved or field key is malformed"
+      },
+      "if_field_equals_then_field_equals": {
+        "arity": "quaternary",
+        "required_keys": [
+          "operator",
+          "if_field",
+          "if_value",
+          "then_field",
+          "then_value"
+        ],
+        "field_type": "top-level string keys",
+        "evaluation": "true iff artifact[if_field] != if_value or artifact[then_field] == then_value",
+        "false_semantics": "artifact[if_field] == if_value and artifact[then_field] != then_value",
+        "predicate_error_semantics": "required field names are missing or malformed"
+      },
+      "non_empty_array": {
+        "arity": "unary",
+        "required_keys": [
+          "operator",
+          "field"
+        ],
+        "field_type": "top-level string key",
+        "evaluation": "true iff artifact[field] is an array with length > 0",
+        "false_semantics": "field is absent, not an array, or empty",
+        "predicate_error_semantics": "field key is malformed"
+      },
+      "each_step_has_keys": {
+        "arity": "unary-with-parameters",
+        "required_keys": [
+          "operator",
+          "field",
+          "required_keys"
+        ],
+        "field_type": "top-level string key",
+        "parameter_types": {
+          "required_keys": "non-empty string array"
+        },
+        "evaluation": "true iff every object in artifact[field] contains all required_keys",
+        "false_semantics": "field is not an array of objects with the required keys",
+        "predicate_error_semantics": "required_keys is malformed or field key is malformed"
+      },
+      "allowed_local_transitions": {
+        "arity": "unary-with-parameters",
+        "required_keys": [
+          "operator",
+          "field",
+          "allowed"
+        ],
+        "field_type": "top-level string key",
+        "parameter_types": {
+          "allowed": "non-empty string array"
+        },
+        "evaluation": "true iff every transition in artifact[field] is listed in allowed",
+        "false_semantics": "at least one transition falls outside the allowed local transition set",
+        "predicate_error_semantics": "allowed transition list is malformed or field key is malformed"
+      },
+      "continuous_chain": {
+        "arity": "unary",
+        "required_keys": [
+          "operator",
+          "field"
+        ],
+        "field_type": "top-level string key",
+        "evaluation": "true iff each transition step begins where the previous step ended",
+        "false_semantics": "transition chain is discontinuous or malformed",
+        "predicate_error_semantics": "field key is malformed"
+      },
+      "present": {
+        "arity": "unary",
+        "required_keys": [
+          "operator",
+          "field"
+        ],
+        "field_type": "top-level string key",
+        "evaluation": "true iff the named field exists",
+        "false_semantics": "field is absent",
+        "predicate_error_semantics": "field key is missing or malformed"
+      },
+      "is_object": {
+        "arity": "unary",
+        "required_keys": [
+          "operator",
+          "field"
+        ],
+        "field_type": "top-level string key",
+        "evaluation": "true iff artifact[field] is a JSON object",
+        "false_semantics": "field is absent or not a JSON object",
+        "predicate_error_semantics": "field key is malformed"
+      },
+      "is_64_hex": {
+        "arity": "unary",
+        "required_keys": [
+          "operator",
+          "field"
+        ],
+        "field_type": "top-level string key",
+        "evaluation": "true iff artifact[field] is a lowercase 64-character hexadecimal string",
+        "false_semantics": "field is absent or not a lowercase 64-character hexadecimal string",
+        "predicate_error_semantics": "field key is malformed"
+      },
+      "enum": {
+        "arity": "unary-with-parameters",
+        "required_keys": [
+          "operator",
+          "field",
+          "allowed"
+        ],
+        "field_type": "top-level string key",
+        "parameter_types": {
+          "allowed": "non-empty scalar array"
+        },
+        "evaluation": "true iff artifact[field] is a member of allowed",
+        "false_semantics": "field is absent or outside the allowed enum",
+        "predicate_error_semantics": "allowed enum list is malformed or field key is malformed"
+      }
+    }
+  },
+  "classification_pipeline": {
+    "bucket_assignment_precedes_verdict_assignment": true,
+    "bucket_order": [
+      "malformed",
+      "out_of_scope",
+      "in_domain_valid",
+      "in_domain_invalid",
+      "in_domain_gap",
+      "harness_only_gap"
+    ],
+    "stages": [
+      {
+        "stage_id": "bucket_assignment",
+        "input": "sample + command context",
+        "output": "class_bucket",
+        "semantics": "assign exactly one declared class bucket before class selection and verdict derivation"
+      },
+      {
+        "stage_id": "class_assignment",
+        "input": "sample + class_bucket",
+        "output": "class_id",
+        "semantics": "resolve one class_id or an explicit ordered precedence chain within the selected bucket"
+      },
+      {
+        "stage_id": "verdict_derivation",
+        "input": "class_id + kernel rule outcomes",
+        "output": "verdict + ordered reason_codes + canonical result",
+        "semantics": "derive the final normalized result only after bucket and class assignment complete"
+      }
+    ]
+  }
+}

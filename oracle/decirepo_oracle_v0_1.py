@@ -173,11 +173,14 @@ def order_reason_codes(reason_codes: List[str], kernel: Dict[str, Any]) -> List[
     order = kernel["normalized_result"]["reason_code_ordering"]["ordered_codes"]
     index = {code: pos for pos, code in enumerate(order)}
     ordered = sorted(reason_codes, key=lambda code: (index.get(code, len(order)), code))
-    deduped: List[str] = []
-    for code in ordered:
-        if code not in deduped:
-            deduped.append(code)
-    return deduped
+    normalization = kernel["normalized_result"].get("reason_code_normalization", {})
+    if normalization.get("deduplicate_after_ordering"):
+        deduped: List[str] = []
+        for code in ordered:
+            if code not in deduped:
+                deduped.append(code)
+        return deduped
+    return ordered
 
 
 def get_bucket_order(kernel: Dict[str, Any], matrix: Dict[str, Any] | None = None) -> List[str]:

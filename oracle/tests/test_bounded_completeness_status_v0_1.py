@@ -27,7 +27,7 @@ class BoundedCompletenessStatusV01Test(unittest.TestCase):
         self.assertEqual(self.status["protocol_specification"], "v0.2")
         self.assertEqual(self.status["protocol_semantics"], "v0.1")
         self.assertEqual(self.status["framework_status"], "bounded_conformance_framework_present")
-        self.assertEqual(self.status["known_gap_boundary_status"], "machine_readable_and_tested")
+        self.assertEqual(self.status["known_gap_boundary_status"], "sealed_known_gap_boundary")
         self.assertFalse(self.status["bounded_completeness_proven"])
 
     def test_claim_ceiling_has_allowed_and_disallowed_claims(self) -> None:

@@ -4,7 +4,7 @@
   "protocol_specification": "v0.2",
   "protocol_semantics": "v0.1",
   "framework_status": "bounded_conformance_framework_present",
-  "known_gap_boundary_status": "machine_readable_and_tested",
+  "known_gap_boundary_status": "sealed_known_gap_boundary",
   "bounded_completeness_proven": false,
   "claim_ceiling": {
     "ceiling_id": "V0_1_EXECUTABLE_FRAMEWORK_WITH_KNOWN_GAPS",
@@ -195,5 +195,6 @@
       ],
       "preferred_resolution_route": "evidence_upgrade"
     }
-  ]
+  ],
+  "claim_boundary_description": "machine-readable boundary for currently known incompleteness"
 }

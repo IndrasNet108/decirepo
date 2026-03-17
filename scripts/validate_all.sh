@@ -19,6 +19,7 @@ echo "Running Oracle Vector Tests..."
 python3 oracle/tests/test_vectors_v0_1.py
 python3 oracle/tests/test_kernel_contract_v0_1.py
 python3 oracle/tests/test_gap_classification_v0_1.py
+python3 oracle/tests/test_bounded_completeness_status_v0_1.py
 python3 oracle/gen_corpus_v0_1.py
 python3 oracle/gen_domain_guided_corpus_v0_1.py
 python3 oracle/gen_boundary_corpus_v0_1.py

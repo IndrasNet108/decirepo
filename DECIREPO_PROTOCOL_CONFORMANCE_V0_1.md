@@ -41,6 +41,7 @@ The bounded-completeness support artifacts for this profile are:
 - `conformance/DOMAIN_PROFILE_V0_1.json`
 - `conformance/CASE_CLASS_MATRIX_V0_1.json`
 - `conformance/GAP_CLASSIFICATION_V0_1.json`
+- `conformance/BOUNDED_COMPLETENESS_STATUS_V0_1.json`
 - `conformance/generated_corpus_v0_1/manifest.json`
 - `conformance/domain_guided_generated_corpus_v0_1/manifest.json`
 - `conformance/boundary_corpus_v0_1/manifest.json`

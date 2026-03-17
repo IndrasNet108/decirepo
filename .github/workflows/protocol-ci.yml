@@ -46,6 +46,9 @@ jobs:
       - name: Gap classification tests
         run: python3 oracle/tests/test_gap_classification_v0_1.py
 
+      - name: Bounded completeness status tests
+        run: python3 oracle/tests/test_bounded_completeness_status_v0_1.py
+
       - name: Generate bounded corpus
         run: python3 oracle/gen_corpus_v0_1.py
 

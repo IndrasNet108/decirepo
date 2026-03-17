@@ -1,0 +1,199 @@
+{
+  "profile_id": "V0_1",
+  "status": "draft",
+  "protocol_specification": "v0.2",
+  "protocol_semantics": "v0.1",
+  "framework_status": "bounded_conformance_framework_present",
+  "known_gap_boundary_status": "machine_readable_and_tested",
+  "bounded_completeness_proven": false,
+  "claim_ceiling": {
+    "ceiling_id": "V0_1_EXECUTABLE_FRAMEWORK_WITH_KNOWN_GAPS",
+    "allowed_claims": [
+      "machine_readable_bounded_conformance_framework_present",
+      "published_vector_replay_passes",
+      "structural_contract_layer_present",
+      "multi_corpus_empirical_evidence_present",
+      "known_gap_boundary_machine_readable"
+    ],
+    "disallowed_claims": [
+      "bounded_completeness_established",
+      "totality_over_full_declared_domain_established",
+      "malformed_closure_established",
+      "known_gaps_exhaustive",
+      "class_independent_completeness_evidence_established"
+    ]
+  },
+  "group_registry": [
+    "claim_blocker",
+    "framework_hygiene",
+    "future_scope"
+  ],
+  "discovery_registry": [
+    "vector",
+    "domain_guided",
+    "boundary",
+    "adversarial",
+    "malformed",
+    "contract_test"
+  ],
+  "resolution_route_registry": [
+    "canonical_anchor",
+    "formal_exclusion",
+    "new_class",
+    "new_corpus",
+    "normalization_fix",
+    "spec_fix",
+    "evidence_upgrade",
+    "hybrid"
+  ],
+  "evidence_layers_present": [
+    "machine_readable_domain_profile",
+    "machine_readable_semantics_kernel",
+    "machine_readable_class_matrix",
+    "executable_oracle",
+    "structural_contract_tests",
+    "published_vector_replay",
+    "class_guided_generated_corpus",
+    "domain_guided_generated_corpus",
+    "boundary_corpus",
+    "adversarial_corpus",
+    "malformed_corpus",
+    "machine_readable_gap_ledger",
+    "executable_gap_ledger_contract"
+  ],
+  "proven_surface": [
+    "executable_conformance_evaluation_for_published_vectors_001_007",
+    "machine_readable_domain_kernel_matrix_alignment",
+    "deterministic_reason_code_normalization_on_current_evidence_set",
+    "multi_corpus_empirical_pressure_layer_present",
+    "known_gap_boundary_explicit_and_tested"
+  ],
+  "blocked_surface": [
+    {
+      "surface_id": "bounded_completeness",
+      "blocker_ids": [
+        "GAP_MULTI_REASON_PRECEDENCE_CANONICALIZATION"
+      ]
+    },
+    {
+      "surface_id": "sealed_completeness_boundary",
+      "blocker_ids": [
+        "GAP_VERIFY_WITHOUT_REBUILD_SOURCE_SCOPE",
+        "GAP_CONFORMANCE_ERROR_BOUNDARY",
+        "GAP_MALFORMED_CORPUS_LAYER"
+      ]
+    },
+    {
+      "surface_id": "published_anchor_closure",
+      "blocker_ids": [
+        "GAP_ARTIFACT_HASH_INVALID_ANCHOR",
+        "GAP_VALIDATOR_RESULT_INVALID_ANCHOR",
+        "GAP_REBUILD_RESULT_INVALID_ANCHOR",
+        "GAP_MULTI_REASON_PRECEDENCE_CANONICALIZATION",
+        "GAP_CONFORMANCE_ERROR_BOUNDARY"
+      ]
+    },
+    {
+      "surface_id": "non_handheld_evidence",
+      "blocker_ids": [
+        "GAP_GENERATED_CORPUS_CLASS_GUIDANCE",
+        "GAP_MALFORMED_CORPUS_LAYER"
+      ]
+    }
+  ],
+  "excluded_surface": [
+    {
+      "surface_id": "verify_without_rebuild_source_under_v0_1",
+      "status": "candidate_for_formal_exclusion",
+      "gap_id": "GAP_VERIFY_WITHOUT_REBUILD_SOURCE_SCOPE"
+    },
+    {
+      "surface_id": "unsupported_command_natural_anchor_under_v0_1",
+      "status": "candidate_for_formal_exclusion",
+      "gap_id": "GAP_CONFORMANCE_ERROR_BOUNDARY"
+    }
+  ],
+  "non_blocking_gaps": [
+    "GAP_VERIFY_WITHOUT_REBUILD_SOURCE_SCOPE",
+    "GAP_ARTIFACT_HASH_INVALID_ANCHOR",
+    "GAP_VALIDATOR_RESULT_INVALID_ANCHOR",
+    "GAP_REBUILD_RESULT_INVALID_ANCHOR",
+    "GAP_CONFORMANCE_ERROR_BOUNDARY",
+    "GAP_GENERATED_CORPUS_CLASS_GUIDANCE",
+    "GAP_MALFORMED_CORPUS_LAYER"
+  ],
+  "gap_status": [
+    {
+      "gap_id": "GAP_VERIFY_WITHOUT_REBUILD_SOURCE_SCOPE",
+      "group": "future_scope",
+      "discovered_by": [
+        "boundary",
+        "contract_test"
+      ],
+      "preferred_resolution_route": "formal_exclusion"
+    },
+    {
+      "gap_id": "GAP_ARTIFACT_HASH_INVALID_ANCHOR",
+      "group": "framework_hygiene",
+      "discovered_by": [
+        "adversarial",
+        "contract_test"
+      ],
+      "preferred_resolution_route": "canonical_anchor"
+    },
+    {
+      "gap_id": "GAP_VALIDATOR_RESULT_INVALID_ANCHOR",
+      "group": "framework_hygiene",
+      "discovered_by": [
+        "adversarial",
+        "contract_test"
+      ],
+      "preferred_resolution_route": "canonical_anchor"
+    },
+    {
+      "gap_id": "GAP_REBUILD_RESULT_INVALID_ANCHOR",
+      "group": "framework_hygiene",
+      "discovered_by": [
+        "adversarial",
+        "contract_test"
+      ],
+      "preferred_resolution_route": "canonical_anchor"
+    },
+    {
+      "gap_id": "GAP_MULTI_REASON_PRECEDENCE_CANONICALIZATION",
+      "group": "claim_blocker",
+      "discovered_by": [
+        "adversarial",
+        "contract_test"
+      ],
+      "preferred_resolution_route": "canonical_anchor"
+    },
+    {
+      "gap_id": "GAP_CONFORMANCE_ERROR_BOUNDARY",
+      "group": "future_scope",
+      "discovered_by": [
+        "adversarial",
+        "contract_test"
+      ],
+      "preferred_resolution_route": "hybrid"
+    },
+    {
+      "gap_id": "GAP_GENERATED_CORPUS_CLASS_GUIDANCE",
+      "group": "framework_hygiene",
+      "discovered_by": [
+        "domain_guided",
+        "contract_test"
+      ],
+      "preferred_resolution_route": "evidence_upgrade"
+    },
+    {
+      "gap_id": "GAP_MALFORMED_CORPUS_LAYER",
+      "group": "framework_hygiene",
+      "discovered_by": [
+        "malformed",
+        "contract_test"
+      ],
+      "preferred_resolution_route": "evidence_upgrade"
+    }
+  ]
+}

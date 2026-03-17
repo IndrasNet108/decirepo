@@ -102,12 +102,12 @@ CASE_SPECS: List[Dict[str, Any]] = [
         "case_id": "adversarial_invalid_hash_and_validator_result",
         "origin": "adversarial",
         "command": "verify",
-        "expected_bucket": "in_domain_gap",
-        "expected_class": "CC009_VERIFY_ARTIFACT_HASH_INVALID",
+        "expected_bucket": "in_domain_invalid",
+        "expected_class": "CC012_MULTI_REASON_PRECEDENCE",
         "expected_verdict": "FAIL",
         "expected_reason_codes": ["ARTIFACT_HASH_INVALID", "VALIDATOR_RESULT_INVALID"],
         "artifact_factory": invalid_artifact_hash_and_validator_result_artifact,
-        "notes": "Conflicting registry-only gaps must not collapse to a silent PASS; precedence should pick artifact_hash_invalid while reason ordering stays stable.",
+        "notes": "Conflicting registry-only gaps must not collapse to a silent PASS; the multi-reason family class must dominate while reason ordering stays stable.",
     },
 ]
 

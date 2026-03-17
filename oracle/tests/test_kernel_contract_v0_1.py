@@ -12,6 +12,7 @@ sys.path.insert(0, str(ROOT / "oracle"))
 
 from decirepo_oracle_v0_1 import (  # noqa: E402
     DECLARED_CLASS_BUCKETS,
+    SUPPORTED_STATE_REQUIREMENTS,
     SUPPORTED_COMPOSITION_OPERATORS,
     SUPPORTED_PREDICATE_OPERATORS,
 )
@@ -88,15 +89,21 @@ class KernelContractV01Test(unittest.TestCase):
 
     def test_case_matrix_predicate_registry_is_closed(self) -> None:
         composition_registry = set(self.kernel["predicate_language"]["composition_registry"].keys())
+        state_registry = set(self.kernel["classification_pipeline"]["state_projection_registry"].keys())
         rule_ids = {rule["rule_id"] for rule in self.kernel["rules"]}
         for predicate in self.matrix["predicate_registry"]:
             self.assertIn(predicate["composition"], composition_registry, predicate["predicate_id"])
             rule_outcomes = predicate.get("rule_outcomes", [])
             state_requirements = predicate.get("state_requirements", {})
             self.assertTrue(rule_outcomes or state_requirements, predicate["predicate_id"])
+            self.assertTrue(set(state_requirements).issubset(state_registry), predicate["predicate_id"])
             for rule_outcome in rule_outcomes:
                 self.assertIn(rule_outcome["rule_id"], rule_ids, predicate["predicate_id"])
                 self.assertIsInstance(rule_outcome["outcome"], bool, predicate["predicate_id"])
+
+    def test_state_projection_registry_matches_oracle_capabilities(self) -> None:
+        registry = set(self.kernel["classification_pipeline"]["state_projection_registry"].keys())
+        self.assertEqual(registry, set(SUPPORTED_STATE_REQUIREMENTS))
 
     def test_precedence_ranks_are_unique_within_scope(self) -> None:
         seen: dict[tuple[str, str], set[int]] = defaultdict(set)

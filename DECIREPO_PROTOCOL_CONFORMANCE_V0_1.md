@@ -46,9 +46,18 @@ The bounded-completeness support artifacts for this profile are:
 - `conformance/domain_guided_generated_corpus_v0_1/manifest.json`
 - `conformance/boundary_corpus_v0_1/manifest.json`
 - `conformance/adversarial_corpus_v0_1/manifest.json`
+- `conformance/precedence_adversarial_corpus_v0_1/manifest.json`
+- `conformance/cc012_negative_verify_corpus_v0_1/manifest.json`
+- `conformance/cc012_verify_distribution_v0_1.json`
 - `conformance/malformed_corpus_v0_1/manifest.json`
 
 These artifacts clarify domain membership, bounded evaluation order, case-class coverage, empirical corpus provenance, and the currently known gap boundary for profile `V0_1`.
+For `CC012`, the strict claim description for the active negative layer is `verify-side non-overcapture boundary for currently representable non-CC012 verify-adjacent surfaces in V0_1`; the working layer name is `verify-side CC012 negative boundary layer`.
+For `CC012`, the active negative boundary layer is `conformance/cc012_negative_verify_corpus_v0_1/manifest.json`, the active positive multi-reason pressure layer is `conformance/precedence_adversarial_corpus_v0_1/manifest.json`, and the active empirical distribution layer is `conformance/cc012_verify_distribution_v0_1.json`.
+The current empirical observation for that distribution layer is: `CC012 behaves as a stable convergence class across all currently observed verify multi-reason outcomes within the V0_1 representable surface`.
+The verify-only `conformance/cc012_negative_verify_corpus_v0_1/manifest.json` supersedes the legacy exploratory `conformance/cc012_negative_corpus_v0_1/` layer; the legacy cross-command corpus is excluded from the active claim surface.
+`conformance/cc012_verify_distribution_v0_1.json` is an empirical baseline analysis artifact over representable verify multi-reason combinations under the current `V0_1` rule surface; it is neither a proof object nor an invariant, and it does not change the claim ceiling by itself.
+Its `conflict_topology_clusters` describe currently observed overlap geometry; cluster existence alone is not a split signal unless it induces distinct behavior in precedence resolution, reason-code normalization, or canonicalization.
 They do not override published canonical vectors.
 
 ## 1. Conformance Definition
@@ -187,7 +196,7 @@ CONFORMANCE_ERROR
 The computed artifact identity.
 
 `reason_codes`
-An ordered list of protocol reason codes. The list MUST be deterministic and lexicographically ordered.
+An ordered list of protocol reason codes. The list MUST be deterministic, follow the fixed total order defined for profile `V0_1`, and collapse duplicates after ordering.
 
 `protocol_version`
 The protocol version bound to the verification result.

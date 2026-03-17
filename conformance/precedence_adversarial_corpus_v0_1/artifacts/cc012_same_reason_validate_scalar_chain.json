@@ -1,0 +1,28 @@
+{
+  "schema_version": "dlx-artifact-v0.1",
+  "decision_id": "DR-CONF-TRANSITION-INVALID-0005",
+  "publisher": "indrasnet-governance",
+  "policy_version": "DECIREPO_PROTOCOL_CONSTITUTION_V0_1",
+  "artifact_hash": "0de52240c27f599d86b00cf1cc4e7778af59a9fd27ea79d4a015b2a925c930e3",
+  "artifact_hash_semantics": "rebuild_result_hash",
+  "rebuild_result_hash": "0de52240c27f599d86b00cf1cc4e7778af59a9fd27ea79d4a015b2a925c930e3",
+  "validator_result": "PASS",
+  "rebuild_result": "MATCH",
+  "artifact_file_sha256_uri": "/artifacts/genesis/DR-GENESIS-0001.sha256",
+  "decision_record_uri": "/api/decision/DR-GENESIS-0001.json",
+  "decision_record_sha256_uri": "/api/decision/DR-GENESIS-0001.sha256",
+  "evidence_manifest_uri": "/api/evidence-bundle-manifest-genesis.json",
+  "evidence_manifest_sha256_uri": "/api/evidence-bundle-manifest-genesis.sha256",
+  "rebuild_source": {
+    "authority": "IndrasNet Protocol Steward",
+    "decision_id": "DR-CONF-TRANSITION-INVALID-0005",
+    "network_status": "genesis",
+    "policy_version": "DECIREPO_PROTOCOL_CONSTITUTION_V0_1",
+    "publisher": "indrasnet-governance",
+    "result": "NETWORK_ACTIVE",
+    "steward_id": "indrasnet-steward-transition-invalid",
+    "target_verification_density": 1
+  },
+  "rebuild_hash_expected": "0de52240c27f599d86b00cf1cc4e7778af59a9fd27ea79d4a015b2a925c930e3",
+  "transition_chain": "not-an-array"
+}

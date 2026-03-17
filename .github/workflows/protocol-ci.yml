@@ -64,6 +64,15 @@ jobs:
       - name: Generate malformed corpus
         run: python3 oracle/gen_malformed_corpus_v0_1.py
 
+      - name: Generate precedence adversarial corpus
+        run: python3 oracle/gen_precedence_adversarial_corpus_v0_1.py
+
+      - name: Generate CC012 negative corpus
+        run: python3 oracle/gen_cc012_negative_verify_corpus_v0_1.py
+
+      - name: Generate CC012 verify distribution analysis
+        run: python3 oracle/gen_cc012_verify_distribution_v0_1.py
+
       - name: Partition tests
         run: python3 oracle/tests/test_partition_v0_1.py
 
@@ -72,6 +81,21 @@ jobs:
 
       - name: Domain-guided and malformed tests
         run: python3 oracle/tests/test_domain_guided_malformed_v0_1.py
+
+      - name: CC012 precedence tests
+        run: python3 oracle/tests/test_cc012_precedence_v0_1.py
+
+      - name: CC012 negative composition tests
+        run: python3 oracle/tests/test_cc012_negative_verify_composition_v0_1.py
+
+      - name: CC012 negative capture tests
+        run: python3 oracle/tests/test_cc012_negative_verify_capture_v0_1.py
+
+      - name: CC012 verify distribution tests
+        run: python3 oracle/tests/test_cc012_verify_distribution_v0_1.py
+
+      - name: CC012 active surface consistency tests
+        run: python3 oracle/tests/test_cc012_active_surface_consistency_v0_1.py
 
       - name: Upload protocol conformance report
         uses: actions/upload-artifact@v6

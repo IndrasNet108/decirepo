@@ -1,0 +1,7 @@
+[
+  {
+    "schema_version": "dlx-artifact-v9.9",
+    "artifact_hash": "not-a-64-hex",
+    "validator_result": "UNKNOWN"
+  }
+]

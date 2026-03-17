@@ -46,6 +46,7 @@
     "domain_guided",
     "boundary",
     "adversarial",
+    "precedence_adversarial",
     "malformed",
     "contract_test"
   ],
@@ -70,9 +71,52 @@
     "domain_guided_generated_corpus",
     "boundary_corpus",
     "adversarial_corpus",
+    "precedence_adversarial_corpus",
+    "cc012_negative_verify_corpus",
+    "cc012_verify_distribution_analysis",
     "malformed_corpus",
     "machine_readable_gap_ledger",
     "executable_gap_ledger_contract"
+  ],
+  "cc012_surface_registry": {
+    "active_negative_surface": {
+      "artifact_id": "conformance/cc012_negative_verify_corpus_v0_1/manifest.json",
+      "role": "verify_side_non_overcapture_boundary_for_currently_representable_non_cc012_verify_adjacent_surfaces",
+      "claim_strict_description": "verify-side non-overcapture boundary for currently representable non-CC012 verify-adjacent surfaces in V0_1",
+      "working_layer_name": "verify-side CC012 negative boundary layer",
+      "active": true
+    },
+    "active_positive_surface": {
+      "artifact_id": "conformance/precedence_adversarial_corpus_v0_1/manifest.json",
+      "role": "positive_multi_reason_precedence_pressure",
+      "claim_strict_description": "positive multi-reason precedence pressure surface for representable V0_1 verify conflicts",
+      "working_layer_name": "CC012 positive precedence pressure layer",
+      "active": true
+    },
+    "active_distribution_surface": {
+      "artifact_id": "conformance/cc012_verify_distribution_v0_1.json",
+      "role": "empirical_distribution_analysis_for_representable_verify_multi_reason_combinations",
+      "claim_strict_description": "empirical distribution analysis for representable verify cases where multiple_reason_codes=true and for verify cases where selected_class=CC012_MULTI_REASON_PRECEDENCE",
+      "working_layer_name": "CC012 verify distribution layer",
+      "current_observation": "CC012 behaves as a stable convergence class across all currently observed verify multi-reason outcomes within the V0_1 representable surface",
+      "analysis_role": "empirical_baseline_not_proof_or_invariant",
+      "active": true
+    },
+    "superseded_legacy_surface": {
+      "artifact_id": "conformance/cc012_negative_corpus_v0_1",
+      "role": "legacy_cross_command_cc012_negative_exploration",
+      "active": false,
+      "excluded_from_claim_surface": true
+    }
+  },
+  "superseded_artifacts": [
+    {
+      "artifact_id": "conformance/cc012_negative_corpus_v0_1",
+      "status": "superseded",
+      "superseded_by": "conformance/cc012_negative_verify_corpus_v0_1/manifest.json",
+      "excluded_from_claim_surface": true,
+      "reason": "legacy cross-command exploratory CC012 negative corpus replaced by verify-only negative capture corpus"
+    }
   ],
   "proven_surface": [
     "executable_conformance_evaluation_for_published_vectors_001_007",
@@ -177,6 +221,7 @@
       "group": "claim_blocker",
       "discovered_by": [
         "adversarial",
+        "precedence_adversarial",
         "contract_test"
       ],
       "preferred_resolution_route": "canonical_anchor"
@@ -209,5 +254,62 @@
       "preferred_resolution_route": "evidence_upgrade"
     }
   ],
-  "claim_boundary_description": "machine-readable boundary for currently known incompleteness"
+  "claim_boundary_description": "machine-readable boundary for currently known incompleteness",
+  "status_revision": {
+    "revision_id": "status-v0.1-r11",
+    "change_reason": "soften CC012 observation wording, add topology-cluster baseline semantics, and tighten active-surface ghost-dependency isolation",
+    "recomputed_from": [
+      "conformance/GAP_CLASSIFICATION_V0_1.json",
+      "conformance/SEMANTICS_KERNEL_V0_1.json",
+      "conformance/DOMAIN_PROFILE_V0_1.json",
+      "conformance/CASE_CLASS_MATRIX_V0_1.json"
+    ]
+  },
+  "next_target": {
+    "target_id": "GAP_MULTI_REASON_PRECEDENCE_CANONICALIZATION",
+    "selected_from_group": "claim_blocker",
+    "selected_from_gap_class": "semantic_blocker",
+    "selection_reason": "currently sole claim_blocker",
+    "selection_basis": [
+      "gap_status=open",
+      "selected_from_group=claim_blocker",
+      "claim_ceiling_raise_permitted=false"
+    ],
+    "target_status": "active"
+  },
+  "target_transition_policy": {
+    "target_change_requires": [
+      "gap_classification_update_or_confirmation",
+      "status_revision",
+      "documented_change_reason"
+    ],
+    "allowed_reselection_sources": [
+      "claim_blocker",
+      "newly_discovered_claim_blocker"
+    ],
+    "forbidden_effects": [
+      "implicit_claim_ceiling_raise",
+      "implicit_blocker_resolution",
+      "implicit_gap_reclassification"
+    ]
+  },
+  "ceiling_raise_policy": {
+    "claim_ceiling_raise_permitted": false,
+    "requires": [
+      "claim_blockers_resolved_or_formally_excluded",
+      "blocker_set_stability_satisfied",
+      "status_recomputed",
+      "gap_classification_recomputed",
+      "all_contract_and_corpus_tests_pass"
+    ],
+    "stability_conditions": {
+      "minimum_iterations_before_claim_ceiling_raise": 3,
+      "iterations_without_new_claim_blockers": 0
+    },
+    "forbidden_shortcuts": [
+      "target_completion_implies_raise",
+      "single_blocker_resolution_implies_raise",
+      "manual_claim_wording_upgrade_without_status_update"
+    ]
+  }
 }

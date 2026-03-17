@@ -43,6 +43,15 @@ DECLARED_CLASS_BUCKETS = frozenset(
         "harness_only_gap",
     }
 )
+SUPPORTED_STATE_REQUIREMENTS = frozenset(
+    {
+        "artifact_is_json_object",
+        "command_supported",
+        "identity_surface_resolved",
+        "multiple_reason_codes",
+        "unknown_top_level_fields_outside_identity_surface",
+    }
+)
 
 
 def read_json(path: Path) -> Dict[str, Any]:
@@ -193,13 +202,24 @@ def get_known_top_level_fields(domain: Dict[str, Any]) -> set[str]:
     return set(domain["artifact_domain"].get("known_top_level_fields", []))
 
 
-def applicable_rules(command: str, kernel: Dict[str, Any], rule_statuses: Iterable[str] | None = None) -> List[Dict[str, Any]]:
+def applicable_rules(
+    command: str,
+    kernel: Dict[str, Any],
+    rule_statuses: Iterable[str] | None = None,
+    rule_id_order_override: List[str] | None = None,
+) -> List[Dict[str, Any]]:
     allowed_statuses = set(rule_statuses or {"published"})
-    return [
+    rules = [
         rule
         for rule in kernel["rules"]
         if command in rule.get("applies_to", []) and rule["status"] in allowed_statuses
     ]
+    if not rule_id_order_override:
+        return rules
+
+    positions = {rule_id: index for index, rule_id in enumerate(rule_id_order_override)}
+    fallback = len(positions)
+    return sorted(rules, key=lambda rule: (positions.get(rule["rule_id"], fallback), rule["rule_id"]))
 
 
 def evaluate_rule_outcomes(
@@ -208,9 +228,10 @@ def evaluate_rule_outcomes(
     artifact_id: str | None,
     kernel: Dict[str, Any],
     rule_statuses: Iterable[str] | None = None,
+    rule_id_order_override: List[str] | None = None,
 ) -> Dict[str, bool]:
     outcomes: Dict[str, bool] = {}
-    for rule in applicable_rules(command, kernel, rule_statuses):
+    for rule in applicable_rules(command, kernel, rule_statuses, rule_id_order_override=rule_id_order_override):
         outcomes[rule["rule_id"]] = evaluate_predicate(rule["predicate"], artifact, artifact_id, command, kernel)
     return outcomes
 
@@ -221,12 +242,17 @@ def compute_pipeline_state(
     kernel: Dict[str, Any],
     domain: Dict[str, Any],
     rule_statuses: Iterable[str] | None = None,
+    rule_id_order_override: List[str] | None = None,
 ) -> Dict[str, Any]:
     state: Dict[str, Any] = {
         "command": command,
         "artifact_is_json_object": is_object(artifact),
         "command_supported": command in kernel["domain"]["supported_commands"],
         "identity_surface_resolved": False,
+        "triggered_rule_ids": [],
+        "triggered_rule_count": 0,
+        "normalized_reason_codes": [],
+        "multiple_reason_codes": False,
         "artifact_id": None,
         "canonical_identity_hex": None,
         "unknown_top_level_fields": [],
@@ -256,7 +282,28 @@ def compute_pipeline_state(
             state["artifact_id"],
             kernel,
             rule_statuses=rule_statuses,
+            rule_id_order_override=rule_id_order_override,
         )
+        triggered_rule_ids = [
+            rule_id for rule_id, outcome in state["rule_outcomes"].items() if outcome is False
+        ]
+        state["triggered_rule_ids"] = sorted(triggered_rule_ids)
+        state["triggered_rule_count"] = len(triggered_rule_ids)
+        rules_by_id = {
+            rule["rule_id"]: rule
+            for rule in applicable_rules(
+                command,
+                kernel,
+                rule_statuses=rule_statuses,
+                rule_id_order_override=rule_id_order_override,
+            )
+        }
+        normalized_reason_codes = order_reason_codes(
+            [rules_by_id[rule_id]["on_false_emit"] for rule_id in triggered_rule_ids],
+            kernel,
+        )
+        state["normalized_reason_codes"] = normalized_reason_codes
+        state["multiple_reason_codes"] = len(normalized_reason_codes) >= 2
 
     return state
 
@@ -323,8 +370,16 @@ def classify_artifact(
     domain: Dict[str, Any],
     matrix: Dict[str, Any],
     rule_statuses: Iterable[str] | None = None,
+    rule_id_order_override: List[str] | None = None,
 ) -> Dict[str, Any]:
-    state = compute_pipeline_state(command, artifact, kernel, domain, rule_statuses=rule_statuses)
+    state = compute_pipeline_state(
+        command,
+        artifact,
+        kernel,
+        domain,
+        rule_statuses=rule_statuses,
+        rule_id_order_override=rule_id_order_override,
+    )
     predicates = {predicate["predicate_id"]: predicate for predicate in matrix["predicate_registry"]}
     matches: List[Dict[str, Any]] = []
 
@@ -360,15 +415,23 @@ def evaluate_command(
     kernel: Dict[str, Any],
     rule_statuses: Iterable[str] | None = None,
     use_declared_rule_order_only: bool = True,
+    rule_id_order_override: List[str] | None = None,
 ) -> Dict[str, Any]:
     if command not in kernel["commands"]:
         raise ValueError(f"unsupported verification_command: {command}")
 
     evaluate_entry_conditions(command, artifact, kernel)
 
-    rules = applicable_rules(command, kernel, rule_statuses=rule_statuses)
+    rules = applicable_rules(command, kernel, rule_statuses=rule_statuses, rule_id_order_override=rule_id_order_override)
     rules_by_id = {rule["rule_id"]: rule for rule in rules}
-    rule_outcomes = evaluate_rule_outcomes(command, artifact, artifact_id, kernel, rule_statuses=rule_statuses)
+    rule_outcomes = evaluate_rule_outcomes(
+        command,
+        artifact,
+        artifact_id,
+        kernel,
+        rule_statuses=rule_statuses,
+        rule_id_order_override=rule_id_order_override,
+    )
     reason_codes: List[str] = []
     errors: List[str] = []
 
@@ -479,6 +542,7 @@ def evaluate_corpus_entry(
     kernel: Dict[str, Any],
     domain: Dict[str, Any],
     matrix: Dict[str, Any],
+    rule_id_order_override: List[str] | None = None,
 ) -> Dict[str, Any]:
     classification = classify_artifact(
         command,
@@ -487,6 +551,7 @@ def evaluate_corpus_entry(
         domain,
         matrix,
         rule_statuses={"published", "registry_only_gap"},
+        rule_id_order_override=rule_id_order_override,
     )
     state = classification["state"]
     selected_class_def = classification["selected_class_def"]
@@ -499,6 +564,10 @@ def evaluate_corpus_entry(
         "partition_mode": classification["partition_mode"],
         "class_bucket": class_bucket,
         "predicate_error": False,
+        "triggered_rule_ids": state["triggered_rule_ids"],
+        "triggered_rule_count": state["triggered_rule_count"],
+        "normalized_reason_codes": state["normalized_reason_codes"],
+        "multiple_reason_codes": state["multiple_reason_codes"],
         "artifact_id": state["artifact_id"],
         "canonical_identity_hex": state["canonical_identity_hex"],
         "normalized_result": None,
@@ -520,6 +589,7 @@ def evaluate_corpus_entry(
         kernel,
         rule_statuses={"published", "registry_only_gap"},
         use_declared_rule_order_only=False,
+        rule_id_order_override=rule_id_order_override,
     )
     normalized_result = build_normalized_result(raw_result, state["artifact_id"], kernel)
     result["normalized_result"] = normalized_result

@@ -545,6 +545,13 @@
         "output": "verdict + ordered reason_codes + canonical result",
         "semantics": "derive the final normalized result only after bucket and class assignment complete"
       }
-    ]
+    ],
+    "state_projection_registry": {
+      "artifact_is_json_object": "true iff the sample input is a JSON object",
+      "command_supported": "true iff the active command belongs to domain.supported_commands",
+      "identity_surface_resolved": "true iff artifact.rebuild_source resolves and canonical identity bytes plus artifact_id are computable",
+      "multiple_reason_codes": "true iff normalized_result.reason_codes contains at least two distinct reason codes after fixed_total_order_then_deduplicate normalization for the active rule-status view",
+      "unknown_top_level_fields_outside_identity_surface": "true iff at least one top-level field outside the declared known top-level artifact field set is present"
+    }
   }
 }

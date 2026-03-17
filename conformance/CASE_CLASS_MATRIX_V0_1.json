@@ -218,7 +218,7 @@
       "class_id": "CC012_MULTI_REASON_PRECEDENCE",
       "domain_membership": "in_domain_gap",
       "command": "verify",
-      "predicate": "multiple independent failure conditions hold for the same artifact evaluation",
+      "predicate": "two or more distinct reason codes are emitted during verify evaluation for the same artifact after fixed-order normalization and deduplication",
       "expected_verdict": "FAIL",
       "expected_reason_codes": [
         "REBUILD_HASH_EXPECTED_MISMATCH",
@@ -226,7 +226,7 @@
       ],
       "vector_coverage": [],
       "proof_status": "open_gap",
-      "notes": "Lexicographic reason ordering is normative, but no published vector yet anchors multi-reason composition or precedence.",
+      "notes": "Family-level open gap until multi-reason ordering and canonicalization are anchored or formally excluded.",
       "class_bucket": "in_domain_invalid",
       "predicate_ref": "PRED_CC012_MULTI_REASON_PRECEDENCE",
       "precedence_rank": 10,
@@ -588,35 +588,11 @@
       "composition": "all_of",
       "state_requirements": {
         "identity_surface_resolved": true,
-        "command_supported": true
+        "command_supported": true,
+        "artifact_is_json_object": true,
+        "multiple_reason_codes": true
       },
-      "rule_outcomes": [
-        {
-          "rule_id": "RULE_SCHEMA_VERSION_EQUALS_DLX_ARTIFACT_V0_1",
-          "outcome": false
-        },
-        {
-          "rule_id": "RULE_ARTIFACT_HASH_64_HEX",
-          "outcome": true
-        },
-        {
-          "rule_id": "RULE_VALIDATOR_RESULT_ENUM",
-          "outcome": true
-        },
-        {
-          "rule_id": "RULE_REBUILD_RESULT_ENUM",
-          "outcome": true
-        },
-        {
-          "rule_id": "RULE_REBUILD_HASH_EXPECTED_MATCHES_ARTIFACT_ID",
-          "outcome": false
-        },
-        {
-          "rule_id": "RULE_PASS_REQUIRES_MATCH_REBUILD_RESULT",
-          "outcome": true
-        }
-      ],
-      "notes": "Open gap until multi-reason ordering is anchored or formally excluded."
+      "notes": "Generic family predicate for verify cases with two or more distinct normalized reason codes."
     },
     {
       "predicate_id": "PRED_CC013_CONFORMANCE_ERROR_HARNESS_FAILURE",

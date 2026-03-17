@@ -20,9 +20,12 @@ python3 oracle/tests/test_vectors_v0_1.py
 python3 oracle/tests/test_kernel_contract_v0_1.py
 python3 oracle/tests/test_gap_classification_v0_1.py
 python3 oracle/gen_corpus_v0_1.py
+python3 oracle/gen_domain_guided_corpus_v0_1.py
 python3 oracle/gen_boundary_corpus_v0_1.py
 python3 oracle/gen_adversarial_corpus_v0_1.py
+python3 oracle/gen_malformed_corpus_v0_1.py
 python3 oracle/tests/test_partition_v0_1.py
 python3 oracle/tests/test_boundary_adversarial_v0_1.py
+python3 oracle/tests/test_domain_guided_malformed_v0_1.py
 
 echo "ALL VALIDATIONS PASSED"

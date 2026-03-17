@@ -1,0 +1,632 @@
+{
+  "profile_id": "V0_1",
+  "status": "draft",
+  "protocol_specification": "v0.2",
+  "protocol_semantics": "v0.1",
+  "classes": [
+    {
+      "class_id": "CC014_MALFORMED_NON_OBJECT_ARTIFACT",
+      "domain_membership": "outside_domain",
+      "command": "mixed",
+      "predicate": "top-level artifact value is not a JSON object",
+      "expected_verdict": null,
+      "expected_reason_codes": [],
+      "vector_coverage": [],
+      "proof_status": "open_gap",
+      "notes": "Malformed top-level artifact input is now explicitly classified instead of remaining an implicit unclassified failure path.",
+      "class_bucket": "malformed",
+      "predicate_ref": "PRED_CC014_MALFORMED_NON_OBJECT_ARTIFACT",
+      "precedence_rank": 10,
+      "partition_mode": "exclusive"
+    },
+    {
+      "class_id": "CC001_VERIFY_BASELINE_PASS",
+      "domain_membership": "in_domain",
+      "command": "verify",
+      "predicate": "schema_version == dlx-artifact-v0.1; artifact.rebuild_source resolves; rebuild_hash_expected matches computed artifact_id; validator_result != PASS or rebuild_result == MATCH",
+      "expected_verdict": "PASS",
+      "expected_reason_codes": [],
+      "vector_coverage": [
+        "vector_001_genesis"
+      ],
+      "proof_status": "published_vector",
+      "notes": "Canonical baseline PASS case.",
+      "class_bucket": "in_domain_valid",
+      "predicate_ref": "PRED_CC001_VERIFY_BASELINE_PASS",
+      "precedence_rank": 100,
+      "partition_mode": "exclusive"
+    },
+    {
+      "class_id": "CC002_VERIFY_SCHEMA_VERSION_INVALID",
+      "domain_membership": "in_domain",
+      "command": "verify",
+      "predicate": "schema_version != dlx-artifact-v0.1",
+      "expected_verdict": "FAIL",
+      "expected_reason_codes": [
+        "SCHEMA_VERSION_INVALID"
+      ],
+      "vector_coverage": [
+        "vector_002_invalid_structure"
+      ],
+      "proof_status": "published_vector",
+      "notes": "Unsupported schema version under verify.",
+      "class_bucket": "in_domain_invalid",
+      "predicate_ref": "PRED_CC002_VERIFY_SCHEMA_VERSION_INVALID",
+      "precedence_rank": 20,
+      "partition_mode": "ordered_precedence_chain"
+    },
+    {
+      "class_id": "CC003_VERIFY_REBUILD_HASH_EXPECTED_MISMATCH",
+      "domain_membership": "in_domain",
+      "command": "verify",
+      "predicate": "rebuild_hash_expected is present and does not equal computed artifact_id",
+      "expected_verdict": "FAIL",
+      "expected_reason_codes": [
+        "REBUILD_HASH_EXPECTED_MISMATCH"
+      ],
+      "vector_coverage": [
+        "vector_003_identity_mismatch"
+      ],
+      "proof_status": "published_vector",
+      "notes": "Identity mismatch anchored by published vector.",
+      "class_bucket": "in_domain_invalid",
+      "predicate_ref": "PRED_CC003_VERIFY_REBUILD_HASH_EXPECTED_MISMATCH",
+      "precedence_rank": 40,
+      "partition_mode": "ordered_precedence_chain"
+    },
+    {
+      "class_id": "CC004_VERIFY_PASS_REQUIRES_MATCH",
+      "domain_membership": "in_domain",
+      "command": "verify",
+      "predicate": "validator_result == PASS and rebuild_result != MATCH",
+      "expected_verdict": "FAIL",
+      "expected_reason_codes": [
+        "PASS_REQUIRES_MATCH"
+      ],
+      "vector_coverage": [
+        "vector_004_verification_failure"
+      ],
+      "proof_status": "published_vector",
+      "notes": "Rule-level verify failure on otherwise structured artifact.",
+      "class_bucket": "in_domain_invalid",
+      "predicate_ref": "PRED_CC004_VERIFY_PASS_REQUIRES_MATCH",
+      "precedence_rank": 60,
+      "partition_mode": "ordered_precedence_chain"
+    },
+    {
+      "class_id": "CC005_VALIDATE_TRANSITION_CHAIN_INVALID",
+      "domain_membership": "in_domain",
+      "command": "validate",
+      "predicate": "transition_chain is empty, malformed, discontinuous, or contains a local transition outside DRAFT->PROPOSED, PROPOSED->VALIDATED, VALIDATED->PUBLISHED",
+      "expected_verdict": "FAIL",
+      "expected_reason_codes": [
+        "TRANSITION_CHAIN_INVALID"
+      ],
+      "vector_coverage": [
+        "vector_005_transition_chain_invalid"
+      ],
+      "proof_status": "published_vector",
+      "notes": "Current baseline closes only local transition validity and continuity.",
+      "class_bucket": "in_domain_invalid",
+      "predicate_ref": "PRED_CC005_VALIDATE_TRANSITION_CHAIN_INVALID",
+      "precedence_rank": 10,
+      "partition_mode": "exclusive"
+    },
+    {
+      "class_id": "CC006_REBUILD_REBUILD_SOURCE_INVALID",
+      "domain_membership": "in_domain",
+      "command": "rebuild",
+      "predicate": "rebuild_source is absent, null, or not an object",
+      "expected_verdict": "FAIL",
+      "expected_reason_codes": [
+        "REBUILD_SOURCE_INVALID"
+      ],
+      "vector_coverage": [
+        "vector_006_rebuild_source_invalid"
+      ],
+      "proof_status": "published_vector",
+      "notes": "Published rebuild failure anchor.",
+      "class_bucket": "in_domain_invalid",
+      "predicate_ref": "PRED_CC006_REBUILD_REBUILD_SOURCE_INVALID",
+      "precedence_rank": 10,
+      "partition_mode": "exclusive"
+    },
+    {
+      "class_id": "CC007_VERIFY_UNKNOWN_TOP_LEVEL_ENVELOPE_FIELD_TOLERATED",
+      "domain_membership": "in_domain",
+      "command": "verify",
+      "predicate": "single unknown top-level field exists outside artifact.rebuild_source while all baseline verify rules still hold",
+      "expected_verdict": "PASS",
+      "expected_reason_codes": [],
+      "vector_coverage": [
+        "vector_007_unknown_envelope_field"
+      ],
+      "proof_status": "published_vector",
+      "notes": "Boundary-hygiene PASS case.",
+      "class_bucket": "in_domain_valid",
+      "predicate_ref": "PRED_CC007_VERIFY_UNKNOWN_TOP_LEVEL_ENVELOPE_FIELD_TOLERATED",
+      "precedence_rank": 110,
+      "partition_mode": "exclusive"
+    },
+    {
+      "class_id": "CC008_VERIFY_REBUILD_SOURCE_ABSENT",
+      "domain_membership": "out_of_scope",
+      "command": "verify",
+      "predicate": "artifact.rebuild_source is absent, null, or not usable as the published identity surface during verify",
+      "expected_verdict": null,
+      "expected_reason_codes": [],
+      "vector_coverage": [],
+      "proof_status": "prose_only_gap",
+      "notes": "Outside the published baseline compatible conformance path; local verifier behavior is not a compatibility anchor.",
+      "class_bucket": "out_of_scope",
+      "predicate_ref": "PRED_CC008_VERIFY_REBUILD_SOURCE_ABSENT",
+      "precedence_rank": 10,
+      "partition_mode": "exclusive"
+    },
+    {
+      "class_id": "CC009_VERIFY_ARTIFACT_HASH_INVALID",
+      "domain_membership": "in_domain_gap",
+      "command": "verify",
+      "predicate": "artifact_hash field is present but not a 64-character hexadecimal value under the baseline artifact model",
+      "expected_verdict": "FAIL",
+      "expected_reason_codes": [
+        "ARTIFACT_HASH_INVALID"
+      ],
+      "vector_coverage": [],
+      "proof_status": "registry_only_gap",
+      "notes": "Reason code exists in the registry but has no published vector anchor yet.",
+      "class_bucket": "in_domain_gap",
+      "predicate_ref": "PRED_CC009_VERIFY_ARTIFACT_HASH_INVALID",
+      "precedence_rank": 30,
+      "partition_mode": "ordered_precedence_chain"
+    },
+    {
+      "class_id": "CC010_VERIFY_VALIDATOR_RESULT_INVALID",
+      "domain_membership": "in_domain_gap",
+      "command": "verify",
+      "predicate": "validator_result is present but outside the allowed baseline enum",
+      "expected_verdict": "FAIL",
+      "expected_reason_codes": [
+        "VALIDATOR_RESULT_INVALID"
+      ],
+      "vector_coverage": [],
+      "proof_status": "registry_only_gap",
+      "notes": "Reason code exists in the registry but has no published vector anchor yet.",
+      "class_bucket": "in_domain_gap",
+      "predicate_ref": "PRED_CC010_VERIFY_VALIDATOR_RESULT_INVALID",
+      "precedence_rank": 50,
+      "partition_mode": "ordered_precedence_chain"
+    },
+    {
+      "class_id": "CC011_VERIFY_REBUILD_RESULT_INVALID",
+      "domain_membership": "in_domain_gap",
+      "command": "verify",
+      "predicate": "rebuild_result is present but outside the allowed baseline enum",
+      "expected_verdict": "FAIL",
+      "expected_reason_codes": [
+        "REBUILD_RESULT_INVALID"
+      ],
+      "vector_coverage": [],
+      "proof_status": "registry_only_gap",
+      "notes": "Reason code exists in the registry but has no published vector anchor yet.",
+      "class_bucket": "in_domain_gap",
+      "predicate_ref": "PRED_CC011_VERIFY_REBUILD_RESULT_INVALID",
+      "precedence_rank": 70,
+      "partition_mode": "ordered_precedence_chain"
+    },
+    {
+      "class_id": "CC012_MULTI_REASON_PRECEDENCE",
+      "domain_membership": "in_domain_gap",
+      "command": "verify",
+      "predicate": "multiple independent failure conditions hold for the same artifact evaluation",
+      "expected_verdict": "FAIL",
+      "expected_reason_codes": [
+        "REBUILD_HASH_EXPECTED_MISMATCH",
+        "SCHEMA_VERSION_INVALID"
+      ],
+      "vector_coverage": [],
+      "proof_status": "open_gap",
+      "notes": "Lexicographic reason ordering is normative, but no published vector yet anchors multi-reason composition or precedence.",
+      "class_bucket": "in_domain_invalid",
+      "predicate_ref": "PRED_CC012_MULTI_REASON_PRECEDENCE",
+      "precedence_rank": 10,
+      "partition_mode": "ordered_precedence_chain"
+    },
+    {
+      "class_id": "CC013_CONFORMANCE_ERROR_HARNESS_FAILURE",
+      "domain_membership": "harness_only_gap",
+      "command": "harness",
+      "predicate": "unsupported verification_command, unresolved identity surface, or inability to normalize the protocol result object",
+      "expected_verdict": "CONFORMANCE_ERROR",
+      "expected_reason_codes": [],
+      "vector_coverage": [],
+      "proof_status": "open_gap",
+      "notes": "Published report schema allows CONFORMANCE_ERROR, but no natural canonical vector currently anchors it.",
+      "class_bucket": "harness_only_gap",
+      "predicate_ref": "PRED_CC013_CONFORMANCE_ERROR_HARNESS_FAILURE",
+      "precedence_rank": 10,
+      "partition_mode": "exclusive"
+    }
+  ],
+  "class_buckets": [
+    "malformed",
+    "out_of_scope",
+    "in_domain_valid",
+    "in_domain_invalid",
+    "in_domain_gap",
+    "harness_only_gap"
+  ],
+  "classification_pipeline": {
+    "bucket_assignment_precedes_verdict_assignment": true,
+    "stages": [
+      {
+        "stage_id": "bucket_assignment",
+        "output": "class_bucket",
+        "notes": "bucket assignment is resolved before verdict derivation"
+      },
+      {
+        "stage_id": "class_assignment",
+        "output": "class_id",
+        "notes": "class selection is single-hit or precedence-ordered within the selected bucket"
+      },
+      {
+        "stage_id": "verdict_derivation",
+        "output": "expected_verdict + expected_reason_codes",
+        "notes": "verdict is derived only after bucket and class selection"
+      }
+    ]
+  },
+  "predicate_registry": [
+    {
+      "predicate_id": "PRED_CC014_MALFORMED_NON_OBJECT_ARTIFACT",
+      "class_bucket": "malformed",
+      "command": "mixed",
+      "composition": "all_of",
+      "state_requirements": {
+        "artifact_is_json_object": false
+      },
+      "notes": "Catches non-object JSON roots before any in-domain or scope-boundary class selection."
+    },
+    {
+      "predicate_id": "PRED_CC001_VERIFY_BASELINE_PASS",
+      "class_bucket": "in_domain_valid",
+      "command": "verify",
+      "composition": "all_of",
+      "state_requirements": {
+        "unknown_top_level_fields_outside_identity_surface": false,
+        "identity_surface_resolved": true,
+        "command_supported": true
+      },
+      "rule_outcomes": [
+        {
+          "rule_id": "RULE_SCHEMA_VERSION_EQUALS_DLX_ARTIFACT_V0_1",
+          "outcome": true
+        },
+        {
+          "rule_id": "RULE_ARTIFACT_HASH_64_HEX",
+          "outcome": true
+        },
+        {
+          "rule_id": "RULE_VALIDATOR_RESULT_ENUM",
+          "outcome": true
+        },
+        {
+          "rule_id": "RULE_REBUILD_RESULT_ENUM",
+          "outcome": true
+        },
+        {
+          "rule_id": "RULE_REBUILD_HASH_EXPECTED_MATCHES_ARTIFACT_ID",
+          "outcome": true
+        },
+        {
+          "rule_id": "RULE_PASS_REQUIRES_MATCH_REBUILD_RESULT",
+          "outcome": true
+        }
+      ]
+    },
+    {
+      "predicate_id": "PRED_CC002_VERIFY_SCHEMA_VERSION_INVALID",
+      "class_bucket": "in_domain_invalid",
+      "command": "verify",
+      "composition": "all_of",
+      "state_requirements": {
+        "identity_surface_resolved": true,
+        "command_supported": true
+      },
+      "rule_outcomes": [
+        {
+          "rule_id": "RULE_SCHEMA_VERSION_EQUALS_DLX_ARTIFACT_V0_1",
+          "outcome": false
+        },
+        {
+          "rule_id": "RULE_ARTIFACT_HASH_64_HEX",
+          "outcome": true
+        },
+        {
+          "rule_id": "RULE_VALIDATOR_RESULT_ENUM",
+          "outcome": true
+        },
+        {
+          "rule_id": "RULE_REBUILD_RESULT_ENUM",
+          "outcome": true
+        }
+      ]
+    },
+    {
+      "predicate_id": "PRED_CC003_VERIFY_REBUILD_HASH_EXPECTED_MISMATCH",
+      "class_bucket": "in_domain_invalid",
+      "command": "verify",
+      "composition": "all_of",
+      "state_requirements": {
+        "identity_surface_resolved": true,
+        "command_supported": true
+      },
+      "rule_outcomes": [
+        {
+          "rule_id": "RULE_REBUILD_HASH_EXPECTED_MATCHES_ARTIFACT_ID",
+          "outcome": false
+        },
+        {
+          "rule_id": "RULE_ARTIFACT_HASH_64_HEX",
+          "outcome": true
+        },
+        {
+          "rule_id": "RULE_VALIDATOR_RESULT_ENUM",
+          "outcome": true
+        },
+        {
+          "rule_id": "RULE_REBUILD_RESULT_ENUM",
+          "outcome": true
+        }
+      ]
+    },
+    {
+      "predicate_id": "PRED_CC004_VERIFY_PASS_REQUIRES_MATCH",
+      "class_bucket": "in_domain_invalid",
+      "command": "verify",
+      "composition": "all_of",
+      "state_requirements": {
+        "identity_surface_resolved": true,
+        "command_supported": true
+      },
+      "rule_outcomes": [
+        {
+          "rule_id": "RULE_SCHEMA_VERSION_EQUALS_DLX_ARTIFACT_V0_1",
+          "outcome": true
+        },
+        {
+          "rule_id": "RULE_ARTIFACT_HASH_64_HEX",
+          "outcome": true
+        },
+        {
+          "rule_id": "RULE_VALIDATOR_RESULT_ENUM",
+          "outcome": true
+        },
+        {
+          "rule_id": "RULE_REBUILD_RESULT_ENUM",
+          "outcome": true
+        },
+        {
+          "rule_id": "RULE_REBUILD_HASH_EXPECTED_MATCHES_ARTIFACT_ID",
+          "outcome": true
+        },
+        {
+          "rule_id": "RULE_PASS_REQUIRES_MATCH_REBUILD_RESULT",
+          "outcome": false
+        }
+      ]
+    },
+    {
+      "predicate_id": "PRED_CC005_VALIDATE_TRANSITION_CHAIN_INVALID",
+      "class_bucket": "in_domain_invalid",
+      "command": "validate",
+      "composition": "any_of",
+      "rule_outcomes": [
+        {
+          "rule_id": "RULE_TRANSITION_CHAIN_NON_EMPTY_ARRAY",
+          "outcome": false
+        },
+        {
+          "rule_id": "RULE_TRANSITION_CHAIN_STEP_SHAPE",
+          "outcome": false
+        },
+        {
+          "rule_id": "RULE_TRANSITION_CHAIN_ALLOWED_LOCAL_TRANSITIONS",
+          "outcome": false
+        },
+        {
+          "rule_id": "RULE_TRANSITION_CHAIN_CONTINUITY",
+          "outcome": false
+        }
+      ]
+    },
+    {
+      "predicate_id": "PRED_CC006_REBUILD_REBUILD_SOURCE_INVALID",
+      "class_bucket": "in_domain_invalid",
+      "command": "rebuild",
+      "composition": "any_of",
+      "rule_outcomes": [
+        {
+          "rule_id": "RULE_REBUILD_SOURCE_PRESENT",
+          "outcome": false
+        },
+        {
+          "rule_id": "RULE_REBUILD_SOURCE_OBJECT",
+          "outcome": false
+        }
+      ]
+    },
+    {
+      "predicate_id": "PRED_CC007_VERIFY_UNKNOWN_TOP_LEVEL_ENVELOPE_FIELD_TOLERATED",
+      "class_bucket": "in_domain_valid",
+      "command": "verify",
+      "composition": "all_of",
+      "state_requirements": {
+        "unknown_top_level_fields_outside_identity_surface": true,
+        "identity_surface_resolved": true,
+        "command_supported": true
+      },
+      "rule_outcomes": [
+        {
+          "rule_id": "RULE_SCHEMA_VERSION_EQUALS_DLX_ARTIFACT_V0_1",
+          "outcome": true
+        },
+        {
+          "rule_id": "RULE_ARTIFACT_HASH_64_HEX",
+          "outcome": true
+        },
+        {
+          "rule_id": "RULE_VALIDATOR_RESULT_ENUM",
+          "outcome": true
+        },
+        {
+          "rule_id": "RULE_REBUILD_RESULT_ENUM",
+          "outcome": true
+        },
+        {
+          "rule_id": "RULE_REBUILD_HASH_EXPECTED_MATCHES_ARTIFACT_ID",
+          "outcome": true
+        },
+        {
+          "rule_id": "RULE_PASS_REQUIRES_MATCH_REBUILD_RESULT",
+          "outcome": true
+        }
+      ],
+      "notes": "Unknown envelope-field tolerance is anchored by vector_007 and does not affect identity or normalized result."
+    },
+    {
+      "predicate_id": "PRED_CC008_VERIFY_REBUILD_SOURCE_ABSENT",
+      "class_bucket": "out_of_scope",
+      "command": "verify",
+      "composition": "all_of",
+      "state_requirements": {
+        "command_supported": true,
+        "identity_surface_resolved": false,
+        "artifact_is_json_object": true
+      }
+    },
+    {
+      "predicate_id": "PRED_CC009_VERIFY_ARTIFACT_HASH_INVALID",
+      "class_bucket": "in_domain_gap",
+      "command": "verify",
+      "composition": "all_of",
+      "state_requirements": {
+        "identity_surface_resolved": true,
+        "command_supported": true
+      },
+      "rule_outcomes": [
+        {
+          "rule_id": "RULE_SCHEMA_VERSION_EQUALS_DLX_ARTIFACT_V0_1",
+          "outcome": true
+        },
+        {
+          "rule_id": "RULE_ARTIFACT_HASH_64_HEX",
+          "outcome": false
+        },
+        {
+          "rule_id": "RULE_REBUILD_RESULT_ENUM",
+          "outcome": true
+        }
+      ]
+    },
+    {
+      "predicate_id": "PRED_CC010_VERIFY_VALIDATOR_RESULT_INVALID",
+      "class_bucket": "in_domain_gap",
+      "command": "verify",
+      "composition": "all_of",
+      "state_requirements": {
+        "identity_surface_resolved": true,
+        "command_supported": true
+      },
+      "rule_outcomes": [
+        {
+          "rule_id": "RULE_SCHEMA_VERSION_EQUALS_DLX_ARTIFACT_V0_1",
+          "outcome": true
+        },
+        {
+          "rule_id": "RULE_VALIDATOR_RESULT_ENUM",
+          "outcome": false
+        },
+        {
+          "rule_id": "RULE_REBUILD_RESULT_ENUM",
+          "outcome": true
+        }
+      ]
+    },
+    {
+      "predicate_id": "PRED_CC011_VERIFY_REBUILD_RESULT_INVALID",
+      "class_bucket": "in_domain_gap",
+      "command": "verify",
+      "composition": "all_of",
+      "state_requirements": {
+        "identity_surface_resolved": true,
+        "command_supported": true
+      },
+      "rule_outcomes": [
+        {
+          "rule_id": "RULE_SCHEMA_VERSION_EQUALS_DLX_ARTIFACT_V0_1",
+          "outcome": true
+        },
+        {
+          "rule_id": "RULE_ARTIFACT_HASH_64_HEX",
+          "outcome": true
+        },
+        {
+          "rule_id": "RULE_VALIDATOR_RESULT_ENUM",
+          "outcome": true
+        },
+        {
+          "rule_id": "RULE_REBUILD_RESULT_ENUM",
+          "outcome": false
+        }
+      ]
+    },
+    {
+      "predicate_id": "PRED_CC012_MULTI_REASON_PRECEDENCE",
+      "class_bucket": "in_domain_invalid",
+      "command": "verify",
+      "composition": "all_of",
+      "state_requirements": {
+        "identity_surface_resolved": true,
+        "command_supported": true
+      },
+      "rule_outcomes": [
+        {
+          "rule_id": "RULE_SCHEMA_VERSION_EQUALS_DLX_ARTIFACT_V0_1",
+          "outcome": false
+        },
+        {
+          "rule_id": "RULE_ARTIFACT_HASH_64_HEX",
+          "outcome": true
+        },
+        {
+          "rule_id": "RULE_VALIDATOR_RESULT_ENUM",
+          "outcome": true
+        },
+        {
+          "rule_id": "RULE_REBUILD_RESULT_ENUM",
+          "outcome": true
+        },
+        {
+          "rule_id": "RULE_REBUILD_HASH_EXPECTED_MATCHES_ARTIFACT_ID",
+          "outcome": false
+        },
+        {
+          "rule_id": "RULE_PASS_REQUIRES_MATCH_REBUILD_RESULT",
+          "outcome": true
+        }
+      ],
+      "notes": "Open gap until multi-reason ordering is anchored or formally excluded."
+    },
+    {
+      "predicate_id": "PRED_CC013_CONFORMANCE_ERROR_HARNESS_FAILURE",
+      "class_bucket": "harness_only_gap",
+      "command": "harness",
+      "composition": "all_of",
+      "state_requirements": {
+        "command_supported": false,
+        "artifact_is_json_object": true
+      }
+    }
+  ]
+}

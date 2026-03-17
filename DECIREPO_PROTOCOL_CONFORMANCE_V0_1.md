@@ -42,10 +42,12 @@ The bounded-completeness support artifacts for this profile are:
 - `conformance/CASE_CLASS_MATRIX_V0_1.json`
 - `conformance/GAP_CLASSIFICATION_V0_1.json`
 - `conformance/generated_corpus_v0_1/manifest.json`
+- `conformance/domain_guided_generated_corpus_v0_1/manifest.json`
 - `conformance/boundary_corpus_v0_1/manifest.json`
 - `conformance/adversarial_corpus_v0_1/manifest.json`
+- `conformance/malformed_corpus_v0_1/manifest.json`
 
-These artifacts clarify domain membership, bounded evaluation order, case-class coverage, and the remaining open claim boundary for profile `V0_1`.
+These artifacts clarify domain membership, bounded evaluation order, case-class coverage, empirical corpus provenance, and the remaining open claim boundary for profile `V0_1`.
 They do not override published canonical vectors.
 
 ## 1. Conformance Definition

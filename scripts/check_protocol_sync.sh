@@ -21,9 +21,11 @@ PATHS=(
   "conformance/DOMAIN_PROFILE_V0_1.json"
   "conformance/CASE_CLASS_MATRIX_V0_1.json"
   "conformance/GAP_CLASSIFICATION_V0_1.json"
+  "conformance/domain_guided_generated_corpus_v0_1"
   "conformance/boundary_corpus_v0_1"
   "conformance/adversarial_corpus_v0_1"
   "conformance/generated_corpus_v0_1"
+  "conformance/malformed_corpus_v0_1"
   "conformance/v0_1"
 )
 

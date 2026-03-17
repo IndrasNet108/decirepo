@@ -30,19 +30,32 @@ class GapClassificationV01Test(unittest.TestCase):
         self.assertEqual(self.ledger["protocol_specification"], "v0.2")
         self.assertEqual(self.ledger["protocol_semantics"], "v0.1")
         self.assertIn(self.ledger["status"], {"draft", "sealed"})
+        self.assertIn("resolution_paths", self.ledger)
 
     def test_gap_class_and_block_type_registries_are_closed(self) -> None:
         declared_gap_classes = set(self.ledger["gap_classes"])
         declared_block_types = set(self.ledger["block_types"])
+        declared_resolution_paths = set(self.ledger["resolution_paths"])
         self.assertTrue(declared_gap_classes)
         self.assertTrue(declared_block_types)
+        self.assertTrue(declared_resolution_paths)
 
         for gap in self.gaps:
             self.assertIn(gap["gap_class"], declared_gap_classes, gap["gap_id"])
             self.assertIsInstance(gap["blocks"], list, gap["gap_id"])
-            self.assertTrue(gap["blocks"], gap["gap_id"])
             self.assertIsInstance(gap["related_class_ids"], list, gap["gap_id"])
             self.assertIn(gap["status"], {"open", "resolved", "excluded"}, gap["gap_id"])
+            self.assertIn(gap["resolution_path"], declared_resolution_paths, gap["gap_id"])
+            self.assertEqual(
+                set(gap["claim_impact"].keys()),
+                {
+                    "blocks_total_classification_over_declared_domain",
+                    "blocks_bounded_claim_v0_1",
+                    "requires_published_anchor",
+                    "formally_excludable_in_v0_1",
+                },
+                gap["gap_id"],
+            )
             for block in gap["blocks"]:
                 self.assertIn(block, declared_block_types, gap["gap_id"])
 
@@ -89,17 +102,32 @@ class GapClassificationV01Test(unittest.TestCase):
         for gap in self.gaps:
             if gap["gap_class"] == "registry_hygiene_gap":
                 self.assertNotIn("bounded_completeness", gap["blocks"], gap["gap_id"])
+                self.assertFalse(gap["claim_impact"]["blocks_bounded_claim_v0_1"], gap["gap_id"])
 
     def test_multi_reason_precedence_gap_blocks_bounded_completeness(self) -> None:
         gap = self.gaps_by_id["GAP_MULTI_REASON_PRECEDENCE_CANONICALIZATION"]
         self.assertIn("CC012_MULTI_REASON_PRECEDENCE", gap["related_class_ids"])
         self.assertEqual(gap["gap_class"], "semantic_blocker")
         self.assertIn("bounded_completeness", gap["blocks"])
+        self.assertTrue(gap["claim_impact"]["blocks_bounded_claim_v0_1"])
 
-    def test_evidence_method_gaps_are_classless(self) -> None:
+    def test_evidence_method_gaps_use_evidence_upgrade_resolution(self) -> None:
         for gap in self.gaps:
             if gap["gap_class"] == "evidence_method_gap":
-                self.assertEqual(gap["related_class_ids"], [], gap["gap_id"])
+                self.assertEqual(gap["resolution_path"], "evidence_upgrade", gap["gap_id"])
+
+    def test_claim_impact_matches_block_lists(self) -> None:
+        for gap in self.gaps:
+            self.assertEqual(
+                gap["claim_impact"]["blocks_bounded_claim_v0_1"],
+                "bounded_completeness" in gap["blocks"],
+                gap["gap_id"],
+            )
+            self.assertEqual(
+                gap["claim_impact"]["requires_published_anchor"],
+                "published_anchor_closure" in gap["blocks"],
+                gap["gap_id"],
+            )
 
     def test_domain_open_gaps_are_covered_by_gap_ledger(self) -> None:
         gap_ids = set(self.gaps_by_id)

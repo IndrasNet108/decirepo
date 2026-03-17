@@ -1,0 +1,116 @@
+{
+  "manifest_version": "0.1",
+  "profile_id": "V0_1",
+  "corpus_id": "adversarial_corpus_v0_1",
+  "provenance_mode": "manual_adversarial",
+  "generator": {
+    "name": "gen_adversarial_corpus_v0_1.py",
+    "version": "0.1.0"
+  },
+  "inputs": {
+    "domain_profile": "conformance/DOMAIN_PROFILE_V0_1.json",
+    "semantics_kernel": "conformance/SEMANTICS_KERNEL_V0_1.json",
+    "case_class_matrix": "conformance/CASE_CLASS_MATRIX_V0_1.json"
+  },
+  "generation_policy": {
+    "mode": "deterministic",
+    "seed_policy": "fixed",
+    "seed": "V0_1-adversarial",
+    "emit_only_in_domain": false,
+    "include_boundary_cases": false,
+    "include_adversarial_cases": true
+  },
+  "cases": [
+    {
+      "case_id": "adversarial_invalid_artifact_hash",
+      "origin": "adversarial",
+      "command": "verify",
+      "artifact_path": "conformance/adversarial_corpus_v0_1/artifacts/adversarial_invalid_artifact_hash.json",
+      "expected_bucket": "in_domain_gap",
+      "expected_class": "CC009_VERIFY_ARTIFACT_HASH_INVALID",
+      "expected_verdict": "FAIL",
+      "expected_reason_codes": [
+        "ARTIFACT_HASH_INVALID"
+      ],
+      "notes": "Attacks the registry-only artifact_hash rule without changing the rest of the valid surface."
+    },
+    {
+      "case_id": "adversarial_invalid_validator_result",
+      "origin": "adversarial",
+      "command": "verify",
+      "artifact_path": "conformance/adversarial_corpus_v0_1/artifacts/adversarial_invalid_validator_result.json",
+      "expected_bucket": "in_domain_gap",
+      "expected_class": "CC010_VERIFY_VALIDATOR_RESULT_INVALID",
+      "expected_verdict": "FAIL",
+      "expected_reason_codes": [
+        "VALIDATOR_RESULT_INVALID"
+      ],
+      "notes": "Forces validator_result outside the bounded enum."
+    },
+    {
+      "case_id": "adversarial_invalid_rebuild_result",
+      "origin": "adversarial",
+      "command": "verify",
+      "artifact_path": "conformance/adversarial_corpus_v0_1/artifacts/adversarial_invalid_rebuild_result.json",
+      "expected_bucket": "in_domain_gap",
+      "expected_class": "CC011_VERIFY_REBUILD_RESULT_INVALID",
+      "expected_verdict": "FAIL",
+      "expected_reason_codes": [
+        "REBUILD_RESULT_INVALID"
+      ],
+      "notes": "Forces rebuild_result outside the bounded enum while staying inside the verify path."
+    },
+    {
+      "case_id": "adversarial_multi_reason_precedence",
+      "origin": "adversarial",
+      "command": "verify",
+      "artifact_path": "conformance/adversarial_corpus_v0_1/artifacts/adversarial_multi_reason_precedence.json",
+      "expected_bucket": "in_domain_invalid",
+      "expected_class": "CC012_MULTI_REASON_PRECEDENCE",
+      "expected_verdict": "FAIL",
+      "expected_reason_codes": [
+        "REBUILD_HASH_EXPECTED_MISMATCH",
+        "SCHEMA_VERSION_INVALID"
+      ],
+      "notes": "Forces overlapping failure classes and requires ordered precedence resolution."
+    },
+    {
+      "case_id": "adversarial_unsupported_command",
+      "origin": "adversarial",
+      "command": "verify_unsupported",
+      "artifact_path": "conformance/adversarial_corpus_v0_1/artifacts/adversarial_unsupported_command.json",
+      "expected_bucket": "harness_only_gap",
+      "expected_class": "CC013_CONFORMANCE_ERROR_HARNESS_FAILURE",
+      "expected_verdict": "CONFORMANCE_ERROR",
+      "expected_reason_codes": [],
+      "notes": "Attacks the harness boundary directly with an unsupported command."
+    },
+    {
+      "case_id": "adversarial_unknown_envelope_plus_schema_invalid",
+      "origin": "adversarial",
+      "command": "verify",
+      "artifact_path": "conformance/adversarial_corpus_v0_1/artifacts/adversarial_unknown_envelope_plus_schema_invalid.json",
+      "expected_bucket": "in_domain_invalid",
+      "expected_class": "CC002_VERIFY_SCHEMA_VERSION_INVALID",
+      "expected_verdict": "FAIL",
+      "expected_reason_codes": [
+        "SCHEMA_VERSION_INVALID"
+      ],
+      "notes": "Unknown envelope tolerance must not mask a real verify failure."
+    },
+    {
+      "case_id": "adversarial_invalid_hash_and_validator_result",
+      "origin": "adversarial",
+      "command": "verify",
+      "artifact_path": "conformance/adversarial_corpus_v0_1/artifacts/adversarial_invalid_hash_and_validator_result.json",
+      "expected_bucket": "in_domain_gap",
+      "expected_class": "CC009_VERIFY_ARTIFACT_HASH_INVALID",
+      "expected_verdict": "FAIL",
+      "expected_reason_codes": [
+        "ARTIFACT_HASH_INVALID",
+        "VALIDATOR_RESULT_INVALID"
+      ],
+      "notes": "Conflicting registry-only gaps must not collapse to a silent PASS; precedence should pick artifact_hash_invalid while reason ordering stays stable."
+    }
+  ]
+}

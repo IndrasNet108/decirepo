@@ -1,0 +1,115 @@
+{
+  "manifest_version": "0.1",
+  "profile_id": "V0_1",
+  "corpus_id": "malformed_corpus_v0_1",
+  "provenance_mode": "malformed_manual",
+  "generator": {
+    "name": "gen_malformed_corpus_v0_1.py",
+    "version": "0.1.0"
+  },
+  "inputs": {
+    "domain_profile": "conformance/DOMAIN_PROFILE_V0_1.json",
+    "semantics_kernel": "conformance/SEMANTICS_KERNEL_V0_1.json"
+  },
+  "generation_policy": {
+    "mode": "deterministic",
+    "seed_policy": "fixed",
+    "seed": "V0_1-malformed",
+    "emit_only_in_domain": false,
+    "include_boundary_cases": true,
+    "include_adversarial_cases": false
+  },
+  "coverage_summary": {
+    "cases_total": 7,
+    "cases_by_expected_bucket": {
+      "malformed": 3,
+      "in_domain_invalid": 3,
+      "out_of_scope": 1
+    }
+  },
+  "cases": [
+    {
+      "case_id": "malformed_root_array_verify",
+      "origin": "malformed",
+      "command": "verify",
+      "artifact_path": "conformance/malformed_corpus_v0_1/artifacts/malformed_root_array_verify.json",
+      "expected_bucket": "malformed",
+      "expected_class": "CC014_MALFORMED_NON_OBJECT_ARTIFACT",
+      "expected_verdict": null,
+      "expected_reason_codes": [],
+      "notes": "Top-level JSON array should be classified as malformed rather than drifting into a protocol bucket."
+    },
+    {
+      "case_id": "malformed_root_string_validate",
+      "origin": "malformed",
+      "command": "validate",
+      "artifact_path": "conformance/malformed_corpus_v0_1/artifacts/malformed_root_string_validate.json",
+      "expected_bucket": "malformed",
+      "expected_class": "CC014_MALFORMED_NON_OBJECT_ARTIFACT",
+      "expected_verdict": null,
+      "expected_reason_codes": [],
+      "notes": "Top-level JSON string stays in the malformed layer across command variants."
+    },
+    {
+      "case_id": "malformed_root_number_rebuild",
+      "origin": "malformed",
+      "command": "rebuild",
+      "artifact_path": "conformance/malformed_corpus_v0_1/artifacts/malformed_root_number_rebuild.json",
+      "expected_bucket": "malformed",
+      "expected_class": "CC014_MALFORMED_NON_OBJECT_ARTIFACT",
+      "expected_verdict": null,
+      "expected_reason_codes": [],
+      "notes": "Top-level scalar input must never silently enter the rebuild path."
+    },
+    {
+      "case_id": "malformed_missing_schema_version_verify",
+      "origin": "malformed",
+      "command": "verify",
+      "artifact_path": "conformance/malformed_corpus_v0_1/artifacts/malformed_missing_schema_version_verify.json",
+      "expected_bucket": "in_domain_invalid",
+      "expected_class": null,
+      "expected_verdict": "FAIL",
+      "expected_reason_codes": [
+        "SCHEMA_VERSION_INVALID"
+      ],
+      "notes": "Parser-adjacent malformed object with missing schema_version must still classify deterministically."
+    },
+    {
+      "case_id": "malformed_scalar_transition_chain_validate",
+      "origin": "malformed",
+      "command": "validate",
+      "artifact_path": "conformance/malformed_corpus_v0_1/artifacts/malformed_scalar_transition_chain_validate.json",
+      "expected_bucket": "in_domain_invalid",
+      "expected_class": null,
+      "expected_verdict": "FAIL",
+      "expected_reason_codes": [
+        "TRANSITION_CHAIN_INVALID"
+      ],
+      "notes": "Wrong transition_chain type should remain deterministic and not escape as out_of_scope."
+    },
+    {
+      "case_id": "malformed_missing_rebuild_source_verify",
+      "origin": "malformed",
+      "command": "verify",
+      "artifact_path": "conformance/malformed_corpus_v0_1/artifacts/malformed_missing_rebuild_source_verify.json",
+      "expected_bucket": "out_of_scope",
+      "expected_class": "CC008_VERIFY_REBUILD_SOURCE_ABSENT",
+      "expected_verdict": null,
+      "expected_reason_codes": [],
+      "notes": "Missing required identity surface field stays on the scope boundary instead of the malformed root bucket."
+    },
+    {
+      "case_id": "malformed_rebuild_source_scalar_rebuild",
+      "origin": "malformed",
+      "command": "rebuild",
+      "artifact_path": "conformance/malformed_corpus_v0_1/artifacts/malformed_rebuild_source_scalar_rebuild.json",
+      "expected_bucket": "in_domain_invalid",
+      "expected_class": null,
+      "expected_verdict": "FAIL",
+      "expected_reason_codes": [
+        "REBUILD_SOURCE_INVALID"
+      ],
+      "notes": "Invalid canonicalization input under rebuild remains an in-domain invalid, not an unhandled parser failure."
+    }
+  ]
+}

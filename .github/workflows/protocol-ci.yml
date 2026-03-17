@@ -49,17 +49,26 @@ jobs:
       - name: Generate bounded corpus
         run: python3 oracle/gen_corpus_v0_1.py
 
+      - name: Generate domain-guided corpus
+        run: python3 oracle/gen_domain_guided_corpus_v0_1.py
+
       - name: Generate boundary corpus
         run: python3 oracle/gen_boundary_corpus_v0_1.py
 
       - name: Generate adversarial corpus
         run: python3 oracle/gen_adversarial_corpus_v0_1.py
 
+      - name: Generate malformed corpus
+        run: python3 oracle/gen_malformed_corpus_v0_1.py
+
       - name: Partition tests
         run: python3 oracle/tests/test_partition_v0_1.py
 
       - name: Boundary and adversarial tests
         run: python3 oracle/tests/test_boundary_adversarial_v0_1.py
+
+      - name: Domain-guided and malformed tests
+        run: python3 oracle/tests/test_domain_guided_malformed_v0_1.py
 
       - name: Upload protocol conformance report
         uses: actions/upload-artifact@v6

@@ -11,8 +11,10 @@
     "conformance:protocol:v0_1": "node scripts/run_protocol_conformance_v0_1.js",
     "oracle:v0_1": "python3 oracle/decirepo_oracle_v0_1.py",
     "oracle:gen-corpus:v0_1": "python3 oracle/gen_corpus_v0_1.py",
+    "oracle:gen-domain-guided:v0_1": "python3 oracle/gen_domain_guided_corpus_v0_1.py",
     "oracle:gen-boundary:v0_1": "python3 oracle/gen_boundary_corpus_v0_1.py",
     "oracle:gen-adversarial:v0_1": "python3 oracle/gen_adversarial_corpus_v0_1.py",
-    "oracle:test:v0_1": "python3 oracle/tests/test_vectors_v0_1.py && python3 oracle/tests/test_kernel_contract_v0_1.py && python3 oracle/tests/test_gap_classification_v0_1.py && python3 oracle/tests/test_partition_v0_1.py && python3 oracle/tests/test_boundary_adversarial_v0_1.py"
+    "oracle:gen-malformed:v0_1": "python3 oracle/gen_malformed_corpus_v0_1.py",
+    "oracle:test:v0_1": "python3 oracle/tests/test_vectors_v0_1.py && python3 oracle/tests/test_kernel_contract_v0_1.py && python3 oracle/tests/test_gap_classification_v0_1.py && python3 oracle/tests/test_partition_v0_1.py && python3 oracle/tests/test_boundary_adversarial_v0_1.py && python3 oracle/tests/test_domain_guided_malformed_v0_1.py"
   }
 }

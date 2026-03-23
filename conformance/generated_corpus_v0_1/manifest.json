@@ -1,0 +1,461 @@
+{
+  "manifest_version": "0.1",
+  "profile_id": "V0_1",
+  "corpus_id": "generated_corpus_v0_1",
+  "provenance_mode": "class_guided",
+  "generator": {
+    "name": "gen_corpus_v0_1.py",
+    "version": "0.1.0"
+  },
+  "inputs": {
+    "domain_profile": "conformance/DOMAIN_PROFILE_V0_1.json",
+    "semantics_kernel": "conformance/SEMANTICS_KERNEL_V0_1.json",
+    "case_class_matrix": "conformance/CASE_CLASS_MATRIX_V0_1.json"
+  },
+  "generation_policy": {
+    "mode": "deterministic",
+    "seed_policy": "fixed",
+    "seed": "V0_1",
+    "emit_only_in_domain": false,
+    "include_boundary_cases": false,
+    "include_adversarial_cases": false
+  },
+  "classification_contract": {
+    "classification_pipeline": [
+      "bucket_assignment",
+      "predicate_resolution",
+      "class_selection",
+      "verdict_derivation",
+      "reason_code_normalization",
+      "normalized_result_construction"
+    ],
+    "partition_expectation": "every_generated_input_must_resolve_to_exactly_one_class_or_declared_precedence_chain",
+    "ambiguity_policy": "allowed_only_if_partition_mode_is_ordered_precedence_chain",
+    "reason_code_ordering": "fixed_total_order"
+  },
+  "coverage_summary": {
+    "declared_classes_total": 14,
+    "declared_classes_covered": 14,
+    "generated_inputs_total": 14,
+    "generated_inputs_in_domain": 11,
+    "generated_inputs_out_of_domain": 3,
+    "generated_inputs_ambiguous": 0,
+    "generated_inputs_with_declared_precedence_chain": 7,
+    "generated_inputs_unclassified": 0
+  },
+  "entries": [
+    {
+      "entry_id": "GEN_CC014_MALFORMED_NON_OBJECT_ARTIFACT",
+      "source_class_id": "CC014_MALFORMED_NON_OBJECT_ARTIFACT",
+      "source_bucket": "malformed",
+      "command": "verify",
+      "generation_kind": "representative",
+      "artifact_path": "conformance/generated_corpus_v0_1/artifacts/GEN_CC014_MALFORMED_NON_OBJECT_ARTIFACT.json",
+      "expected": {
+        "in_domain": false,
+        "matched_classes": [
+          "CC014_MALFORMED_NON_OBJECT_ARTIFACT"
+        ],
+        "selected_class": "CC014_MALFORMED_NON_OBJECT_ARTIFACT",
+        "partition_mode": "exclusive",
+        "expected_verdict": null,
+        "expected_reason_codes": []
+      },
+      "trace_expectation": {
+        "bucket_assignment": "malformed",
+        "predicate_ref": "PRED_CC014_MALFORMED_NON_OBJECT_ARTIFACT",
+        "precedence_rank": 10
+      },
+      "oracle_expectation": {
+        "artifact_id_required": false,
+        "normalized_result_required": false,
+        "canonical_result_hex_required": false
+      }
+    },
+    {
+      "entry_id": "GEN_CC001_VERIFY_BASELINE_PASS",
+      "source_class_id": "CC001_VERIFY_BASELINE_PASS",
+      "source_bucket": "in_domain_valid",
+      "command": "verify",
+      "generation_kind": "representative",
+      "artifact_path": "conformance/generated_corpus_v0_1/artifacts/GEN_CC001_VERIFY_BASELINE_PASS.json",
+      "expected": {
+        "in_domain": true,
+        "matched_classes": [
+          "CC001_VERIFY_BASELINE_PASS"
+        ],
+        "selected_class": "CC001_VERIFY_BASELINE_PASS",
+        "partition_mode": "exclusive",
+        "expected_verdict": "PASS",
+        "expected_reason_codes": []
+      },
+      "trace_expectation": {
+        "bucket_assignment": "in_domain_valid",
+        "predicate_ref": "PRED_CC001_VERIFY_BASELINE_PASS",
+        "precedence_rank": 100
+      },
+      "oracle_expectation": {
+        "artifact_id_required": true,
+        "normalized_result_required": true,
+        "canonical_result_hex_required": true
+      }
+    },
+    {
+      "entry_id": "GEN_CC002_VERIFY_SCHEMA_VERSION_INVALID",
+      "source_class_id": "CC002_VERIFY_SCHEMA_VERSION_INVALID",
+      "source_bucket": "in_domain_invalid",
+      "command": "verify",
+      "generation_kind": "representative",
+      "artifact_path": "conformance/generated_corpus_v0_1/artifacts/GEN_CC002_VERIFY_SCHEMA_VERSION_INVALID.json",
+      "expected": {
+        "in_domain": true,
+        "matched_classes": [
+          "CC002_VERIFY_SCHEMA_VERSION_INVALID"
+        ],
+        "selected_class": "CC002_VERIFY_SCHEMA_VERSION_INVALID",
+        "partition_mode": "ordered_precedence_chain",
+        "expected_verdict": "FAIL",
+        "expected_reason_codes": [
+          "SCHEMA_VERSION_INVALID"
+        ]
+      },
+      "trace_expectation": {
+        "bucket_assignment": "in_domain_invalid",
+        "predicate_ref": "PRED_CC002_VERIFY_SCHEMA_VERSION_INVALID",
+        "precedence_rank": 20
+      },
+      "oracle_expectation": {
+        "artifact_id_required": true,
+        "normalized_result_required": true,
+        "canonical_result_hex_required": true
+      }
+    },
+    {
+      "entry_id": "GEN_CC003_VERIFY_REBUILD_HASH_EXPECTED_MISMATCH",
+      "source_class_id": "CC003_VERIFY_REBUILD_HASH_EXPECTED_MISMATCH",
+      "source_bucket": "in_domain_invalid",
+      "command": "verify",
+      "generation_kind": "representative",
+      "artifact_path": "conformance/generated_corpus_v0_1/artifacts/GEN_CC003_VERIFY_REBUILD_HASH_EXPECTED_MISMATCH.json",
+      "expected": {
+        "in_domain": true,
+        "matched_classes": [
+          "CC003_VERIFY_REBUILD_HASH_EXPECTED_MISMATCH"
+        ],
+        "selected_class": "CC003_VERIFY_REBUILD_HASH_EXPECTED_MISMATCH",
+        "partition_mode": "ordered_precedence_chain",
+        "expected_verdict": "FAIL",
+        "expected_reason_codes": [
+          "REBUILD_HASH_EXPECTED_MISMATCH"
+        ]
+      },
+      "trace_expectation": {
+        "bucket_assignment": "in_domain_invalid",
+        "predicate_ref": "PRED_CC003_VERIFY_REBUILD_HASH_EXPECTED_MISMATCH",
+        "precedence_rank": 40
+      },
+      "oracle_expectation": {
+        "artifact_id_required": true,
+        "normalized_result_required": true,
+        "canonical_result_hex_required": true
+      }
+    },
+    {
+      "entry_id": "GEN_CC004_VERIFY_PASS_REQUIRES_MATCH",
+      "source_class_id": "CC004_VERIFY_PASS_REQUIRES_MATCH",
+      "source_bucket": "in_domain_invalid",
+      "command": "verify",
+      "generation_kind": "representative",
+      "artifact_path": "conformance/generated_corpus_v0_1/artifacts/GEN_CC004_VERIFY_PASS_REQUIRES_MATCH.json",
+      "expected": {
+        "in_domain": true,
+        "matched_classes": [
+          "CC004_VERIFY_PASS_REQUIRES_MATCH"
+        ],
+        "selected_class": "CC004_VERIFY_PASS_REQUIRES_MATCH",
+        "partition_mode": "ordered_precedence_chain",
+        "expected_verdict": "FAIL",
+        "expected_reason_codes": [
+          "PASS_REQUIRES_MATCH"
+        ]
+      },
+      "trace_expectation": {
+        "bucket_assignment": "in_domain_invalid",
+        "predicate_ref": "PRED_CC004_VERIFY_PASS_REQUIRES_MATCH",
+        "precedence_rank": 60
+      },
+      "oracle_expectation": {
+        "artifact_id_required": true,
+        "normalized_result_required": true,
+        "canonical_result_hex_required": true
+      }
+    },
+    {
+      "entry_id": "GEN_CC005_VALIDATE_TRANSITION_CHAIN_INVALID",
+      "source_class_id": "CC005_VALIDATE_TRANSITION_CHAIN_INVALID",
+      "source_bucket": "in_domain_invalid",
+      "command": "validate",
+      "generation_kind": "representative",
+      "artifact_path": "conformance/generated_corpus_v0_1/artifacts/GEN_CC005_VALIDATE_TRANSITION_CHAIN_INVALID.json",
+      "expected": {
+        "in_domain": true,
+        "matched_classes": [
+          "CC005_VALIDATE_TRANSITION_CHAIN_INVALID"
+        ],
+        "selected_class": "CC005_VALIDATE_TRANSITION_CHAIN_INVALID",
+        "partition_mode": "exclusive",
+        "expected_verdict": "FAIL",
+        "expected_reason_codes": [
+          "TRANSITION_CHAIN_INVALID"
+        ]
+      },
+      "trace_expectation": {
+        "bucket_assignment": "in_domain_invalid",
+        "predicate_ref": "PRED_CC005_VALIDATE_TRANSITION_CHAIN_INVALID",
+        "precedence_rank": 10
+      },
+      "oracle_expectation": {
+        "artifact_id_required": true,
+        "normalized_result_required": true,
+        "canonical_result_hex_required": true
+      }
+    },
+    {
+      "entry_id": "GEN_CC006_REBUILD_REBUILD_SOURCE_INVALID",
+      "source_class_id": "CC006_REBUILD_REBUILD_SOURCE_INVALID",
+      "source_bucket": "in_domain_invalid",
+      "command": "rebuild",
+      "generation_kind": "representative",
+      "artifact_path": "conformance/generated_corpus_v0_1/artifacts/GEN_CC006_REBUILD_REBUILD_SOURCE_INVALID.json",
+      "expected": {
+        "in_domain": true,
+        "matched_classes": [
+          "CC006_REBUILD_REBUILD_SOURCE_INVALID"
+        ],
+        "selected_class": "CC006_REBUILD_REBUILD_SOURCE_INVALID",
+        "partition_mode": "exclusive",
+        "expected_verdict": "FAIL",
+        "expected_reason_codes": [
+          "REBUILD_SOURCE_INVALID"
+        ]
+      },
+      "trace_expectation": {
+        "bucket_assignment": "in_domain_invalid",
+        "predicate_ref": "PRED_CC006_REBUILD_REBUILD_SOURCE_INVALID",
+        "precedence_rank": 10
+      },
+      "oracle_expectation": {
+        "artifact_id_required": true,
+        "normalized_result_required": true,
+        "canonical_result_hex_required": true
+      }
+    },
+    {
+      "entry_id": "GEN_CC007_VERIFY_UNKNOWN_TOP_LEVEL_ENVELOPE_FIELD_TOLERATED",
+      "source_class_id": "CC007_VERIFY_UNKNOWN_TOP_LEVEL_ENVELOPE_FIELD_TOLERATED",
+      "source_bucket": "in_domain_valid",
+      "command": "verify",
+      "generation_kind": "representative",
+      "artifact_path": "conformance/generated_corpus_v0_1/artifacts/GEN_CC007_VERIFY_UNKNOWN_TOP_LEVEL_ENVELOPE_FIELD_TOLERATED.json",
+      "expected": {
+        "in_domain": true,
+        "matched_classes": [
+          "CC007_VERIFY_UNKNOWN_TOP_LEVEL_ENVELOPE_FIELD_TOLERATED"
+        ],
+        "selected_class": "CC007_VERIFY_UNKNOWN_TOP_LEVEL_ENVELOPE_FIELD_TOLERATED",
+        "partition_mode": "exclusive",
+        "expected_verdict": "PASS",
+        "expected_reason_codes": []
+      },
+      "trace_expectation": {
+        "bucket_assignment": "in_domain_valid",
+        "predicate_ref": "PRED_CC007_VERIFY_UNKNOWN_TOP_LEVEL_ENVELOPE_FIELD_TOLERATED",
+        "precedence_rank": 110
+      },
+      "oracle_expectation": {
+        "artifact_id_required": true,
+        "normalized_result_required": true,
+        "canonical_result_hex_required": true
+      }
+    },
+    {
+      "entry_id": "GEN_CC008_VERIFY_REBUILD_SOURCE_ABSENT",
+      "source_class_id": "CC008_VERIFY_REBUILD_SOURCE_ABSENT",
+      "source_bucket": "out_of_scope",
+      "command": "verify",
+      "generation_kind": "representative",
+      "artifact_path": "conformance/generated_corpus_v0_1/artifacts/GEN_CC008_VERIFY_REBUILD_SOURCE_ABSENT.json",
+      "expected": {
+        "in_domain": false,
+        "matched_classes": [
+          "CC008_VERIFY_REBUILD_SOURCE_ABSENT"
+        ],
+        "selected_class": "CC008_VERIFY_REBUILD_SOURCE_ABSENT",
+        "partition_mode": "exclusive",
+        "expected_verdict": null,
+        "expected_reason_codes": []
+      },
+      "trace_expectation": {
+        "bucket_assignment": "out_of_scope",
+        "predicate_ref": "PRED_CC008_VERIFY_REBUILD_SOURCE_ABSENT",
+        "precedence_rank": 10
+      },
+      "oracle_expectation": {
+        "artifact_id_required": false,
+        "normalized_result_required": false,
+        "canonical_result_hex_required": false
+      }
+    },
+    {
+      "entry_id": "GEN_CC009_VERIFY_ARTIFACT_HASH_INVALID",
+      "source_class_id": "CC009_VERIFY_ARTIFACT_HASH_INVALID",
+      "source_bucket": "in_domain_gap",
+      "command": "verify",
+      "generation_kind": "representative",
+      "artifact_path": "conformance/generated_corpus_v0_1/artifacts/GEN_CC009_VERIFY_ARTIFACT_HASH_INVALID.json",
+      "expected": {
+        "in_domain": true,
+        "matched_classes": [
+          "CC009_VERIFY_ARTIFACT_HASH_INVALID"
+        ],
+        "selected_class": "CC009_VERIFY_ARTIFACT_HASH_INVALID",
+        "partition_mode": "ordered_precedence_chain",
+        "expected_verdict": "FAIL",
+        "expected_reason_codes": [
+          "ARTIFACT_HASH_INVALID"
+        ]
+      },
+      "trace_expectation": {
+        "bucket_assignment": "in_domain_gap",
+        "predicate_ref": "PRED_CC009_VERIFY_ARTIFACT_HASH_INVALID",
+        "precedence_rank": 30
+      },
+      "oracle_expectation": {
+        "artifact_id_required": true,
+        "normalized_result_required": true,
+        "canonical_result_hex_required": true
+      }
+    },
+    {
+      "entry_id": "GEN_CC010_VERIFY_VALIDATOR_RESULT_INVALID",
+      "source_class_id": "CC010_VERIFY_VALIDATOR_RESULT_INVALID",
+      "source_bucket": "in_domain_gap",
+      "command": "verify",
+      "generation_kind": "representative",
+      "artifact_path": "conformance/generated_corpus_v0_1/artifacts/GEN_CC010_VERIFY_VALIDATOR_RESULT_INVALID.json",
+      "expected": {
+        "in_domain": true,
+        "matched_classes": [
+          "CC010_VERIFY_VALIDATOR_RESULT_INVALID"
+        ],
+        "selected_class": "CC010_VERIFY_VALIDATOR_RESULT_INVALID",
+        "partition_mode": "ordered_precedence_chain",
+        "expected_verdict": "FAIL",
+        "expected_reason_codes": [
+          "VALIDATOR_RESULT_INVALID"
+        ]
+      },
+      "trace_expectation": {
+        "bucket_assignment": "in_domain_gap",
+        "predicate_ref": "PRED_CC010_VERIFY_VALIDATOR_RESULT_INVALID",
+        "precedence_rank": 50
+      },
+      "oracle_expectation": {
+        "artifact_id_required": true,
+        "normalized_result_required": true,
+        "canonical_result_hex_required": true
+      }
+    },
+    {
+      "entry_id": "GEN_CC011_VERIFY_REBUILD_RESULT_INVALID",
+      "source_class_id": "CC011_VERIFY_REBUILD_RESULT_INVALID",
+      "source_bucket": "in_domain_gap",
+      "command": "verify",
+      "generation_kind": "representative",
+      "artifact_path": "conformance/generated_corpus_v0_1/artifacts/GEN_CC011_VERIFY_REBUILD_RESULT_INVALID.json",
+      "expected": {
+        "in_domain": true,
+        "matched_classes": [
+          "CC011_VERIFY_REBUILD_RESULT_INVALID"
+        ],
+        "selected_class": "CC011_VERIFY_REBUILD_RESULT_INVALID",
+        "partition_mode": "ordered_precedence_chain",
+        "expected_verdict": "FAIL",
+        "expected_reason_codes": [
+          "REBUILD_RESULT_INVALID"
+        ]
+      },
+      "trace_expectation": {
+        "bucket_assignment": "in_domain_gap",
+        "predicate_ref": "PRED_CC011_VERIFY_REBUILD_RESULT_INVALID",
+        "precedence_rank": 70
+      },
+      "oracle_expectation": {
+        "artifact_id_required": true,
+        "normalized_result_required": true,
+        "canonical_result_hex_required": true
+      }
+    },
+    {
+      "entry_id": "GEN_CC012_MULTI_REASON_PRECEDENCE",
+      "source_class_id": "CC012_MULTI_REASON_PRECEDENCE",
+      "source_bucket": "in_domain_invalid",
+      "command": "verify",
+      "generation_kind": "representative",
+      "artifact_path": "conformance/generated_corpus_v0_1/artifacts/GEN_CC012_MULTI_REASON_PRECEDENCE.json",
+      "expected": {
+        "in_domain": true,
+        "matched_classes": [
+          "CC002_VERIFY_SCHEMA_VERSION_INVALID",
+          "CC003_VERIFY_REBUILD_HASH_EXPECTED_MISMATCH",
+          "CC012_MULTI_REASON_PRECEDENCE"
+        ],
+        "selected_class": "CC012_MULTI_REASON_PRECEDENCE",
+        "partition_mode": "ordered_precedence_chain",
+        "expected_verdict": "FAIL",
+        "expected_reason_codes": [
+          "REBUILD_HASH_EXPECTED_MISMATCH",
+          "SCHEMA_VERSION_INVALID"
+        ]
+      },
+      "trace_expectation": {
+        "bucket_assignment": "in_domain_invalid",
+        "predicate_ref": "PRED_CC012_MULTI_REASON_PRECEDENCE",
+        "precedence_rank": 10
+      },
+      "oracle_expectation": {
+        "artifact_id_required": true,
+        "normalized_result_required": true,
+        "canonical_result_hex_required": true
+      }
+    },
+    {
+      "entry_id": "GEN_CC013_CONFORMANCE_ERROR_HARNESS_FAILURE",
+      "source_class_id": "CC013_CONFORMANCE_ERROR_HARNESS_FAILURE",
+      "source_bucket": "harness_only_gap",
+      "command": "verify_unsupported",
+      "generation_kind": "representative",
+      "artifact_path": "conformance/generated_corpus_v0_1/artifacts/GEN_CC013_CONFORMANCE_ERROR_HARNESS_FAILURE.json",
+      "expected": {
+        "in_domain": false,
+        "matched_classes": [
+          "CC013_CONFORMANCE_ERROR_HARNESS_FAILURE"
+        ],
+        "selected_class": "CC013_CONFORMANCE_ERROR_HARNESS_FAILURE",
+        "partition_mode": "exclusive",
+        "expected_verdict": "CONFORMANCE_ERROR",
+        "expected_reason_codes": []
+      },
+      "trace_expectation": {
+        "bucket_assignment": "harness_only_gap",
+        "predicate_ref": "PRED_CC013_CONFORMANCE_ERROR_HARNESS_FAILURE",
+        "precedence_rank": 10
+      },
+      "oracle_expectation": {
+        "artifact_id_required": false,
+        "normalized_result_required": false,
+        "canonical_result_hex_required": false
+      }
+    }
+  ]
+}

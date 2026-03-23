@@ -1,0 +1,180 @@
+{
+  "profile_id": "V0_1",
+  "status": "draft",
+  "protocol_specification": "v0.2",
+  "protocol_semantics": "v0.1",
+  "gap_classes": [
+    "semantic_blocker",
+    "scope_boundary_gap",
+    "registry_hygiene_gap",
+    "harness_boundary_gap",
+    "evidence_method_gap"
+  ],
+  "block_types": [
+    "bounded_completeness",
+    "sealed_completeness_boundary",
+    "published_anchor_closure",
+    "non_handheld_evidence"
+  ],
+  "gaps": [
+    {
+      "gap_id": "GAP_VERIFY_WITHOUT_REBUILD_SOURCE_SCOPE",
+      "gap_class": "scope_boundary_gap",
+      "related_class_ids": [
+        "CC008_VERIFY_REBUILD_SOURCE_ABSENT"
+      ],
+      "blocks": [
+        "sealed_completeness_boundary"
+      ],
+      "status": "open",
+      "notes": "The profile currently treats verify without rebuild_source as outside the published baseline-compatible path, but the exclusion is not yet sealed as a final bounded-completeness boundary decision.",
+      "resolution_path": "formal_exclusion",
+      "claim_impact": {
+        "blocks_total_classification_over_declared_domain": false,
+        "blocks_bounded_claim_v0_1": false,
+        "requires_published_anchor": false,
+        "formally_excludable_in_v0_1": true
+      }
+    },
+    {
+      "gap_id": "GAP_ARTIFACT_HASH_INVALID_ANCHOR",
+      "gap_class": "registry_hygiene_gap",
+      "related_class_ids": [
+        "CC009_VERIFY_ARTIFACT_HASH_INVALID"
+      ],
+      "blocks": [
+        "published_anchor_closure"
+      ],
+      "status": "open",
+      "notes": "The class is machine-classified and corpus-covered, but still lacks a published canonical vector anchor.",
+      "resolution_path": "canonical_anchor",
+      "claim_impact": {
+        "blocks_total_classification_over_declared_domain": false,
+        "blocks_bounded_claim_v0_1": false,
+        "requires_published_anchor": true,
+        "formally_excludable_in_v0_1": false
+      }
+    },
+    {
+      "gap_id": "GAP_VALIDATOR_RESULT_INVALID_ANCHOR",
+      "gap_class": "registry_hygiene_gap",
+      "related_class_ids": [
+        "CC010_VERIFY_VALIDATOR_RESULT_INVALID"
+      ],
+      "blocks": [
+        "published_anchor_closure"
+      ],
+      "status": "open",
+      "notes": "The class is machine-classified and corpus-covered, but still lacks a published canonical vector anchor.",
+      "resolution_path": "canonical_anchor",
+      "claim_impact": {
+        "blocks_total_classification_over_declared_domain": false,
+        "blocks_bounded_claim_v0_1": false,
+        "requires_published_anchor": true,
+        "formally_excludable_in_v0_1": false
+      }
+    },
+    {
+      "gap_id": "GAP_REBUILD_RESULT_INVALID_ANCHOR",
+      "gap_class": "registry_hygiene_gap",
+      "related_class_ids": [
+        "CC011_VERIFY_REBUILD_RESULT_INVALID"
+      ],
+      "blocks": [
+        "published_anchor_closure"
+      ],
+      "status": "open",
+      "notes": "The class is machine-classified and corpus-covered, but still lacks a published canonical vector anchor.",
+      "resolution_path": "canonical_anchor",
+      "claim_impact": {
+        "blocks_total_classification_over_declared_domain": false,
+        "blocks_bounded_claim_v0_1": false,
+        "requires_published_anchor": true,
+        "formally_excludable_in_v0_1": false
+      }
+    },
+    {
+      "gap_id": "GAP_MULTI_REASON_PRECEDENCE_CANONICALIZATION",
+      "gap_class": "semantic_blocker",
+      "related_class_ids": [
+        "CC012_MULTI_REASON_PRECEDENCE"
+      ],
+      "blocks": [
+        "bounded_completeness",
+        "published_anchor_closure"
+      ],
+      "status": "open",
+      "notes": "The framework now exercises real overlap and deterministic precedence on corpus cases, but the profile still lacks a canonical published anchor sealing multi-reason precedence semantics.",
+      "resolution_path": "canonical_anchor",
+      "claim_impact": {
+        "blocks_total_classification_over_declared_domain": false,
+        "blocks_bounded_claim_v0_1": true,
+        "requires_published_anchor": true,
+        "formally_excludable_in_v0_1": false
+      }
+    },
+    {
+      "gap_id": "GAP_CONFORMANCE_ERROR_BOUNDARY",
+      "gap_class": "harness_boundary_gap",
+      "related_class_ids": [
+        "CC013_CONFORMANCE_ERROR_HARNESS_FAILURE"
+      ],
+      "blocks": [
+        "sealed_completeness_boundary",
+        "published_anchor_closure"
+      ],
+      "status": "open",
+      "notes": "Unsupported command now yields an explicit CONFORMANCE_ERROR in corpus and oracle execution, but the profile still lacks a natural canonical published anchor or a final formal exclusion decision.",
+      "resolution_path": "hybrid",
+      "claim_impact": {
+        "blocks_total_classification_over_declared_domain": false,
+        "blocks_bounded_claim_v0_1": false,
+        "requires_published_anchor": true,
+        "formally_excludable_in_v0_1": true
+      }
+    },
+    {
+      "gap_id": "GAP_GENERATED_CORPUS_CLASS_GUIDANCE",
+      "gap_class": "evidence_method_gap",
+      "related_class_ids": [],
+      "blocks": [
+        "non_handheld_evidence"
+      ],
+      "status": "open",
+      "notes": "The representative generated corpus remains class-guided, but it is now supplemented by a separate domain-guided exploration corpus. The evidence stack is stronger, yet still not non-handheld enough to count as independent totality evidence over the full declared domain.",
+      "resolution_path": "evidence_upgrade",
+      "claim_impact": {
+        "blocks_total_classification_over_declared_domain": false,
+        "blocks_bounded_claim_v0_1": false,
+        "requires_published_anchor": false,
+        "formally_excludable_in_v0_1": false
+      }
+    },
+    {
+      "gap_id": "GAP_MALFORMED_CORPUS_LAYER",
+      "gap_class": "evidence_method_gap",
+      "related_class_ids": [
+        "CC014_MALFORMED_NON_OBJECT_ARTIFACT"
+      ],
+      "blocks": [
+        "sealed_completeness_boundary",
+        "non_handheld_evidence"
+      ],
+      "status": "open",
+      "notes": "A dedicated malformed corpus now exists and the malformed bucket has an explicit class anchor, but malformed pressure remains partial rather than sealed across all parser-adjacent and canonicalization-boundary cases.",
+      "resolution_path": "evidence_upgrade",
+      "claim_impact": {
+        "blocks_total_classification_over_declared_domain": false,
+        "blocks_bounded_claim_v0_1": false,
+        "requires_published_anchor": false,
+        "formally_excludable_in_v0_1": false
+      }
+    }
+  ],
+  "resolution_paths": [
+    "canonical_anchor",
+    "formal_exclusion",
+    "evidence_upgrade",
+    "hybrid"
+  ]
+}

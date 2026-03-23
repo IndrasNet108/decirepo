@@ -1,0 +1,258 @@
+{
+  "manifest_version": "0.1",
+  "profile_id": "V0_1",
+  "corpus_id": "cc012_negative_verify_corpus_v0_1",
+  "provenance_mode": "manual_adversarial_negative_capture_verify_only",
+  "generator": {
+    "name": "gen_cc012_negative_verify_corpus_v0_1.py",
+    "version": "0.1.0"
+  },
+  "inputs": {
+    "domain_profile": "conformance/DOMAIN_PROFILE_V0_1.json",
+    "semantics_kernel": "conformance/SEMANTICS_KERNEL_V0_1.json",
+    "case_class_matrix": "conformance/CASE_CLASS_MATRIX_V0_1.json"
+  },
+  "generation_policy": {
+    "mode": "deterministic",
+    "seed_policy": "fixed",
+    "seed": "V0_1-cc012-negative-verify",
+    "emit_only_in_domain": false,
+    "include_boundary_cases": true,
+    "include_adversarial_cases": true,
+    "include_negative_capture_cases": true,
+    "verify_only": true
+  },
+  "negative_capture_contract": {
+    "verify_only": true,
+    "must_not_select_class": "CC012_MULTI_REASON_PRECEDENCE",
+    "paired_positive_corpus_manifest": "conformance/precedence_adversarial_corpus_v0_1/manifest.json",
+    "mode_minima": {
+      "neighbor_class_non_regression": 1,
+      "harness_contamination_negative": 1,
+      "layout_equivalence_negative": 2,
+      "boundary_out_of_scope": 1,
+      "future_scope_exclusion": 1,
+      "malformed_short_circuit": 2
+    },
+    "bucket_minima": {
+      "in_domain_invalid": 4,
+      "out_of_scope": 2,
+      "malformed": 2
+    },
+    "input_shape_profile_minima": {
+      "minimal_valid_envelope_shape": 1,
+      "deep_nested_unknown_envelope_shape": 1,
+      "unknown_field_layout_variant_shape": 2,
+      "near_boundary_missing_identity_surface_shape": 2,
+      "malformed_non_object_root_shape": 2
+    },
+    "expected_multiple_reason_codes_policy": {
+      "all_cases_must_be_false": true,
+      "reason": "under CASE_CLASS_MATRIX_V0_1, any in-domain verify artifact with multiple_reason_codes=true is selected as CC012_MULTI_REASON_PRECEDENCE; out_of_scope and malformed buckets short-circuit before reason normalization"
+    },
+    "excluded_negative_modes": [
+      {
+        "mode": "multi_reason_non_precedence",
+        "reason": "not representable in verify under current V0_1 matrix because multiple_reason_codes=true implies CC012 selection for in-domain verify artifacts"
+      },
+      {
+        "mode": "same_reason_multipath",
+        "reason": "not representable in verify under current V0_1 kernel because verify rules emit distinct reason codes"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "case_id": "cc012_verify_neg_001_schema_invalid_neighbor",
+      "cc012_negative_mode": "neighbor_class_non_regression",
+      "command": "verify",
+      "artifact_path": "conformance/cc012_negative_verify_corpus_v0_1/artifacts/cc012_verify_neg_001_schema_invalid_neighbor.json",
+      "input_shape_profile": "minimal_valid_envelope_shape",
+      "expected_bucket": "in_domain_invalid",
+      "expected_selected_class": "CC002_VERIFY_SCHEMA_VERSION_INVALID",
+      "must_not_select_class": "CC012_MULTI_REASON_PRECEDENCE",
+      "expected_multiple_reason_codes": false,
+      "expected_triggered_rule_count_min": 1,
+      "expected_normalized_reason_codes": [
+        "SCHEMA_VERSION_INVALID"
+      ],
+      "assertions": [
+        "stable_selected_class",
+        "stable_matched_classes",
+        "stable_normalized_reason_codes",
+        "stable_canonical_result_hex"
+      ],
+      "semantic_equivalence_group": null,
+      "layout_variant_of": null,
+      "must_match_selected_class_with": null,
+      "must_match_canonical_result_with": null
+    },
+    {
+      "case_id": "cc012_verify_neg_002_harness_trace_pass_requires_match",
+      "cc012_negative_mode": "harness_contamination_negative",
+      "command": "verify",
+      "artifact_path": "conformance/cc012_negative_verify_corpus_v0_1/artifacts/cc012_verify_neg_002_harness_trace_pass_requires_match.json",
+      "input_shape_profile": "deep_nested_unknown_envelope_shape",
+      "expected_bucket": "in_domain_invalid",
+      "expected_selected_class": "CC004_VERIFY_PASS_REQUIRES_MATCH",
+      "must_not_select_class": "CC012_MULTI_REASON_PRECEDENCE",
+      "expected_multiple_reason_codes": false,
+      "expected_triggered_rule_count_min": 1,
+      "expected_normalized_reason_codes": [
+        "PASS_REQUIRES_MATCH"
+      ],
+      "assertions": [
+        "stable_selected_class",
+        "stable_matched_classes",
+        "stable_normalized_reason_codes",
+        "stable_canonical_result_hex"
+      ],
+      "semantic_equivalence_group": null,
+      "layout_variant_of": null,
+      "must_match_selected_class_with": null,
+      "must_match_canonical_result_with": null
+    },
+    {
+      "case_id": "cc012_verify_neg_003_layout_negative_schema_noise_a",
+      "cc012_negative_mode": "layout_equivalence_negative",
+      "command": "verify",
+      "artifact_path": "conformance/cc012_negative_verify_corpus_v0_1/artifacts/cc012_verify_neg_003_layout_negative_schema_noise_a.json",
+      "input_shape_profile": "unknown_field_layout_variant_shape",
+      "expected_bucket": "in_domain_invalid",
+      "expected_selected_class": "CC002_VERIFY_SCHEMA_VERSION_INVALID",
+      "must_not_select_class": "CC012_MULTI_REASON_PRECEDENCE",
+      "expected_multiple_reason_codes": false,
+      "expected_triggered_rule_count_min": 1,
+      "expected_normalized_reason_codes": [
+        "SCHEMA_VERSION_INVALID"
+      ],
+      "assertions": [
+        "stable_selected_class",
+        "stable_matched_classes",
+        "stable_normalized_reason_codes",
+        "stable_canonical_result_hex"
+      ],
+      "semantic_equivalence_group": "layout_negative_schema_noise",
+      "layout_variant_of": null,
+      "must_match_selected_class_with": "cc012_verify_neg_004_layout_negative_schema_noise_b",
+      "must_match_canonical_result_with": "cc012_verify_neg_004_layout_negative_schema_noise_b"
+    },
+    {
+      "case_id": "cc012_verify_neg_004_layout_negative_schema_noise_b",
+      "cc012_negative_mode": "layout_equivalence_negative",
+      "command": "verify",
+      "artifact_path": "conformance/cc012_negative_verify_corpus_v0_1/artifacts/cc012_verify_neg_004_layout_negative_schema_noise_b.json",
+      "input_shape_profile": "unknown_field_layout_variant_shape",
+      "expected_bucket": "in_domain_invalid",
+      "expected_selected_class": "CC002_VERIFY_SCHEMA_VERSION_INVALID",
+      "must_not_select_class": "CC012_MULTI_REASON_PRECEDENCE",
+      "expected_multiple_reason_codes": false,
+      "expected_triggered_rule_count_min": 1,
+      "expected_normalized_reason_codes": [
+        "SCHEMA_VERSION_INVALID"
+      ],
+      "assertions": [
+        "stable_selected_class",
+        "stable_matched_classes",
+        "stable_normalized_reason_codes",
+        "stable_canonical_result_hex"
+      ],
+      "semantic_equivalence_group": "layout_negative_schema_noise",
+      "layout_variant_of": "cc012_verify_neg_003_layout_negative_schema_noise_a",
+      "must_match_selected_class_with": "cc012_verify_neg_003_layout_negative_schema_noise_a",
+      "must_match_canonical_result_with": "cc012_verify_neg_003_layout_negative_schema_noise_a"
+    },
+    {
+      "case_id": "cc012_verify_neg_005_out_of_scope_schema_noise",
+      "cc012_negative_mode": "boundary_out_of_scope",
+      "command": "verify",
+      "artifact_path": "conformance/cc012_negative_verify_corpus_v0_1/artifacts/cc012_verify_neg_005_out_of_scope_schema_noise.json",
+      "input_shape_profile": "near_boundary_missing_identity_surface_shape",
+      "expected_bucket": "out_of_scope",
+      "expected_selected_class": "CC008_VERIFY_REBUILD_SOURCE_ABSENT",
+      "must_not_select_class": "CC012_MULTI_REASON_PRECEDENCE",
+      "expected_multiple_reason_codes": false,
+      "expected_triggered_rule_count_min": 0,
+      "expected_normalized_reason_codes": [],
+      "assertions": [
+        "stable_selected_class",
+        "stable_matched_classes",
+        "stable_normalized_reason_codes",
+        "stable_canonical_result_hex"
+      ],
+      "semantic_equivalence_group": null,
+      "layout_variant_of": null,
+      "must_match_selected_class_with": null,
+      "must_match_canonical_result_with": null
+    },
+    {
+      "case_id": "cc012_verify_neg_006_out_of_scope_registry_noise",
+      "cc012_negative_mode": "future_scope_exclusion",
+      "command": "verify",
+      "artifact_path": "conformance/cc012_negative_verify_corpus_v0_1/artifacts/cc012_verify_neg_006_out_of_scope_registry_noise.json",
+      "input_shape_profile": "near_boundary_missing_identity_surface_shape",
+      "expected_bucket": "out_of_scope",
+      "expected_selected_class": "CC008_VERIFY_REBUILD_SOURCE_ABSENT",
+      "must_not_select_class": "CC012_MULTI_REASON_PRECEDENCE",
+      "expected_multiple_reason_codes": false,
+      "expected_triggered_rule_count_min": 0,
+      "expected_normalized_reason_codes": [],
+      "assertions": [
+        "stable_selected_class",
+        "stable_matched_classes",
+        "stable_normalized_reason_codes",
+        "stable_canonical_result_hex"
+      ],
+      "semantic_equivalence_group": null,
+      "layout_variant_of": null,
+      "must_match_selected_class_with": null,
+      "must_match_canonical_result_with": null
+    },
+    {
+      "case_id": "cc012_verify_neg_007_malformed_root_array",
+      "cc012_negative_mode": "malformed_short_circuit",
+      "command": "verify",
+      "artifact_path": "conformance/cc012_negative_verify_corpus_v0_1/artifacts/cc012_verify_neg_007_malformed_root_array.json",
+      "input_shape_profile": "malformed_non_object_root_shape",
+      "expected_bucket": "malformed",
+      "expected_selected_class": "CC014_MALFORMED_NON_OBJECT_ARTIFACT",
+      "must_not_select_class": "CC012_MULTI_REASON_PRECEDENCE",
+      "expected_multiple_reason_codes": false,
+      "expected_triggered_rule_count_min": 0,
+      "expected_normalized_reason_codes": [],
+      "assertions": [
+        "stable_selected_class",
+        "stable_matched_classes",
+        "stable_normalized_reason_codes",
+        "stable_canonical_result_hex"
+      ],
+      "semantic_equivalence_group": null,
+      "layout_variant_of": null,
+      "must_match_selected_class_with": null,
+      "must_match_canonical_result_with": null
+    },
+    {
+      "case_id": "cc012_verify_neg_008_malformed_root_string",
+      "cc012_negative_mode": "malformed_short_circuit",
+      "command": "verify",
+      "artifact_path": "conformance/cc012_negative_verify_corpus_v0_1/artifacts/cc012_verify_neg_008_malformed_root_string.json",
+      "input_shape_profile": "malformed_non_object_root_shape",
+      "expected_bucket": "malformed",
+      "expected_selected_class": "CC014_MALFORMED_NON_OBJECT_ARTIFACT",
+      "must_not_select_class": "CC012_MULTI_REASON_PRECEDENCE",
+      "expected_multiple_reason_codes": false,
+      "expected_triggered_rule_count_min": 0,
+      "expected_normalized_reason_codes": [],
+      "assertions": [
+        "stable_selected_class",
+        "stable_matched_classes",
+        "stable_normalized_reason_codes",
+        "stable_canonical_result_hex"
+      ],
+      "semantic_equivalence_group": null,
+      "layout_variant_of": null,
+      "must_match_selected_class_with": null,
+      "must_match_canonical_result_with": null
+    }
+  ]
+}

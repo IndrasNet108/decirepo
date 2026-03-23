@@ -23,7 +23,21 @@ fi
 PATHS=(
   "DECIREPO_PROTOCOL_FORMAL_SPEC_V0_2.md"
   "DECIREPO_PROTOCOL_CONFORMANCE_V0_1.md"
+  "DECIREPO_SEMANTICS_KERNEL_V0_1.md"
   "conformance/v0_1"
+  "conformance/SEMANTICS_KERNEL_V0_1.json"
+  "conformance/DOMAIN_PROFILE_V0_1.json"
+  "conformance/CASE_CLASS_MATRIX_V0_1.json"
+  "conformance/GAP_CLASSIFICATION_V0_1.json"
+  "conformance/BOUNDED_COMPLETENESS_STATUS_V0_1.json"
+  "conformance/generated_corpus_v0_1/manifest.json"
+  "conformance/domain_guided_generated_corpus_v0_1/manifest.json"
+  "conformance/boundary_corpus_v0_1/manifest.json"
+  "conformance/adversarial_corpus_v0_1/manifest.json"
+  "conformance/precedence_adversarial_corpus_v0_1/manifest.json"
+  "conformance/cc012_negative_verify_corpus_v0_1/manifest.json"
+  "conformance/cc012_verify_distribution_v0_1.json"
+  "conformance/malformed_corpus_v0_1/manifest.json"
 )
 
 normalize_for_sync() {

@@ -1,0 +1,339 @@
+{
+  "manifest_version": "0.1",
+  "profile_id": "V0_1",
+  "corpus_id": "precedence_adversarial_corpus_v0_1",
+  "provenance_mode": "manual_adversarial_precedence",
+  "generator": {
+    "name": "gen_precedence_adversarial_corpus_v0_1.py",
+    "version": "0.1.0"
+  },
+  "inputs": {
+    "domain_profile": "conformance/DOMAIN_PROFILE_V0_1.json",
+    "semantics_kernel": "conformance/SEMANTICS_KERNEL_V0_1.json",
+    "case_class_matrix": "conformance/CASE_CLASS_MATRIX_V0_1.json"
+  },
+  "generation_policy": {
+    "mode": "deterministic",
+    "seed_policy": "fixed",
+    "seed": "V0_1-precedence-adversarial",
+    "emit_only_in_domain": false,
+    "include_boundary_cases": false,
+    "include_adversarial_cases": true,
+    "include_precedence_stress_cases": true
+  },
+  "cases": [
+    {
+      "case_id": "cc012_pair_schema_hash_layout_a",
+      "provenance_mode": "manual_adversarial_precedence",
+      "command": "verify",
+      "artifact_path": "conformance/precedence_adversarial_corpus_v0_1/artifacts/cc012_pair_schema_hash_layout_a.json",
+      "expected_bucket": "in_domain_invalid",
+      "expected_selected_class": "CC012_MULTI_REASON_PRECEDENCE",
+      "expected_matched_classes": [
+        "CC002_VERIFY_SCHEMA_VERSION_INVALID",
+        "CC003_VERIFY_REBUILD_HASH_EXPECTED_MISMATCH",
+        "CC012_MULTI_REASON_PRECEDENCE"
+      ],
+      "expected_reason_codes": [
+        "REBUILD_HASH_EXPECTED_MISMATCH",
+        "SCHEMA_VERSION_INVALID"
+      ],
+      "expected_triggered_rule_ids": [
+        "RULE_REBUILD_HASH_EXPECTED_MATCHES_ARTIFACT_ID",
+        "RULE_SCHEMA_VERSION_EQUALS_DLX_ARTIFACT_V0_1"
+      ],
+      "expected_precedence_invariant": "stable",
+      "expected_reason_normalization": "fixed_total_order_then_deduplicate",
+      "semantic_equivalence_group": "schema_hash_pair",
+      "layout_variant_of": null,
+      "must_match_selected_class_with": null,
+      "must_match_canonical_result_with": null
+    },
+    {
+      "case_id": "cc012_pair_schema_hash_layout_b",
+      "provenance_mode": "manual_adversarial_precedence",
+      "command": "verify",
+      "artifact_path": "conformance/precedence_adversarial_corpus_v0_1/artifacts/cc012_pair_schema_hash_layout_b.json",
+      "expected_bucket": "in_domain_invalid",
+      "expected_selected_class": "CC012_MULTI_REASON_PRECEDENCE",
+      "expected_matched_classes": [
+        "CC002_VERIFY_SCHEMA_VERSION_INVALID",
+        "CC003_VERIFY_REBUILD_HASH_EXPECTED_MISMATCH",
+        "CC012_MULTI_REASON_PRECEDENCE"
+      ],
+      "expected_reason_codes": [
+        "REBUILD_HASH_EXPECTED_MISMATCH",
+        "SCHEMA_VERSION_INVALID"
+      ],
+      "expected_triggered_rule_ids": [
+        "RULE_REBUILD_HASH_EXPECTED_MATCHES_ARTIFACT_ID",
+        "RULE_SCHEMA_VERSION_EQUALS_DLX_ARTIFACT_V0_1"
+      ],
+      "expected_precedence_invariant": "stable",
+      "expected_reason_normalization": "fixed_total_order_then_deduplicate",
+      "semantic_equivalence_group": "schema_hash_pair",
+      "layout_variant_of": "cc012_pair_schema_hash_layout_a",
+      "must_match_selected_class_with": "cc012_pair_schema_hash_layout_a",
+      "must_match_canonical_result_with": "cc012_pair_schema_hash_layout_a"
+    },
+    {
+      "case_id": "cc012_pair_artifact_hash_validator",
+      "provenance_mode": "manual_adversarial_precedence",
+      "command": "verify",
+      "artifact_path": "conformance/precedence_adversarial_corpus_v0_1/artifacts/cc012_pair_artifact_hash_validator.json",
+      "expected_bucket": "in_domain_invalid",
+      "expected_selected_class": "CC012_MULTI_REASON_PRECEDENCE",
+      "expected_matched_classes": [
+        "CC009_VERIFY_ARTIFACT_HASH_INVALID",
+        "CC010_VERIFY_VALIDATOR_RESULT_INVALID",
+        "CC012_MULTI_REASON_PRECEDENCE"
+      ],
+      "expected_reason_codes": [
+        "ARTIFACT_HASH_INVALID",
+        "VALIDATOR_RESULT_INVALID"
+      ],
+      "expected_triggered_rule_ids": [
+        "RULE_ARTIFACT_HASH_64_HEX",
+        "RULE_VALIDATOR_RESULT_ENUM"
+      ],
+      "expected_precedence_invariant": "stable",
+      "expected_reason_normalization": "fixed_total_order_then_deduplicate",
+      "semantic_equivalence_group": null,
+      "layout_variant_of": null,
+      "must_match_selected_class_with": null,
+      "must_match_canonical_result_with": null
+    },
+    {
+      "case_id": "cc012_pair_hash_mismatch_pass_requires_match",
+      "provenance_mode": "manual_adversarial_precedence",
+      "command": "verify",
+      "artifact_path": "conformance/precedence_adversarial_corpus_v0_1/artifacts/cc012_pair_hash_mismatch_pass_requires_match.json",
+      "expected_bucket": "in_domain_invalid",
+      "expected_selected_class": "CC012_MULTI_REASON_PRECEDENCE",
+      "expected_matched_classes": [
+        "CC003_VERIFY_REBUILD_HASH_EXPECTED_MISMATCH",
+        "CC012_MULTI_REASON_PRECEDENCE"
+      ],
+      "expected_reason_codes": [
+        "PASS_REQUIRES_MATCH",
+        "REBUILD_HASH_EXPECTED_MISMATCH"
+      ],
+      "expected_triggered_rule_ids": [
+        "RULE_PASS_REQUIRES_MATCH_REBUILD_RESULT",
+        "RULE_REBUILD_HASH_EXPECTED_MATCHES_ARTIFACT_ID"
+      ],
+      "expected_precedence_invariant": "stable",
+      "expected_reason_normalization": "fixed_total_order_then_deduplicate",
+      "semantic_equivalence_group": null,
+      "layout_variant_of": null,
+      "must_match_selected_class_with": null,
+      "must_match_canonical_result_with": null
+    },
+    {
+      "case_id": "cc012_pair_schema_pass_requires_match",
+      "provenance_mode": "manual_adversarial_precedence",
+      "command": "verify",
+      "artifact_path": "conformance/precedence_adversarial_corpus_v0_1/artifacts/cc012_pair_schema_pass_requires_match.json",
+      "expected_bucket": "in_domain_invalid",
+      "expected_selected_class": "CC012_MULTI_REASON_PRECEDENCE",
+      "expected_matched_classes": [
+        "CC002_VERIFY_SCHEMA_VERSION_INVALID",
+        "CC012_MULTI_REASON_PRECEDENCE"
+      ],
+      "expected_reason_codes": [
+        "PASS_REQUIRES_MATCH",
+        "SCHEMA_VERSION_INVALID"
+      ],
+      "expected_triggered_rule_ids": [
+        "RULE_PASS_REQUIRES_MATCH_REBUILD_RESULT",
+        "RULE_SCHEMA_VERSION_EQUALS_DLX_ARTIFACT_V0_1"
+      ],
+      "expected_precedence_invariant": "stable",
+      "expected_reason_normalization": "fixed_total_order_then_deduplicate",
+      "semantic_equivalence_group": null,
+      "layout_variant_of": null,
+      "must_match_selected_class_with": null,
+      "must_match_canonical_result_with": null
+    },
+    {
+      "case_id": "cc012_triple_schema_hash_pass_requires_match",
+      "provenance_mode": "manual_adversarial_precedence",
+      "command": "verify",
+      "artifact_path": "conformance/precedence_adversarial_corpus_v0_1/artifacts/cc012_triple_schema_hash_pass_requires_match.json",
+      "expected_bucket": "in_domain_invalid",
+      "expected_selected_class": "CC012_MULTI_REASON_PRECEDENCE",
+      "expected_matched_classes": [
+        "CC002_VERIFY_SCHEMA_VERSION_INVALID",
+        "CC003_VERIFY_REBUILD_HASH_EXPECTED_MISMATCH",
+        "CC012_MULTI_REASON_PRECEDENCE"
+      ],
+      "expected_reason_codes": [
+        "PASS_REQUIRES_MATCH",
+        "REBUILD_HASH_EXPECTED_MISMATCH",
+        "SCHEMA_VERSION_INVALID"
+      ],
+      "expected_triggered_rule_ids": [
+        "RULE_PASS_REQUIRES_MATCH_REBUILD_RESULT",
+        "RULE_REBUILD_HASH_EXPECTED_MATCHES_ARTIFACT_ID",
+        "RULE_SCHEMA_VERSION_EQUALS_DLX_ARTIFACT_V0_1"
+      ],
+      "expected_precedence_invariant": "stable",
+      "expected_reason_normalization": "fixed_total_order_then_deduplicate",
+      "semantic_equivalence_group": null,
+      "layout_variant_of": null,
+      "must_match_selected_class_with": null,
+      "must_match_canonical_result_with": null
+    },
+    {
+      "case_id": "cc012_triple_artifact_validator_rebuild_layout_a",
+      "provenance_mode": "manual_adversarial_precedence",
+      "command": "verify",
+      "artifact_path": "conformance/precedence_adversarial_corpus_v0_1/artifacts/cc012_triple_artifact_validator_rebuild_layout_a.json",
+      "expected_bucket": "in_domain_invalid",
+      "expected_selected_class": "CC012_MULTI_REASON_PRECEDENCE",
+      "expected_matched_classes": [
+        "CC012_MULTI_REASON_PRECEDENCE"
+      ],
+      "expected_reason_codes": [
+        "ARTIFACT_HASH_INVALID",
+        "REBUILD_RESULT_INVALID",
+        "VALIDATOR_RESULT_INVALID"
+      ],
+      "expected_triggered_rule_ids": [
+        "RULE_ARTIFACT_HASH_64_HEX",
+        "RULE_REBUILD_RESULT_ENUM",
+        "RULE_VALIDATOR_RESULT_ENUM"
+      ],
+      "expected_precedence_invariant": "stable",
+      "expected_reason_normalization": "fixed_total_order_then_deduplicate",
+      "semantic_equivalence_group": "artifact_validator_rebuild_triple",
+      "layout_variant_of": null,
+      "must_match_selected_class_with": null,
+      "must_match_canonical_result_with": null
+    },
+    {
+      "case_id": "cc012_triple_artifact_validator_rebuild_layout_b",
+      "provenance_mode": "manual_adversarial_precedence",
+      "command": "verify",
+      "artifact_path": "conformance/precedence_adversarial_corpus_v0_1/artifacts/cc012_triple_artifact_validator_rebuild_layout_b.json",
+      "expected_bucket": "in_domain_invalid",
+      "expected_selected_class": "CC012_MULTI_REASON_PRECEDENCE",
+      "expected_matched_classes": [
+        "CC012_MULTI_REASON_PRECEDENCE"
+      ],
+      "expected_reason_codes": [
+        "ARTIFACT_HASH_INVALID",
+        "REBUILD_RESULT_INVALID",
+        "VALIDATOR_RESULT_INVALID"
+      ],
+      "expected_triggered_rule_ids": [
+        "RULE_ARTIFACT_HASH_64_HEX",
+        "RULE_REBUILD_RESULT_ENUM",
+        "RULE_VALIDATOR_RESULT_ENUM"
+      ],
+      "expected_precedence_invariant": "stable",
+      "expected_reason_normalization": "fixed_total_order_then_deduplicate",
+      "semantic_equivalence_group": "artifact_validator_rebuild_triple",
+      "layout_variant_of": "cc012_triple_artifact_validator_rebuild_layout_a",
+      "must_match_selected_class_with": "cc012_triple_artifact_validator_rebuild_layout_a",
+      "must_match_canonical_result_with": "cc012_triple_artifact_validator_rebuild_layout_a"
+    },
+    {
+      "case_id": "cc012_same_reason_validate_scalar_chain",
+      "provenance_mode": "manual_adversarial_precedence",
+      "command": "validate",
+      "artifact_path": "conformance/precedence_adversarial_corpus_v0_1/artifacts/cc012_same_reason_validate_scalar_chain.json",
+      "expected_bucket": "in_domain_invalid",
+      "expected_selected_class": "CC005_VALIDATE_TRANSITION_CHAIN_INVALID",
+      "expected_matched_classes": [
+        "CC005_VALIDATE_TRANSITION_CHAIN_INVALID"
+      ],
+      "expected_reason_codes": [
+        "TRANSITION_CHAIN_INVALID"
+      ],
+      "expected_triggered_rule_ids": [
+        "RULE_TRANSITION_CHAIN_ALLOWED_LOCAL_TRANSITIONS",
+        "RULE_TRANSITION_CHAIN_CONTINUITY",
+        "RULE_TRANSITION_CHAIN_NON_EMPTY_ARRAY",
+        "RULE_TRANSITION_CHAIN_STEP_SHAPE"
+      ],
+      "expected_precedence_invariant": "stable",
+      "expected_reason_normalization": "fixed_total_order_then_deduplicate",
+      "semantic_equivalence_group": null,
+      "layout_variant_of": null,
+      "must_match_selected_class_with": null,
+      "must_match_canonical_result_with": null
+    },
+    {
+      "case_id": "cc012_same_reason_validate_multi_path",
+      "provenance_mode": "manual_adversarial_precedence",
+      "command": "validate",
+      "artifact_path": "conformance/precedence_adversarial_corpus_v0_1/artifacts/cc012_same_reason_validate_multi_path.json",
+      "expected_bucket": "in_domain_invalid",
+      "expected_selected_class": "CC005_VALIDATE_TRANSITION_CHAIN_INVALID",
+      "expected_matched_classes": [
+        "CC005_VALIDATE_TRANSITION_CHAIN_INVALID"
+      ],
+      "expected_reason_codes": [
+        "TRANSITION_CHAIN_INVALID"
+      ],
+      "expected_triggered_rule_ids": [
+        "RULE_TRANSITION_CHAIN_ALLOWED_LOCAL_TRANSITIONS",
+        "RULE_TRANSITION_CHAIN_CONTINUITY",
+        "RULE_TRANSITION_CHAIN_STEP_SHAPE"
+      ],
+      "expected_precedence_invariant": "stable",
+      "expected_reason_normalization": "fixed_total_order_then_deduplicate",
+      "semantic_equivalence_group": null,
+      "layout_variant_of": null,
+      "must_match_selected_class_with": null,
+      "must_match_canonical_result_with": null
+    },
+    {
+      "case_id": "cc012_triple_schema_artifact_validator",
+      "provenance_mode": "manual_adversarial_precedence",
+      "command": "verify",
+      "artifact_path": "conformance/precedence_adversarial_corpus_v0_1/artifacts/cc012_triple_schema_artifact_validator.json",
+      "expected_bucket": "in_domain_invalid",
+      "expected_selected_class": "CC012_MULTI_REASON_PRECEDENCE",
+      "expected_matched_classes": [
+        "CC012_MULTI_REASON_PRECEDENCE"
+      ],
+      "expected_reason_codes": [
+        "ARTIFACT_HASH_INVALID",
+        "SCHEMA_VERSION_INVALID",
+        "VALIDATOR_RESULT_INVALID"
+      ],
+      "expected_triggered_rule_ids": [
+        "RULE_ARTIFACT_HASH_64_HEX",
+        "RULE_SCHEMA_VERSION_EQUALS_DLX_ARTIFACT_V0_1",
+        "RULE_VALIDATOR_RESULT_ENUM"
+      ],
+      "expected_precedence_invariant": "stable",
+      "expected_reason_normalization": "fixed_total_order_then_deduplicate",
+      "semantic_equivalence_group": null,
+      "layout_variant_of": null,
+      "must_match_selected_class_with": null,
+      "must_match_canonical_result_with": null
+    },
+    {
+      "case_id": "cc012_harness_contamination_probe",
+      "provenance_mode": "manual_adversarial_precedence",
+      "command": "verify_unsupported",
+      "artifact_path": "conformance/precedence_adversarial_corpus_v0_1/artifacts/cc012_harness_contamination_probe.json",
+      "expected_bucket": "harness_only_gap",
+      "expected_selected_class": "CC013_CONFORMANCE_ERROR_HARNESS_FAILURE",
+      "expected_matched_classes": [
+        "CC013_CONFORMANCE_ERROR_HARNESS_FAILURE"
+      ],
+      "expected_reason_codes": [],
+      "expected_triggered_rule_ids": [],
+      "expected_precedence_invariant": "stable",
+      "expected_reason_normalization": "fixed_total_order_then_deduplicate",
+      "semantic_equivalence_group": null,
+      "layout_variant_of": null,
+      "must_match_selected_class_with": null,
+      "must_match_canonical_result_with": null
+    }
+  ]
+}

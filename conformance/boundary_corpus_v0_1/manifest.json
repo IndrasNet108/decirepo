@@ -1,0 +1,60 @@
+{
+  "manifest_version": "0.1",
+  "profile_id": "V0_1",
+  "corpus_id": "boundary_corpus_v0_1",
+  "provenance_mode": "manual_boundary",
+  "generator": {
+    "name": "gen_boundary_corpus_v0_1.py",
+    "version": "0.1.0"
+  },
+  "inputs": {
+    "domain_profile": "conformance/DOMAIN_PROFILE_V0_1.json",
+    "semantics_kernel": "conformance/SEMANTICS_KERNEL_V0_1.json",
+    "case_class_matrix": "conformance/CASE_CLASS_MATRIX_V0_1.json"
+  },
+  "generation_policy": {
+    "mode": "deterministic",
+    "seed_policy": "fixed",
+    "seed": "V0_1-boundary",
+    "emit_only_in_domain": false,
+    "include_boundary_cases": true,
+    "include_adversarial_cases": false
+  },
+  "cases": [
+    {
+      "case_id": "boundary_unknown_envelope_tolerated",
+      "origin": "boundary",
+      "command": "verify",
+      "artifact_path": "conformance/boundary_corpus_v0_1/artifacts/boundary_unknown_envelope_tolerated.json",
+      "expected_bucket": "in_domain_valid",
+      "expected_class": "CC007_VERIFY_UNKNOWN_TOP_LEVEL_ENVELOPE_FIELD_TOLERATED",
+      "expected_verdict": "PASS",
+      "expected_reason_codes": [],
+      "notes": "Single unknown top-level envelope field remains non-semantic at the bounded verify surface."
+    },
+    {
+      "case_id": "boundary_missing_rebuild_source",
+      "origin": "boundary",
+      "command": "verify",
+      "artifact_path": "conformance/boundary_corpus_v0_1/artifacts/boundary_missing_rebuild_source.json",
+      "expected_bucket": "out_of_scope",
+      "expected_class": "CC008_VERIFY_REBUILD_SOURCE_ABSENT",
+      "expected_verdict": null,
+      "expected_reason_codes": [],
+      "notes": "Boundary between published baseline path and verify inputs outside the identity-surface-compatible path."
+    },
+    {
+      "case_id": "boundary_empty_transition_chain",
+      "origin": "boundary",
+      "command": "validate",
+      "artifact_path": "conformance/boundary_corpus_v0_1/artifacts/boundary_empty_transition_chain.json",
+      "expected_bucket": "in_domain_invalid",
+      "expected_class": "CC005_VALIDATE_TRANSITION_CHAIN_INVALID",
+      "expected_verdict": "FAIL",
+      "expected_reason_codes": [
+        "TRANSITION_CHAIN_INVALID"
+      ],
+      "notes": "Minimal invalid edge for validate: empty chain rather than illegal local transition."
+    }
+  ]
+}

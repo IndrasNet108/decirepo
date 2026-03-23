@@ -1,0 +1,134 @@
+{
+  "manifest_version": "0.1",
+  "profile_id": "V0_1",
+  "corpus_id": "domain_guided_generated_corpus_v0_1",
+  "provenance_mode": "domain_guided",
+  "generator": {
+    "name": "gen_domain_guided_corpus_v0_1.py",
+    "version": "0.1.0"
+  },
+  "inputs": {
+    "domain_profile": "conformance/DOMAIN_PROFILE_V0_1.json",
+    "semantics_kernel": "conformance/SEMANTICS_KERNEL_V0_1.json"
+  },
+  "generation_policy": {
+    "mode": "deterministic",
+    "seed_policy": "fixed",
+    "seed": "V0_1-domain-guided",
+    "emit_only_in_domain": false,
+    "include_boundary_cases": true,
+    "include_adversarial_cases": false,
+    "class_matrix_guidance": "forbidden_during_sample_construction"
+  },
+  "coverage_summary": {
+    "cases_total": 8,
+    "cases_by_expected_bucket": {
+      "in_domain_valid": 2,
+      "in_domain_invalid": 4,
+      "out_of_scope": 1,
+      "in_domain_gap": 1
+    },
+    "cases_with_expected_class": 0,
+    "cases_without_expected_class": 8
+  },
+  "cases": [
+    {
+      "case_id": "domain_verify_pass_minimal",
+      "origin": "generated",
+      "command": "verify",
+      "artifact_path": "conformance/domain_guided_generated_corpus_v0_1/artifacts/domain_verify_pass_minimal.json",
+      "expected_bucket": "in_domain_valid",
+      "expected_class": null,
+      "expected_verdict": "PASS",
+      "expected_reason_codes": [],
+      "notes": "Domain-guided valid verify path using only supported command and baseline-compatible identity surface."
+    },
+    {
+      "case_id": "domain_verify_unknown_envelope",
+      "origin": "generated",
+      "command": "verify",
+      "artifact_path": "conformance/domain_guided_generated_corpus_v0_1/artifacts/domain_verify_unknown_envelope.json",
+      "expected_bucket": "in_domain_valid",
+      "expected_class": null,
+      "expected_verdict": "PASS",
+      "expected_reason_codes": [],
+      "notes": "Unknown top-level envelope field is tolerated while the rest of the verify surface remains valid."
+    },
+    {
+      "case_id": "domain_verify_schema_invalid",
+      "origin": "generated",
+      "command": "verify",
+      "artifact_path": "conformance/domain_guided_generated_corpus_v0_1/artifacts/domain_verify_schema_invalid.json",
+      "expected_bucket": "in_domain_invalid",
+      "expected_class": null,
+      "expected_verdict": "FAIL",
+      "expected_reason_codes": [
+        "SCHEMA_VERSION_INVALID"
+      ],
+      "notes": "Supported command plus valid identity surface, but schema_version falls outside baseline."
+    },
+    {
+      "case_id": "domain_verify_hash_mismatch",
+      "origin": "generated",
+      "command": "verify",
+      "artifact_path": "conformance/domain_guided_generated_corpus_v0_1/artifacts/domain_verify_hash_mismatch.json",
+      "expected_bucket": "in_domain_invalid",
+      "expected_class": null,
+      "expected_verdict": "FAIL",
+      "expected_reason_codes": [
+        "REBUILD_HASH_EXPECTED_MISMATCH"
+      ],
+      "notes": "Supported verify path with deterministic identity mismatch."
+    },
+    {
+      "case_id": "domain_validate_scalar_transition_chain",
+      "origin": "generated",
+      "command": "validate",
+      "artifact_path": "conformance/domain_guided_generated_corpus_v0_1/artifacts/domain_validate_scalar_transition_chain.json",
+      "expected_bucket": "in_domain_invalid",
+      "expected_class": null,
+      "expected_verdict": "FAIL",
+      "expected_reason_codes": [
+        "TRANSITION_CHAIN_INVALID"
+      ],
+      "notes": "Domain-guided invalid validate case using wrong transition_chain type without selecting a class a priori."
+    },
+    {
+      "case_id": "domain_rebuild_invalid_source",
+      "origin": "generated",
+      "command": "rebuild",
+      "artifact_path": "conformance/domain_guided_generated_corpus_v0_1/artifacts/domain_rebuild_invalid_source.json",
+      "expected_bucket": "in_domain_invalid",
+      "expected_class": null,
+      "expected_verdict": "FAIL",
+      "expected_reason_codes": [
+        "REBUILD_SOURCE_INVALID"
+      ],
+      "notes": "Supported rebuild command with parser-adjacent invalid rebuild_source."
+    },
+    {
+      "case_id": "domain_verify_missing_rebuild_source",
+      "origin": "generated",
+      "command": "verify",
+      "artifact_path": "conformance/domain_guided_generated_corpus_v0_1/artifacts/domain_verify_missing_rebuild_source.json",
+      "expected_bucket": "out_of_scope",
+      "expected_class": null,
+      "expected_verdict": null,
+      "expected_reason_codes": [],
+      "notes": "Domain boundary case: verify command outside the baseline-compatible identity path."
+    },
+    {
+      "case_id": "domain_verify_invalid_artifact_hash",
+      "origin": "generated",
+      "command": "verify",
+      "artifact_path": "conformance/domain_guided_generated_corpus_v0_1/artifacts/domain_verify_invalid_artifact_hash.json",
+      "expected_bucket": "in_domain_gap",
+      "expected_class": null,
+      "expected_verdict": "FAIL",
+      "expected_reason_codes": [
+        "ARTIFACT_HASH_INVALID"
+      ],
+      "notes": "Registry-only gap discovered from domain-valid shape plus invalid artifact_hash semantics."
+    }
+  ]
+}

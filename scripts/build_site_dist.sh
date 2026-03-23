@@ -4,6 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 DIST_DIR="$ROOT_DIR/site-dist"
 
+rm -rf "$DIST_DIR"
 mkdir -p "$DIST_DIR"
 
 copy_file_if_exists() {
@@ -36,6 +37,8 @@ copy_file_if_exists "favicon.ico"
 copy_file_if_exists "favicon-32x32.png"
 copy_file_if_exists "favicon-16x16.png"
 copy_file_if_exists "apple-touch-icon.png"
+copy_file_if_exists "android-chrome-192x192.png"
+copy_file_if_exists "android-chrome-512x512.png"
 copy_file_if_exists "site.webmanifest"
 copy_file_if_exists "robots.txt"
 copy_file_if_exists "CNAME"

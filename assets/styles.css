@@ -216,6 +216,10 @@ a {
   min-width: 0;
 }
 
+.cases-stack {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .index-hero-panel {
   gap: 16px;
 }

@@ -1,0 +1,8 @@
+{
+  "decision_id": "DR-0001",
+  "visual_id": "◢A9D325",
+  "parent": null,
+  "children": ["◢4E7FDF", "◢6A6AD0", "◢3A4FBD"],
+  "related": ["◢8F2A62"],
+  "linked_policy": "PROCUREMENT_RULES_V1"
+}

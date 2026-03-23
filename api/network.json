@@ -1,0 +1,34 @@
+{
+  "network_id": "decirepo-verification-network-v0",
+  "protocol_version": "v0.1",
+  "verification_graph_endpoint": "../api/verification-graph",
+  "trust_events_endpoint": "../api/trust-events",
+  "connected_registries": [
+    {
+      "registry_id": "decirepo.com",
+      "registry_pubkey": "drpk_6f4d39deci_local_root",
+      "verify_endpoint": "../api/verify.json",
+      "conformance_report_endpoint": "../api/conformance-report",
+      "node_endpoint": "/.well-known/decirepo-node",
+      "manifest_endpoint": "/api/network/decirepo-node.json",
+      "conformance_profile": "decirepo-protocol-v0_1-mandatory",
+      "status": "active"
+    },
+    {
+      "registry_id": "bank-registry.eu",
+      "registry_pubkey": "drpk_91ac22bank_registry",
+      "verify_endpoint": "../api/network/bank-registry/verify.json",
+      "node_endpoint": "../api/network/bank-registry/node.json",
+      "manifest_endpoint": "../api/network/bank-registry/node.json",
+      "status": "connected"
+    },
+    {
+      "registry_id": "municipal-registry.gov",
+      "registry_pubkey": "drpk_27f11amunicipal_registry",
+      "verify_endpoint": "../api/network/municipal-registry/verify.json",
+      "node_endpoint": "../api/network/municipal-registry/node.json",
+      "manifest_endpoint": "../api/network/municipal-registry/node.json",
+      "status": "connected"
+    }
+  ]
+}

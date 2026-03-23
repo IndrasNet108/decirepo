@@ -1,0 +1,32 @@
+{
+  "report_id": "DIR-20260307-0001",
+  "reference_decision": "DR-0003",
+  "divergent_decisions": [
+    {
+      "decision_id": "DR-0004",
+      "matching_dimensions": [
+        "decision_class",
+        "policy_family",
+        "procurement_type"
+      ],
+      "outcome_difference": {
+        "reference_outcome": "APPROVED",
+        "divergent_outcome": "REJECTED"
+      },
+      "linked_evidence": {
+        "compare": "/pages/diff.html?left=DR-0003&right=DR-0004",
+        "verify": "/pages/verify.html?id=DR-0004",
+        "decision_explanation": "/api/decision-explanation.json",
+        "precedent_search_report": "/api/precedent-search-report.json"
+      }
+    }
+  ],
+  "investigation_basis": [
+    "same decision_class",
+    "same policy_family",
+    "same exception_type",
+    "different outcome"
+  ],
+  "generated_at": "2026-03-07T15:30:00Z",
+  "protocol_version": "v0.1"
+}

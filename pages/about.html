@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <title>DeciRepo — About</title>
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="header-root"></div>
+
+    <main class="page-protocol">
+      <section class="title-block">
+        <h1 class="title-main">About DeciRepo</h1>
+        <p class="title-sub">Product, engine, and legal origin</p>
+      </section>
+
+      <section class="panel after-title-gap">
+        <h2 class="section-title">System Identity</h2>
+        <div class="kv-stack">
+          <div class="kv-line">
+            <div class="kv-key">Product</div>
+            <div class="kv-value">DeciRepo</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Technology</div>
+            <div class="kv-value">DLX deterministic decision engine</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Developer</div>
+            <div class="kv-value">IndrasNet OÜ</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Protocol DOI</div>
+            <div class="kv-value"><a class="menu-link" href="https://doi.org/10.5281/zenodo.19044692" target="_blank" rel="noopener noreferrer">10.5281/zenodo.19044692</a></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Origin</h2>
+        <p class="section-subtitle">DeciRepo is developed by IndrasNet OÜ and powered by the DLX deterministic decision engine.</p>
+        <p class="section-subtitle">The platform provides decision artifact registration, verification, lineage, and policy impact simulation.</p>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Canonical Public Records</h2>
+        <p class="section-subtitle section-wrap">Public protocol state, change history, and verification references.</p>
+        <div class="bottom-links repo-links-wrap">
+          <a class="menu-link" href="./cases.html">Cases</a>
+          <a class="menu-link" href="https://doi.org/10.5281/zenodo.19044692" target="_blank" rel="noopener noreferrer">Zenodo DOI</a>
+          <a class="menu-link" href="../PUBLIC_CHANGELOG.md" target="_blank" rel="noopener noreferrer">PUBLIC_CHANGELOG.md</a>
+          <a class="menu-link" href="https://github.com/IndrasNet108/decirepo/blob/main/INDEPENDENT_VERIFICATION_NOTE_TEMPLATE_V0_1.md" target="_blank" rel="noopener noreferrer">Independent Verification Template</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-brand">DeciRepo</div>
+      <div class="footer-description">Decision infrastructure powered by DLX</div>
+      <div class="footer-engine">
+        <img class="footer-dlx-logo" src="../assets/brand/dlx-logo.png" alt="DLX logo" />
+        <div class="footer-engine-text">DLX deterministic engine</div>
+      </div>
+      <div class="footer-links">
+        <a class="menu-link" href="./privacy.html">Privacy Policy</a>
+        <a class="menu-link" href="./terms.html">Terms of Use</a>
+        <a class="menu-link" href="./disclaimer.html">Disclaimer</a>
+        <a class="menu-link" href="./billing.html">Billing & Refunds</a>
+        <a class="menu-link" href="mailto:info@indrasnet.ee">Contact</a>
+      </div>
+      <div class="footer-legal">© 2026 IndrasNet OÜ</div>
+      <div class="footer-meta">IndrasNet Protocol Steward · Estonia</div>
+      <div class="footer-meta">DeciRepo Protocol v0.1</div>
+    </footer>
+
+  </div>
+
+  <script src="../components/header.js"></script>
+  <script>
+    window.DeciRepoHeader.mount("header-root", "about");
+  </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+{
+  "registry_id": "decirepo.com",
+  "validators": [
+    {
+      "validator_id": "DLX-CORE-V1",
+      "public_key": "valpk_8A3F_dlx_core_v1",
+      "environment": "DLX v1.0",
+      "status": "trusted"
+    },
+    {
+      "validator_id": "EU-RISK-POLICY-V1",
+      "public_key": "valpk_5B8C_eu_risk_v1",
+      "environment": "DLX v1.0",
+      "status": "trusted"
+    },
+    {
+      "validator_id": "MUNICIPAL-PROC-V1",
+      "public_key": "valpk_72A1_municipal_v1",
+      "environment": "DLX v1.0",
+      "status": "trusted"
+    }
+  ],
+  "policy_profiles": [
+    {
+      "profile_id": "PROCUREMENT-2026-03",
+      "policy_versions": ["PROCUREMENT_RULES_V1", "PROCUREMENT_RULES_V2"],
+      "status": "active"
+    },
+    {
+      "profile_id": "FIN-RISK-2026-03",
+      "policy_versions": ["AUDIT_PROTOCOL_V1"],
+      "status": "active"
+    }
+  ],
+  "trusted_registries": [
+    {
+      "registry_id": "decirepo.com",
+      "registry_pubkey": "drpk_6f4d39deci_local_root",
+      "verify_endpoint": "../api/verify.json",
+      "node_discovery_endpoint": "/.well-known/decirepo-node",
+      "manifest_endpoint": "/api/network/decirepo-node.json",
+      "trust_score_endpoint": "../api/trust-score",
+      "status": "active"
+    },
+    {
+      "registry_id": "bank-registry.eu",
+      "registry_pubkey": "drpk_91ac22bank_registry",
+      "verify_endpoint": "../api/network/bank-registry/verify.json",
+      "manifest_endpoint": "../api/network/bank-registry/node.json",
+      "trust_score_endpoint": "../api/trust-score",
+      "status": "connected"
+    },
+    {
+      "registry_id": "municipal-registry.gov",
+      "registry_pubkey": "drpk_27f11amunicipal_registry",
+      "verify_endpoint": "../api/network/municipal-registry/verify.json",
+      "manifest_endpoint": "../api/network/municipal-registry/node.json",
+      "trust_score_endpoint": "../api/trust-score",
+      "status": "connected"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "stream_id": "decirepo-trust-events-v0_1",
+  "events": [
+    {
+      "event_id": "te_0001",
+      "timestamp": "2026-03-07T17:40:00Z",
+      "type": "registry_added",
+      "source_registry": "decirepo.com",
+      "target_registry": "municipal-registry.gov",
+      "severity": "info",
+      "details": "Registry admitted after protocol v0.1 compatibility checks."
+    },
+    {
+      "event_id": "te_0002",
+      "timestamp": "2026-03-07T17:51:00Z",
+      "type": "score_changed",
+      "source_registry": "decirepo.com",
+      "target_registry": "bank-registry.eu",
+      "severity": "info",
+      "details": "Trust score updated from 90.9 to 91.7 after successful rebuild probes."
+    },
+    {
+      "event_id": "te_0003",
+      "timestamp": "2026-03-07T18:02:00Z",
+      "type": "verification_mismatch_detected",
+      "source_registry": "decirepo.com",
+      "target_registry": "municipal-registry.gov",
+      "severity": "warning",
+      "details": "Single mismatch detected and cleared on recheck."
+    },
+    {
+      "event_id": "te_0004",
+      "timestamp": "2026-03-07T18:14:00Z",
+      "type": "key_rotated",
+      "source_registry": "bank-registry.eu",
+      "target_registry": "bank-registry.eu",
+      "severity": "info",
+      "details": "Node manifest key rotation announced and signature revalidated."
+    },
+    {
+      "event_id": "te_0005",
+      "timestamp": "2026-03-07T18:16:00Z",
+      "type": "policy_profile_changed",
+      "source_registry": "municipal-registry.gov",
+      "target_registry": "municipal-registry.gov",
+      "severity": "info",
+      "details": "Profile MUNICIPAL-PROC-V1 marked active for protocol v0.1."
+    }
+  ],
+  "last_updated": "2026-03-07T18:20:00Z"
+}

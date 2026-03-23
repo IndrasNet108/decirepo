@@ -1,0 +1,9 @@
+{
+  "artifact_hash": "a9d325b8f1d4c3ee28733f5e0f5d9479e1c207bcafe4da77d5d47f1120aa3c4f",
+  "decision_id": "DR-0001",
+  "visual_id": "◢A9D325",
+  "rebuild_result": "MATCH",
+  "validator": "PASS",
+  "environment": "DLX v1.0",
+  "status": "VERIFIED"
+}

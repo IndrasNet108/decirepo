@@ -1,0 +1,22 @@
+AUDIT EVIDENCE PACKAGE v0.1
+
+Package ID: AUDIT-PKG-DR-A-10492
+Generated At: 2026-03-07T13:00:00Z
+
+Artifact References:
+- Decision: /api/decision/DR-A-10492
+- Verification Report: /api/verify.json
+- Precedent Search Report: /api/precedent-search-report
+- Decision Explanation: /api/decision-explanation
+- Policy Drift Report: /api/policy-drift-detection
+- Divergence Investigation: /api/divergence-investigation-report
+- Evidence Bundle Manifest: /api/evidence-bundle-manifest
+- Compare Report: null
+
+Rebuild Metadata:
+- Protocol: v0.1
+- Engine: dlx-ref
+- Rebuild Hash: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+
+Status: REPRODUCIBLE
+Integrity Check: PASS

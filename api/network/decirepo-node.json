@@ -1,0 +1,31 @@
+{
+  "registry_id": "decirepo.com",
+  "verify_endpoint": "/api/verify.json",
+  "trust_endpoint": "/api/trust",
+  "trust_score_endpoint": "/api/trust-score",
+  "conformance_report_endpoint": "/api/conformance-report",
+  "protocol_endpoint": "/api/protocol",
+  "protocol_version": "v0.1",
+  "conformance_profile": "decirepo-protocol-v0_1-mandatory",
+  "compatibility_badge": {
+    "label": "DeciRepo Protocol Compatible",
+    "status": "active"
+  },
+  "manifest_url": "/api/network/decirepo-node.json",
+  "discovery_endpoint": "/.well-known/decirepo-node",
+  "public_keys": [
+    {
+      "key_id": "drpk_6f4d39deci_local_root",
+      "algorithm": "ed25519",
+      "purpose": "registry_signature"
+    }
+  ],
+  "capabilities": ["verify", "lineage", "trust-score", "policy-impact", "conformance-report"],
+  "manifest_issued_at": "2026-03-07T18:00:00Z",
+  "status": "active",
+  "signature": {
+    "algorithm": "ed25519",
+    "signed_payload_hash": "4f83c7e5d36f3c19a97d4ef2df5ad4b2dc40b1db7beffeb193331668ec0db30f",
+    "value": "sig_decirepo_manifest_v0_1_9c11"
+  }
+}

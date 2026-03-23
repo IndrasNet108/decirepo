@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <title>DeciRepo — Verify</title>
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="header-root"></div>
+    <div id="context-nav-root"></div>
+
+    <main class="page-verify">
+      <section class="verify-shell">
+        <section class="panel verify-panel">
+          <h1 class="section-title">Verify Decision Artifact</h1>
+          <div class="verify-input-row">
+            <input id="verify-input" class="verify-input" type="text" placeholder="Enter ◢HASH, Decision ID, or full hash" />
+            <button id="verify-button" class="btn btn-gold" type="button">Verify</button>
+          </div>
+          <div id="result-banner" class="banner valid">VALID</div>
+          <div id="verify-result"></div>
+          <div id="verify-hint" class="verify-hint mono"></div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-brand">DeciRepo</div>
+      <div class="footer-description">Decision infrastructure powered by DLX</div>
+      <div class="footer-engine">
+        <img class="footer-dlx-logo" src="../assets/brand/dlx-logo.png" alt="DLX logo" />
+        <div class="footer-engine-text">DLX deterministic engine</div>
+      </div>
+      <div class="footer-links">
+        <a class="menu-link" href="./privacy.html">Privacy Policy</a>
+        <a class="menu-link" href="./terms.html">Terms of Use</a>
+        <a class="menu-link" href="./disclaimer.html">Disclaimer</a>
+        <a class="menu-link" href="./billing.html">Billing & Refunds</a>
+        <a class="menu-link" href="mailto:info@indrasnet.ee">Contact</a>
+      </div>
+      <div class="footer-legal">© 2026 IndrasNet OÜ</div>
+      <div class="footer-meta">IndrasNet Protocol Steward · Estonia</div>
+      <div class="footer-meta">DeciRepo Protocol v0.1</div>
+    </footer>
+
+  </div>
+
+  <script src="../assets/data.js"></script>
+  <script src="../components/header.js"></script>
+  <script src="../components/context-nav.js"></script>
+  <script src="../components/decision-block.js"></script>
+  <script>
+    window.DeciRepoHeader.mount("header-root", "verify");
+
+    const input = document.getElementById("verify-input");
+    const button = document.getElementById("verify-button");
+    const banner = document.getElementById("result-banner");
+    const resultRoot = document.getElementById("verify-result");
+    const hintRoot = document.getElementById("verify-hint");
+    let lastDecision = null;
+
+    function mountContextNav(decision) {
+      let hint = "Suggested next: open a decision or paste a published hash to verify.";
+      const links = [
+        { label: "Open Genesis", href: "./decision.html?id=DR-GENESIS-0001", primary: true },
+        { label: "Back to Repository", href: "./index.html" },
+        { label: "Feed", href: "./feed.html" },
+        { label: "Protocol", href: "./protocol.html" }
+      ];
+      if (decision) {
+        hint = "Suggested next: inspect lineage now that the artifact verification result is visible.";
+        links.splice(0, links.length,
+          { label: "Open Lineage", href: `./lineage.html?id=${encodeURIComponent(decision.id)}`, primary: true },
+          { label: "Back to Decision", href: `./decision.html?id=${encodeURIComponent(decision.id)}` },
+          { label: "Policy Impact", href: `./policy-impact.html?id=${encodeURIComponent(decision.id)}` },
+          { label: "Back to Repository", href: "./index.html" },
+          { label: "Feed", href: "./feed.html" },
+          { label: "Protocol", href: "./protocol.html" }
+        );
+      }
+      window.DeciRepoContextNav.mount("context-nav-root", {
+        current: "Verify",
+        meta: decision ? decision.id : "lookup",
+        hint,
+        links
+      });
+    }
+
+    function renderEmpty() {
+      lastDecision = null;
+      mountContextNav(null);
+      banner.textContent = "READY";
+      banner.className = "banner";
+      resultRoot.innerHTML = window.DeciRepoDecisionBlock.renderStack([
+        { key: "status", value: "Enter a decision id, short hash, or artifact hash to verify." }
+      ]);
+      hintRoot.textContent = "Recompute locally: node dlx-ref/cli.js verify <artifact-envelope-path>";
+    }
+
+    function renderPending() {
+      banner.textContent = "CHECKING";
+      banner.className = "banner";
+    }
+
+    function renderResult(decision, verification, query) {
+      mountContextNav(decision || null);
+      const valid = Boolean(verification && verification.ok);
+      banner.textContent = valid ? "VALID" : "INVALID";
+      banner.className = valid ? "banner valid" : "banner invalid";
+
+      const visualId = decision ? `◢${decision.short_hash}` : (query || "N/A");
+      const originRegistry = decision && decision.artifact ? decision.artifact.origin_registry : "N/A";
+      const source = verification ? verification.source : "N/A";
+      const reason = verification && verification.reason ? verification.reason : "N/A";
+      const verifiedAtUtc = new Date().toISOString();
+      const verifierNode = verification && verification.origin_registry
+        ? verification.origin_registry
+        : (originRegistry || window.DeciRepoData.LOCAL_REGISTRY_ID || "N/A");
+      const artifactHash = decision && decision.artifact && decision.artifact.artifact_hash
+        ? decision.artifact.artifact_hash
+        : (query || "N/A");
+      const artifactLocalPath = decision && decision.artifact && decision.artifact.artifact_local_path
+        ? decision.artifact.artifact_local_path
+        : null;
+      const artifactPublicUri = decision && decision.artifact && decision.artifact.artifact_public_uri
+        ? decision.artifact.artifact_public_uri
+        : null;
+      const decisionRecordUri = decision && decision.artifact && decision.artifact.decision_record_uri
+        ? decision.artifact.decision_record_uri
+        : null;
+      const artifactSha256Uri = decision && decision.artifact && decision.artifact.artifact_sha256_uri
+        ? decision.artifact.artifact_sha256_uri
+        : null;
+      const artifactFileSha256 = decision && decision.artifact && decision.artifact.artifact_file_sha256
+        ? decision.artifact.artifact_file_sha256
+        : "N/A";
+      const evidenceManifestUri = decision && decision.artifact && decision.artifact.evidence_manifest_uri
+        ? decision.artifact.evidence_manifest_uri
+        : null;
+      const recomputeTarget = artifactLocalPath || "artifact envelope path not published";
+
+      const data = valid
+        ? {
+            Decision_ID: `${visualId} (${decision.id})`,
+            Protocol_Version: "DeciRepo v0.1",
+            Verification_Result: "MATCH",
+            Verified_At_UTC: verifiedAtUtc,
+            Verifier_Node: verifierNode,
+            Origin_Registry: originRegistry,
+            Rebuild_Result_Hash: decision.artifact.rebuild_result_hash || artifactHash,
+            Artifact_Hash_Semantics: decision.artifact.artifact_hash_semantics || "artifact_hash",
+            Artifact_File_SHA256: artifactFileSha256,
+            Artifact_Envelope_URI: artifactPublicUri || "N/A",
+            Artifact_Envelope_SHA256_URI: artifactSha256Uri || "N/A",
+            Decision_Record_URI: decisionRecordUri || "N/A",
+            Evidence_Manifest_URI: evidenceManifestUri || "N/A",
+            Rebuild_Result: verification.rebuild_result || decision.artifact.rebuild_status,
+            Validator: verification.validator || decision.artifact.validator_result,
+            Environment: verification.environment || "DLX v1.0",
+            Verification_Source: source,
+            Policy_Version: decision.policyVersion
+          }
+        : {
+            Decision_ID: visualId,
+            Protocol_Version: "DeciRepo v0.1",
+            Verification_Result: "FAIL",
+            Verified_At_UTC: verifiedAtUtc,
+            Verifier_Node: verifierNode,
+            Origin_Registry: originRegistry,
+            Rebuild_Result_Hash: artifactHash,
+            Artifact_Envelope_URI: artifactPublicUri || "N/A",
+            Decision_Record_URI: decisionRecordUri || "N/A",
+            Rebuild_Result: "NO MATCH",
+            Validator: verification && verification.validator ? verification.validator : "FAIL",
+            Environment: "N/A",
+            Verification_Source: source,
+            Failure_Reason: reason,
+            Policy_Version: "N/A"
+          };
+
+      const rows = Object.entries(data).map(([k, v]) => ({ key: k, value: String(v) }));
+      resultRoot.innerHTML = window.DeciRepoDecisionBlock.renderStack(
+        rows,
+        ["Rebuild_Result_Hash", "Artifact_File_SHA256", "Artifact_Envelope_URI", "Artifact_Envelope_SHA256_URI", "Decision_Record_URI", "Evidence_Manifest_URI"]
+      );
+      hintRoot.textContent = `Recompute locally: node dlx-ref/cli.js verify ${recomputeTarget}`;
+    }
+
+    function resolveQuery(raw) {
+      const normalized = String(raw || "").trim();
+      if (!normalized) return null;
+      if (normalized.startsWith("◢")) {
+        return window.DeciRepoData.getDecisionByShortHash(normalized.slice(1));
+      }
+      return window.DeciRepoData.resolveDecision(normalized);
+    }
+
+    async function verify(queryOverride) {
+      const query = String(queryOverride !== undefined ? queryOverride : input.value).trim();
+      input.value = query;
+      if (!query) {
+        renderEmpty();
+        return;
+      }
+
+      renderPending();
+      const decision = resolveQuery(query);
+      lastDecision = decision;
+
+      if (!decision) {
+        renderResult(null, { ok: false, source: "local", reason: "DECISION_NOT_FOUND" }, query);
+        return;
+      }
+
+      const verification = await window.DeciRepoData.verifyWithRegistry(decision, { timeout_ms: 3000 });
+
+      if (decision !== lastDecision) return;
+      renderResult(decision, verification, query);
+    }
+
+    function syncFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const preset = params.get("q") || params.get("hash") || "";
+      if (preset) {
+        verify(preset);
+      } else {
+        input.value = "";
+        renderEmpty();
+      }
+    }
+
+    button.addEventListener("click", () => verify());
+    window.addEventListener("pageshow", syncFromUrl);
+    window.addEventListener("popstate", syncFromUrl);
+
+    syncFromUrl();
+  </script>
+</body>
+</html>

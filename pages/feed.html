@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DeciRepo — Public Decision Feed</title>
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="header-root"></div>
+
+    <main class="feed-page">
+      <section class="panel">
+        <h1 class="section-title">Public Decision Feed</h1>
+        <p class="section-subtitle">Append-only verified decisions stream.</p>
+      </section>
+
+      <section class="panel">
+        <div class="feed-filter-grid">
+          <label class="feed-field">
+            <span class="feed-label">Outcome</span>
+            <select id="filter-outcome" class="feed-select">
+              <option value="ALL">ALL</option>
+            </select>
+          </label>
+
+          <label class="feed-field">
+            <span class="feed-label">Policy Version</span>
+            <select id="filter-policy" class="feed-select">
+              <option value="ALL">ALL</option>
+            </select>
+          </label>
+
+          <label class="feed-field">
+            <span class="feed-label">Authority</span>
+            <select id="filter-authority" class="feed-select">
+              <option value="ALL">ALL</option>
+            </select>
+          </label>
+
+          <label class="feed-field">
+            <span class="feed-label">Publisher</span>
+            <select id="filter-publisher" class="feed-select">
+              <option value="ALL">ALL</option>
+            </select>
+          </label>
+
+          <label class="feed-field">
+            <span class="feed-label">Time Window</span>
+            <select id="filter-window" class="feed-select">
+              <option value="all">ALL</option>
+              <option value="24h">Last 24h</option>
+              <option value="7d">Last 7d</option>
+              <option value="30d">Last 30d</option>
+            </select>
+          </label>
+
+          <label class="feed-field">
+            <span class="feed-label">Integrity</span>
+            <div class="feed-toggle">
+              <input id="filter-unverified" type="checkbox" />
+              <span>Include unverified</span>
+            </div>
+          </label>
+        </div>
+      </section>
+
+      <section class="panel">
+        <table class="feed-table" role="grid">
+          <thead>
+            <tr>
+              <th>Decision ID</th>
+              <th>Outcome</th>
+              <th>Policy</th>
+              <th>Authority</th>
+              <th>Publisher</th>
+              <th>Timestamp</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="feed-body"></tbody>
+        </table>
+        <div class="feed-meta" id="feed-meta">Loading feed...</div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-brand">DeciRepo</div>
+      <div class="footer-description">Decision infrastructure powered by DLX</div>
+      <div class="footer-legal">© 2026 IndrasNet OÜ</div>
+      <div class="footer-meta">DeciRepo Protocol v0.1</div>
+    </footer>
+  </div>
+
+  <script src="../assets/data.js"></script>
+  <script src="../components/header.js"></script>
+  <script>
+    window.DeciRepoHeader.mount("header-root", "feed");
+
+    const state = {
+      items: [],
+      filtered: []
+    };
+
+    function unique(values) {
+      return Array.from(new Set(values)).filter(Boolean).sort();
+    }
+
+    function toFeedItem(raw) {
+      const localDecision = raw.legacy_id ? window.DeciRepoData.getDecisionById(raw.legacy_id) : null;
+      const publisherId = raw.publisher_id || raw.publisher || (localDecision ? localDecision.publisher : "unknown");
+      const publisherLabel = raw.publisher_label || (localDecision ? localDecision.publisher_label : publisherId);
+      const rfcRef = raw.rfc_ref || (localDecision ? localDecision.rfc_ref : "");
+      return {
+        decision_id: raw.decision_id || raw.canonical_id || "",
+        canonical_id: raw.canonical_id || raw.decision_id || "",
+        legacy_id: raw.legacy_id || "",
+        artifact_hash: raw.artifact_hash || "",
+        policy_version: raw.policy_version || "",
+        outcome: raw.outcome || "UNKNOWN",
+        validator: raw.validator || "UNKNOWN",
+        rebuild: raw.rebuild || "UNKNOWN",
+        authority: raw.authority || "UNKNOWN",
+        publisher_id: publisherId,
+        publisher_label: publisherLabel,
+        rfc_ref: rfcRef,
+        timestamp: raw.timestamp || "1970-01-01T00:00:00Z"
+      };
+    }
+
+    function fallbackFeedItems() {
+      return window.DeciRepoData.decisions.map((d, idx) => {
+        const day = String(7 - Math.floor(idx / 2)).padStart(2, "0");
+        const hour = String(23 - idx).padStart(2, "0");
+        return {
+          decision_id: d.canonical_id,
+          canonical_id: d.canonical_id,
+          legacy_id: d.id,
+          artifact_hash: d.artifact.artifact_hash,
+          policy_version: d.policyVersion,
+          outcome: d.outcomeFields.decision,
+          validator: d.artifact.validator_result,
+          rebuild: d.artifact.rebuild_status,
+          authority: d.authority,
+          publisher_id: d.publisher || "unknown",
+          publisher_label: d.publisher_label || d.publisher || "unknown",
+          rfc_ref: d.rfc_ref || "",
+          timestamp: `2026-03-${day}T${hour}:00:00Z`
+        };
+      });
+    }
+
+    async function loadFeed() {
+      const candidates = ["../api/feed", "../api/feed.json"];
+      for (const url of candidates) {
+        try {
+          const res = await fetch(url, { cache: "no-store" });
+          if (!res.ok) continue;
+          const payload = await res.json();
+          if (!payload || !Array.isArray(payload.items)) continue;
+          return payload.items.map(toFeedItem);
+        } catch (_err) {
+          // continue fallback chain
+        }
+      }
+      return fallbackFeedItems().map(toFeedItem);
+    }
+
+    function mountOptions(selectId, values) {
+      const select = document.getElementById(selectId);
+      if (!select) return;
+      const initial = select.value || "ALL";
+      select.innerHTML = `<option value="ALL">ALL</option>${values
+        .map((v) => `<option value="${v}">${v}</option>`)
+        .join("")}`;
+      select.value = values.includes(initial) ? initial : "ALL";
+    }
+
+    function outcomeClass(value) {
+      if (value === "APPROVED") return "outcome-approved";
+      if (value === "REJECTED") return "outcome-rejected";
+      return "outcome-neutral";
+    }
+
+    function timeWindowMatches(timestamp, windowKey) {
+      if (windowKey === "all") return true;
+      const now = Date.now();
+      const ts = Date.parse(timestamp);
+      if (!Number.isFinite(ts)) return false;
+      const diff = now - ts;
+      if (windowKey === "24h") return diff <= 24 * 60 * 60 * 1000;
+      if (windowKey === "7d") return diff <= 7 * 24 * 60 * 60 * 1000;
+      if (windowKey === "30d") return diff <= 30 * 24 * 60 * 60 * 1000;
+      return true;
+    }
+
+    function applyFilters() {
+      const outcome = document.getElementById("filter-outcome").value;
+      const policy = document.getElementById("filter-policy").value;
+      const authority = document.getElementById("filter-authority").value;
+      const publisher = document.getElementById("filter-publisher").value;
+      const windowKey = document.getElementById("filter-window").value;
+      const includeUnverified = document.getElementById("filter-unverified").checked;
+
+      state.filtered = state.items.filter((item) => {
+        if (!includeUnverified && !(item.validator === "PASS" && item.rebuild === "MATCH")) return false;
+        if (outcome !== "ALL" && item.outcome !== outcome) return false;
+        if (policy !== "ALL" && item.policy_version !== policy) return false;
+        if (authority !== "ALL" && item.authority !== authority) return false;
+        if (publisher !== "ALL" && item.publisher_id !== publisher) return false;
+        if (!timeWindowMatches(item.timestamp, windowKey)) return false;
+        return true;
+      });
+
+      renderRows();
+    }
+
+    function renderRows() {
+      const body = document.getElementById("feed-body");
+      const meta = document.getElementById("feed-meta");
+      if (!body || !meta) return;
+
+      function visualId(item) {
+        const short = item.artifact_hash ? item.artifact_hash.slice(0, 6).toUpperCase() : "";
+        return short ? `◢${short}` : item.canonical_id;
+      }
+
+      const rows = state.filtered
+        .map((item) => {
+          const pairId = item.legacy_id ? window.DeciRepoData.getPairId(item.legacy_id) : "";
+          const hasPair = Boolean(pairId && pairId !== item.legacy_id);
+          return `
+            <tr>
+              <td>
+                <span class="canonical-id">${visualId(item)}</span>
+                <span class="legacy-id">${item.legacy_id}</span>
+                ${item.rfc_ref ? `<span class="legacy-id">${item.rfc_ref}</span>` : ""}
+              </td>
+              <td class="${outcomeClass(item.outcome)}">${item.outcome}</td>
+              <td>${item.policy_version}</td>
+              <td>${item.authority}</td>
+              <td>${item.publisher_label}${item.publisher_id && item.publisher_id !== item.publisher_label ? ` (${item.publisher_id})` : ""}</td>
+              <td>${item.timestamp}</td>
+              <td>
+                <div class="feed-actions">
+                  <button class="btn small" data-open="${item.legacy_id}">Open</button>
+                  <button class="btn small" data-verify="${visualId(item)}">Verify</button>
+                  <button class="btn small ${hasPair ? "" : "disabled"}" data-compare-left="${item.legacy_id}" data-compare-right="${pairId}" ${hasPair ? "" : "disabled"}>Compare</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        })
+        .join("");
+
+      body.innerHTML = rows || `<tr><td colspan="7">No feed records match current filters.</td></tr>`;
+      meta.textContent = `Feed records: ${state.filtered.length} / ${state.items.length}`;
+
+      body.querySelectorAll("[data-open]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-open");
+          window.location.href = `./decision.html?id=${encodeURIComponent(id)}`;
+        });
+      });
+
+      body.querySelectorAll("[data-verify]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const q = btn.getAttribute("data-verify");
+          window.location.href = `./verify.html?q=${encodeURIComponent(q)}`;
+        });
+      });
+
+      body.querySelectorAll("[data-compare-left]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          if (btn.disabled) return;
+          const left = btn.getAttribute("data-compare-left");
+          const right = btn.getAttribute("data-compare-right");
+          window.location.href = `./diff.html?left=${encodeURIComponent(left)}&right=${encodeURIComponent(right)}`;
+        });
+      });
+    }
+
+    async function init() {
+      const items = await loadFeed();
+      state.items = items.sort((a, b) => Date.parse(b.timestamp) - Date.parse(a.timestamp));
+
+      mountOptions("filter-outcome", unique(state.items.map((x) => x.outcome)));
+      mountOptions("filter-policy", unique(state.items.map((x) => x.policy_version)));
+      mountOptions("filter-authority", unique(state.items.map((x) => x.authority)));
+      mountOptions("filter-publisher", unique(state.items.map((x) => x.publisher_id)));
+
+      ["filter-outcome", "filter-policy", "filter-authority", "filter-publisher", "filter-window", "filter-unverified"].forEach((id) => {
+        const el = document.getElementById(id);
+        el.addEventListener("change", applyFilters);
+      });
+
+      applyFilters();
+    }
+
+    init();
+  </script>
+</body>
+</html>

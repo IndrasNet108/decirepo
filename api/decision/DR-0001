@@ -1,0 +1,11 @@
+{
+  "decision_id": "DR-0001",
+  "visual_id": "◢A9D325",
+  "artifact_hash": "a9d325b8f1d4c3ee28733f5e0f5d9479e1c207bcafe4da77d5d47f1120aa3c4f",
+  "policy_version": "PROCUREMENT_RULES_V1",
+  "outcome": "APPROVED",
+  "authority": "Municipal Procurement Committee",
+  "validator_status": "PASS",
+  "rebuild_result": "MATCH",
+  "environment": "DLX v1.0"
+}

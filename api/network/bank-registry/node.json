@@ -1,0 +1,22 @@
+{
+  "registry_id": "bank-registry.eu",
+  "verify_endpoint": "../api/network/bank-registry/verify.json",
+  "trust_endpoint": "../api/trust",
+  "trust_score_endpoint": "../api/trust-score",
+  "protocol_version": "v0.1",
+  "public_keys": [
+    {
+      "key_id": "drpk_91ac22bank_registry",
+      "algorithm": "ed25519",
+      "purpose": "registry_signature"
+    }
+  ],
+  "capabilities": ["verify", "lineage", "trust-score"],
+  "manifest_issued_at": "2026-03-07T17:58:00Z",
+  "status": "connected",
+  "signature": {
+    "algorithm": "ed25519",
+    "signed_payload_hash": "dd9d2b8e3055e223f4f4cd0e19cf5f5f2ad274a2fa2fda2a5f3d708c26ef30bc",
+    "value": "sig_bank_manifest_v0_1_1a7b"
+  }
+}

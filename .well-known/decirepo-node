@@ -1,0 +1,18 @@
+{
+  "registry_id": "decirepo.com",
+  "protocol_version": "v0.1",
+  "manifest_url": "/api/network/decirepo-node.json",
+  "verify_endpoint": "/api/verify.json",
+  "trust_endpoint": "/api/trust",
+  "conformance_report_endpoint": "/api/conformance-report",
+  "protocol_endpoint": "/api/protocol",
+  "conformance_profile": "decirepo-protocol-v0_1-mandatory",
+  "compatibility_badge": {
+    "label": "DeciRepo Protocol Compatible",
+    "status": "active"
+  },
+  "node_public_key": "drpk_6f4d39deci_local_root",
+  "discovery_endpoint": "/.well-known/decirepo-node",
+  "status": "active",
+  "published_at": "2026-03-07T16:30:00Z"
+}

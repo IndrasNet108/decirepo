@@ -7,22 +7,24 @@ on:
 jobs:
   protocol-checks:
     runs-on: ubuntu-latest
+    env:
+      DECIREPO_SITE_READ_TOKEN: ${{ secrets.DECIREPO_SITE_READ_TOKEN }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v5
 
       - name: Checkout site mirror (private access)
-        if: ${{ secrets.DECIREPO_SITE_READ_TOKEN != '' }}
+        if: ${{ env.DECIREPO_SITE_READ_TOKEN != '' }}
         uses: actions/checkout@v5
         with:
           repository: IndrasNet108/decirepo-site
           ref: main
           path: decirepo-site-seed
-          token: ${{ secrets.DECIREPO_SITE_READ_TOKEN }}
+          token: ${{ env.DECIREPO_SITE_READ_TOKEN }}
 
       - name: Checkout site mirror (public fallback)
-        if: ${{ secrets.DECIREPO_SITE_READ_TOKEN == '' }}
+        if: ${{ env.DECIREPO_SITE_READ_TOKEN == '' }}
         run: |
           GIT_TERMINAL_PROMPT=0 git clone --depth=1 --branch main \
             https://github.com/IndrasNet108/decirepo-site.git \

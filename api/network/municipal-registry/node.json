@@ -1,0 +1,22 @@
+{
+  "registry_id": "municipal-registry.gov",
+  "verify_endpoint": "../api/network/municipal-registry/verify.json",
+  "trust_endpoint": "../api/trust",
+  "trust_score_endpoint": "../api/trust-score",
+  "protocol_version": "v0.1",
+  "public_keys": [
+    {
+      "key_id": "drpk_27f11amunicipal_registry",
+      "algorithm": "ed25519",
+      "purpose": "registry_signature"
+    }
+  ],
+  "capabilities": ["verify", "lineage"],
+  "manifest_issued_at": "2026-03-07T17:56:00Z",
+  "status": "connected",
+  "signature": {
+    "algorithm": "ed25519",
+    "signed_payload_hash": "f0f31a8b67f52f15ab4c07ad5cf971fbc6cb67f0d8a7f366d2c6dbb6ec66cf0d",
+    "value": "sig_municipal_manifest_v0_1_4e2f"
+  }
+}

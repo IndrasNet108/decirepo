@@ -1,0 +1,26 @@
+DIVERGENCE INVESTIGATION REPORT v0.1
+
+Report ID: DIR-20260307-0001
+Reference Decision: DR-0003 (APPROVED)
+Generated At: 2026-03-07T15:30:00Z
+
+This report formalizes the structural divergence between decisions sharing similar contexts but producing different outcomes.
+
+Divergent Cases:
+1. DR-0004
+   - Match: decision_class, policy_family, procurement_type
+   - Diff: APPROVED vs REJECTED
+   - Evidence Links:
+     - Compare: /pages/diff.html?left=DR-0003&right=DR-0004
+     - Verify: /pages/verify.html?id=DR-0004
+     - Explanation: /api/decision-explanation.json
+     - Precedents: /api/precedent-search-report.json
+
+Investigation Basis:
+- same decision_class
+- same policy_family
+- same exception_type
+- different outcome
+
+Note: Divergence is an investigation signal, not proof of bias or error.
+Status: AUDIT READY

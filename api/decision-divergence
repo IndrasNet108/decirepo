@@ -1,0 +1,14 @@
+DECISION DIVERGENCE ARTIFACT v0.1
+
+Reference Decision: DR-0003 (APPROVED)
+Detected At: 2026-03-07T15:00:00Z
+
+Divergent Cases Detected: 1
+
+Case 1: DR-0004
+- Matching Dimensions: decision_class, policy_family, procurement_type
+- Outcome Difference: APPROVED vs REJECTED
+- Reason: structurally similar context, divergent outcome
+
+Protocol Version: v0.1
+Status: DIVERGENCE DETECTED

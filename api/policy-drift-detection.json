@@ -1,0 +1,75 @@
+{
+  "report_id": "policy-drift-detection-v0_1-2026-03-07",
+  "generated_at": "2026-03-07T19:05:00Z",
+  "query": {
+    "baseline_policy": "PROCUREMENT_POLICY_V3",
+    "target_policy": "PROCUREMENT_POLICY_V4",
+    "scope": "policy_family=PROCUREMENT-EXCEPTIONS",
+    "method": "deterministic_rule_recompute"
+  },
+  "summary": {
+    "decisions_analyzed": 8,
+    "changed_outcomes": 3,
+    "unchanged_outcomes": 5,
+    "drift_rate": 0.375,
+    "transitions": {
+      "approved_to_rejected": 3,
+      "rejected_to_approved": 0
+    }
+  },
+  "drift_drivers": [
+    {
+      "driver_id": "emergency_override_requires_budget_cap",
+      "affected_decisions": 1,
+      "description": "Emergency waiver in V4 requires budget cap."
+    },
+    {
+      "driver_id": "formal_emergency_declaration_required",
+      "affected_decisions": 2,
+      "description": "V4 rejects emergency override without formal declaration."
+    }
+  ],
+  "changed_decisions": [
+    {
+      "decision_id": "DR-0001",
+      "canonical_id": "◢A9D325",
+      "old_outcome": "APPROVED",
+      "new_outcome": "REJECTED",
+      "old_rule": "emergency_override_allowed",
+      "new_rule": "emergency_override_requires_budget_cap",
+      "old_reason_code": "EMERGENCY_OVERRIDE_ALLOWED",
+      "new_reason_code": "EMERGENCY_OVERRIDE_REQUIRES_BUDGET_CAP",
+      "compare_link": "/pages/diff.html?left=DR-0001&right=DR-0002",
+      "verify_link": "/pages/verify.html?q=%E2%97%A2A9D325"
+    },
+    {
+      "decision_id": "DR-0007",
+      "canonical_id": "◢2EAF52",
+      "old_outcome": "APPROVED",
+      "new_outcome": "REJECTED",
+      "old_rule": "emergency_override_allowed",
+      "new_rule": "formal_emergency_declaration_required",
+      "old_reason_code": "EMERGENCY_OVERRIDE_ALLOWED",
+      "new_reason_code": "MISSING_FORMAL_EMERGENCY_DECLARATION",
+      "compare_link": "/pages/diff.html?left=DR-0007&right=DR-0008",
+      "verify_link": "/pages/verify.html?q=%E2%97%A22EAF52"
+    },
+    {
+      "decision_id": "DR-0008",
+      "canonical_id": "◢E08026",
+      "old_outcome": "APPROVED",
+      "new_outcome": "REJECTED",
+      "old_rule": "emergency_override_allowed",
+      "new_rule": "formal_emergency_declaration_required",
+      "old_reason_code": "EMERGENCY_OVERRIDE_ALLOWED",
+      "new_reason_code": "MISSING_FORMAL_EMERGENCY_DECLARATION",
+      "compare_link": "/pages/diff.html?left=DR-0008&right=DR-0007",
+      "verify_link": "/pages/verify.html?q=%E2%97%A2E08026"
+    }
+  ],
+  "safety": {
+    "llm_used": false,
+    "recommendation_mode": false,
+    "explainability": "explicit_rule_delta"
+  }
+}

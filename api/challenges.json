@@ -1,0 +1,26 @@
+{
+  "stream_id": "decirepo-challenges-v0_1",
+  "items": [
+    {
+      "challenge_id": "CH-0001",
+      "status": "resolved",
+      "source_registry": "decirepo.com",
+      "target_registry": "municipal-registry.gov",
+      "reason": "verification_mismatch_detected",
+      "opened_at": "2026-03-07T18:02:00Z",
+      "resolved_at": "2026-03-07T18:05:00Z",
+      "resolution": "recheck_match"
+    },
+    {
+      "challenge_id": "CH-0002",
+      "status": "open",
+      "source_registry": "bank-registry.eu",
+      "target_registry": "municipal-registry.gov",
+      "reason": "policy_profile_drift",
+      "opened_at": "2026-03-07T18:22:00Z",
+      "resolved_at": null,
+      "resolution": null
+    }
+  ],
+  "last_updated": "2026-03-07T18:25:00Z"
+}

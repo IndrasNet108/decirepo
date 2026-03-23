@@ -1,0 +1,32 @@
+PRECEDENT SEARCH REPORT v0.1
+
+Report ID: PSR-20260307-0001
+Generated At: 2026-03-07T12:00:00Z
+
+Query Context:
+- Reference Decision: DR-A-10492
+- Class: A
+- Policy: AML-KYC-OVERRIDES
+- Mode: by_decision_id
+
+Match Basis:
+- same_decision_class
+- same_policy_family
+- same_reason_code
+
+Result Summary:
+- Total Precedents Found: 5
+- APPROVED: 3
+- REJECTED: 2
+
+Precedent Candidates:
+1. DR-A-10311 (APPROVED) - workflow-system
+2. DR-A-10102 (APPROVED) - workflow-system
+3. DR-A-09971 (APPROVED) - workflow-system
+4. DR-A-10045 (REJECTED) - workflow-system
+5. DR-A-10311 (REJECTED) - workflow-system
+
+Selected Precedent: DR-A-10311
+
+Disclaimer:
+Precedents are retrieval results. They are not recommendations.

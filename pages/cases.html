@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <title>DeciRepo — Public Challenge Cases</title>
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="header-root"></div>
+
+    <main class="page-protocol">
+      <section class="title-block">
+        <h1 class="title-main">Public Challenge Cases</h1>
+        <p class="title-sub">Bounded wording-drift cases for fail-closed control claims</p>
+      </section>
+
+      <section class="panel after-title-gap">
+        <h2 class="section-title">Boundary Under Test</h2>
+        <p class="section-subtitle section-wrap">These cases test whether a reviewed internal state and a final outbound commitment still align at the moment of commit.</p>
+        <div class="kv-stack">
+          <div class="kv-line">
+            <div class="kv-key">Problem class</div>
+            <div class="kv-value">Semantic drift between reviewed wording and effective external commitment.</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Not in scope</div>
+            <div class="kv-value">Engine internals, extraction logic, hashing strategy, or implementation-specific control paths.</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Question</div>
+            <div class="kv-value">Would the transition still proceed, or fail closed, if the outbound wording no longer matches what was actually reviewed?</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-grid">
+        <section class="panel">
+          <h2 class="section-title">Case 01 · Legal Outbound Drift</h2>
+          <p class="section-subtitle section-wrap">A neutral reviewed draft shifts into language that can be read as both admission and commitment.</p>
+          <pre class="code-block">Reviewed draft:
+"We are reviewing the incident and will respond after completing our internal assessment. All rights are reserved."
+
+Modified version before send:
+"We confirm the incident falls under our responsibility and will arrange settlement after receiving the supporting documents."</pre>
+          <div class="kv-stack">
+            <div class="kv-line">
+              <div class="kv-key">Reviewed state</div>
+              <div class="kv-value">Neutral correspondence posture.</div>
+            </div>
+            <div class="kv-line">
+              <div class="kv-key">Outbound effect</div>
+              <div class="kv-value">Can be read as creating both an admission and a commitment.</div>
+            </div>
+            <div class="kv-line">
+              <div class="kv-key">Test question</div>
+              <div class="kv-value">Would this transition be allowed after human confirmation, or fail unless the reviewed version and outbound wording still align at commit?</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2 class="section-title">Case 02 · Commercial Commitment Drift</h2>
+          <p class="section-subtitle section-wrap">A negotiation-safe draft shifts into wording that can be read as commercial acceptance before formal execution.</p>
+          <pre class="code-block">Reviewed draft:
+"We have received your proposal and will revert after internal review. Nothing in this message should be treated as final acceptance."
+
+Modified version before send:
+"We are aligned on the commercial terms and can proceed on that basis once the paperwork is completed."</pre>
+          <div class="kv-stack">
+            <div class="kv-line">
+              <div class="kv-key">Reviewed state</div>
+              <div class="kv-value">Negotiation posture remains open.</div>
+            </div>
+            <div class="kv-line">
+              <div class="kv-key">Outbound effect</div>
+              <div class="kv-value">Can be read as commercial acceptance before formal execution.</div>
+            </div>
+            <div class="kv-line">
+              <div class="kv-key">Test question</div>
+              <div class="kv-value">Would this transition be allowed after human confirmation, or fail unless the reviewed version and outbound wording still align at commit?</div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">How To Use These Cases</h2>
+        <p class="section-subtitle section-wrap">These are challenge cases, not product documentation. They are designed to test whether a claimed fail-closed architecture can stop wording drift before it becomes an effective external position.</p>
+        <div class="button-row tight">
+          <a class="btn btn-gold" href="mailto:info@indrasnet.ee?subject=DeciRepo%20Case%20Challenge">Request a case review</a>
+          <a class="btn" href="./about.html">About DeciRepo</a>
+          <a class="btn" href="./protocol.html">Protocol</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-brand">DeciRepo</div>
+      <div class="footer-description">Decision infrastructure powered by DLX</div>
+      <div class="footer-engine">
+        <img class="footer-dlx-logo" src="../assets/brand/dlx-logo.png" alt="DLX logo" />
+        <div class="footer-engine-text">DLX deterministic engine</div>
+      </div>
+      <div class="footer-links">
+        <a class="menu-link" href="./privacy.html">Privacy Policy</a>
+        <a class="menu-link" href="./terms.html">Terms of Use</a>
+        <a class="menu-link" href="./disclaimer.html">Disclaimer</a>
+        <a class="menu-link" href="./billing.html">Billing & Refunds</a>
+        <a class="menu-link" href="mailto:info@indrasnet.ee">Contact</a>
+      </div>
+      <div class="footer-legal">© 2026 IndrasNet OÜ</div>
+      <div class="footer-meta">IndrasNet Protocol Steward · Estonia</div>
+      <div class="footer-meta">DeciRepo Protocol v0.1</div>
+    </footer>
+
+  </div>
+
+  <script src="../components/header.js"></script>
+  <script>
+    window.DeciRepoHeader.mount("header-root", "cases");
+  </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "audit_package_id": "AUDIT-PKG-DR-A-10492",
+  "generated_at": "2026-03-07T13:00:00Z",
+  "artifact_refs": {
+    "decision": "/api/decision/DR-A-10492.json",
+    "verify_report": "/api/verify.json",
+    "precedent_search_report": "/api/precedent-search-report.json",
+    "decision_explanation": "/api/decision-explanation.json",
+    "policy_drift_report": "/api/policy-drift-detection.json",
+    "divergence_investigation_report": "/api/divergence-investigation-report.json",
+    "evidence_bundle_manifest": "/api/evidence-bundle-manifest.json",
+    "compare_report": null
+  },
+  "rebuild_metadata": {
+    "protocol_version": "v0.1",
+    "dlx_engine": "dlx-ref",
+    "rebuild_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "generated_at": "2026-03-07T13:00:00Z"
+  }
+}

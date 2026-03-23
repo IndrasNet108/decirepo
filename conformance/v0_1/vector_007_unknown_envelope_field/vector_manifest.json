@@ -1,0 +1,14 @@
+{
+  "vector_id": "vector_007_unknown_envelope_field",
+  "conformance_profile": "V0_1",
+  "protocol_specification": "v0.2",
+  "protocol_semantics": "v0.1",
+  "identity_surface": "artifact.rebuild_source",
+  "canonicalization": "decirepo-json-c14n-v1",
+  "result_canonicalization": "decirepo-result-c14n-v1",
+  "hash_function": "SHA256",
+  "normalized_result_schema": "decirepo-verifier-result-v0.1",
+  "verification_command": "verify",
+  "description": "Single unknown top-level field outside artifact.rebuild_source does not affect baseline verify identity or normalized result.",
+  "canonical_bytes_source": "artifact.rebuild_source"
+}

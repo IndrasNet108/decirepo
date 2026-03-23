@@ -1,0 +1,40 @@
+{
+  "report_id": "decirepo-conformance-report-v0_1-2026-03-07",
+  "generated_at": "2026-03-07T18:40:00Z",
+  "registry_id": "decirepo.com",
+  "protocol_version": "v0.1",
+  "compatibility_profile": "decirepo-protocol-v0_1-mandatory",
+  "overall_verdict": "PASS",
+  "checks": [
+    {
+      "check_id": "dlx_ref_conformance",
+      "command": "node dlx-ref/cli.js conformance dlx-ref/tests/conformance_v0_1.json",
+      "status": "PASS",
+      "details": "5/5 test cases passed"
+    },
+    {
+      "check_id": "federation_negative_perimeter",
+      "command": "node scripts/run_negative_federation_tests.js",
+      "status": "PASS",
+      "details": "5/5 fail-closed cases passed"
+    },
+    {
+      "check_id": "registry_sanity",
+      "command": "node scripts/sanity_check_registry.js",
+      "status": "PASS",
+      "details": "registry sanity checks passed"
+    }
+  ],
+  "compatibility_badge": {
+    "label": "DeciRepo Protocol Compatible",
+    "status": "active"
+  },
+  "ci": {
+    "workflow": ".github/workflows/protocol-ci.yml",
+    "required_checks": [
+      "dlx-ref conformance",
+      "federation negative tests",
+      "registry sanity checks"
+    ]
+  }
+}

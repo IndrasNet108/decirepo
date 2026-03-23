@@ -1,0 +1,15 @@
+{
+  "transition_chain": [
+    {
+      "from": "DRAFT",
+      "to": "PROPOSED",
+      "evidence_hash": "cc53f3d3d88f38f5ef0877d26fcb5cae8982ad867825ac20a38e44b87f14a903"
+    },
+    {
+      "from": "PROPOSED",
+      "to": "PUBLISHED",
+      "evidence_hash": "f4ca7c537c5f8e5af40e3f096652cbf4fa5dbd0f08fd31ea3f5916f875f9225c"
+    }
+  ]
+}
+

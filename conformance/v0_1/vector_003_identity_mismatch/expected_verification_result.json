@@ -1,0 +1,9 @@
+{
+  "artifact_id": "6282b0a0ad6094775dbff43cf48542e5f165aa8402728c2dc34f53fe8830a98d",
+  "protocol_version": "v0.1",
+  "reason_codes": [
+    "REBUILD_HASH_EXPECTED_MISMATCH"
+  ],
+  "status": "FAIL",
+  "verifier_result_schema": "decirepo-verifier-result-v0.1"
+}

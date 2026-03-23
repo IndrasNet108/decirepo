@@ -1,0 +1,51 @@
+{
+  "perspective_registry": "decirepo.com",
+  "model": {
+    "model_id": "decirepo-trust-score-v0_1",
+    "scale": "0..100",
+    "weights": {
+      "verify_success_rate": 0.35,
+      "rebuild_match_rate": 0.30,
+      "uptime_score": 0.20,
+      "policy_compatibility": 0.10,
+      "incident_penalty": 0.05
+    },
+    "formula": "trust_score = 100 * (0.35*verify_success_rate + 0.30*rebuild_match_rate + 0.20*uptime_score + 0.10*policy_compatibility + 0.05*incident_penalty)"
+  },
+  "registries": [
+    {
+      "registry": "decirepo.com",
+      "trust_score": 93.3,
+      "components": {
+        "verify_success_rate": 0.992,
+        "rebuild_match_rate": 0.987,
+        "uptime_score": 0.996,
+        "policy_compatibility": 0.91,
+        "incident_penalty": -0.01
+      }
+    },
+    {
+      "registry": "bank-registry.eu",
+      "trust_score": 91.7,
+      "components": {
+        "verify_success_rate": 0.976,
+        "rebuild_match_rate": 0.969,
+        "uptime_score": 0.989,
+        "policy_compatibility": 0.88,
+        "incident_penalty": -0.03
+      }
+    },
+    {
+      "registry": "municipal-registry.gov",
+      "trust_score": 89.4,
+      "components": {
+        "verify_success_rate": 0.955,
+        "rebuild_match_rate": 0.948,
+        "uptime_score": 0.974,
+        "policy_compatibility": 0.83,
+        "incident_penalty": -0.05
+      }
+    }
+  ],
+  "last_updated": "2026-03-07T18:20:00Z"
+}

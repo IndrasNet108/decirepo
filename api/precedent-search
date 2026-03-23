@@ -1,0 +1,67 @@
+{
+  "query": {
+    "decision_class": "A",
+    "policy_family": "AML-KYC-OVERRIDES",
+    "outcome": null,
+    "time_range": "last_180_days"
+  },
+  "scoring_model": {
+    "model_id": "precedent-search-v0_1",
+    "weights": {
+      "class_match": 0.40,
+      "policy_family_match": 0.30,
+      "reason_code_match": 0.20,
+      "risk_distance": 0.10
+    },
+    "tie_breaker": "decision_id_lexical"
+  },
+  "total_candidates": 1234,
+  "returned": 5,
+  "results": [
+    {
+      "decision_id": "DR-A-10492",
+      "canonical_id": "◢7F3A2C",
+      "decision_class": "A",
+      "policy_family": "AML-KYC-OVERRIDES",
+      "outcome": "APPROVED",
+      "similarity_score": 0.94,
+      "why_matched": "class=A, policy_family match, reason_code near-match"
+    },
+    {
+      "decision_id": "DR-A-10311",
+      "canonical_id": "◢2A91F4",
+      "decision_class": "A",
+      "policy_family": "AML-KYC-OVERRIDES",
+      "outcome": "REJECTED",
+      "similarity_score": 0.91,
+      "why_matched": "class=A, policy_family match, close risk band"
+    },
+    {
+      "decision_id": "DR-A-10102",
+      "canonical_id": "◢B84D21",
+      "decision_class": "A",
+      "policy_family": "AML-KYC-OVERRIDES",
+      "outcome": "APPROVED",
+      "similarity_score": 0.89,
+      "why_matched": "class=A, policy_family match"
+    },
+    {
+      "decision_id": "DR-A-10045",
+      "canonical_id": "◢91AA03",
+      "decision_class": "A",
+      "policy_family": "AML-KYC-OVERRIDES",
+      "outcome": "REJECTED",
+      "similarity_score": 0.87,
+      "why_matched": "class=A, reason_code near-match"
+    },
+    {
+      "decision_id": "DR-A-09971",
+      "canonical_id": "◢A33121",
+      "decision_class": "A",
+      "policy_family": "AML-KYC-OVERRIDES",
+      "outcome": "APPROVED",
+      "similarity_score": 0.85,
+      "why_matched": "class=A, close risk band"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "schema_version": "dlx-artifact-v0.1",
+  "decision_id": "DR-INVALID-0001",
+  "publisher": "indrasnet-governance",
+  "policy_version": "DECIREPO_PROTOCOL_V0_1",
+  "artifact_hash": "not-a-valid-hash",
+  "rebuild_result": "MATCH"
+}
+

@@ -1,0 +1,14 @@
+{
+  "name": "decirepo-reference-node",
+  "version": "0.1.0",
+  "description": "Federated decision verification infrastructure based on proof by recomputation.",
+  "main": "dlx-ref/cli.js",
+  "author": "Oleg Surkov",
+  "license": "SEE LICENSE IN LICENSE FILE",
+  "dependencies": {},
+  "scripts": {
+    "build:site-dist": "bash scripts/build_site_dist.sh",
+    "test": "bash scripts/validate_all.sh",
+    "conformance:protocol:v0_1": "node scripts/run_protocol_conformance_v0_1.js"
+  }
+}

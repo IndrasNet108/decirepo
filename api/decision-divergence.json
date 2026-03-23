@@ -1,0 +1,19 @@
+{
+  "reference_decision": "DR-0003",
+  "divergent_decisions": [
+    {
+      "decision_id": "DR-0004",
+      "matching_dimensions": [
+        "decision_class",
+        "policy_family",
+        "procurement_type"
+      ],
+      "outcome_difference": {
+        "reference_outcome": "APPROVED",
+        "divergent_outcome": "REJECTED"
+      }
+    }
+  ],
+  "detected_at": "2026-03-07T15:00:00Z",
+  "protocol_version": "v0.1"
+}

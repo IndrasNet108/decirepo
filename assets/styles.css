@@ -132,6 +132,12 @@ a {
   text-overflow: ellipsis;
 }
 
+.title-main-wrap {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+}
+
 .title-sub {
   margin: 0;
   color: var(--secondary-gray);
@@ -141,6 +147,12 @@ a {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.title-sub-wrap {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
 }
 
 .hero-lines {
@@ -565,18 +577,10 @@ a {
 
 .case-trap-line {
   display: grid;
-  gap: 6px;
+  gap: 0;
   border-left: 3px solid var(--accent-gold);
   background: #151516;
   padding: 10px 12px;
-}
-
-.case-trap-label {
-  color: var(--secondary-gray);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .case-trap-text {

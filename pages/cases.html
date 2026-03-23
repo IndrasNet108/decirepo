@@ -17,118 +17,59 @@
 
     <main class="page-protocol">
       <section class="title-block">
-        <h1 class="title-main">Public Challenge Cases</h1>
-        <p class="title-sub">Bounded wording-drift cases for fail-closed control claims</p>
-      </section>
-
-      <section class="panel after-title-gap">
-        <h2 class="section-title">Boundary Under Test</h2>
-        <p class="section-subtitle section-wrap">These cases test whether a reviewed internal state and a final outbound commitment still align at the moment of commit.</p>
-        <div class="kv-stack">
-          <div class="kv-line">
-            <div class="kv-key">Problem class</div>
-            <div class="kv-value">Semantic drift between reviewed wording and effective external commitment.</div>
-          </div>
-          <div class="kv-line">
-            <div class="kv-key">Not in scope</div>
-            <div class="kv-value">Engine internals, extraction logic, hashing strategy, or implementation-specific control paths.</div>
-          </div>
-          <div class="kv-line">
-            <div class="kv-key">Question</div>
-            <div class="kv-value">Would the transition still proceed, or fail closed, if the outbound wording no longer matches what was actually reviewed?</div>
-          </div>
+        <h1 class="title-main title-main-wrap">The point where wording becomes binding or fails.</h1>
+        <p class="title-sub title-sub-wrap">Because one sentence can create liability.</p>
+        <div class="hero-lines">
+          <p class="hero-line">These are not examples.</p>
+          <p class="hero-line">These are moments where the reviewed version and the sent version became different positions.</p>
         </div>
       </section>
 
-      <section class="content-grid cases-stack">
+      <section class="content-grid cases-stack after-title-gap">
         <section class="panel">
           <h2 class="section-title">Case 01 · Legal Outbound Drift</h2>
-          <p class="section-subtitle section-wrap">A neutral reviewed draft shifts into language that can be read as both admission and commitment.</p>
-          <pre class="code-block">Reviewed draft:
+          <pre class="code-block">Reviewed:
 "We are reviewing the incident and will respond after completing our internal assessment. All rights are reserved."
 
-Modified version before send:
+Sent:
 "We confirm the incident falls under our responsibility and will arrange settlement after receiving the supporting documents."</pre>
           <div class="case-trap-line">
-            <div class="case-trap-label">Moment of loss</div>
-            <div class="case-trap-text">This is where liability was created.</div>
+            <div class="case-trap-text">&rarr; This is where liability was created.</div>
           </div>
-          <div class="kv-stack">
-            <div class="kv-line">
-              <div class="kv-key">Reviewed state</div>
-              <div class="kv-value">Neutral correspondence posture.</div>
-            </div>
-            <div class="kv-line">
-              <div class="kv-key">Outbound effect</div>
-              <div class="kv-value">Can be read as creating both an admission and a commitment.</div>
-            </div>
-            <div class="kv-line">
-              <div class="kv-key">Test question</div>
-              <div class="kv-value">Would this transition be allowed after human confirmation, or fail unless the reviewed version and outbound wording still align at commit?</div>
-            </div>
-          </div>
+          <p class="section-subtitle section-wrap">The reviewed version was neutral. The outbound version created both an admission and a commitment.</p>
         </section>
 
         <section class="panel">
           <h2 class="section-title">Case 02 · Commercial Commitment Drift</h2>
-          <p class="section-subtitle section-wrap">A negotiation-safe draft shifts into wording that can be read as commercial acceptance before formal execution.</p>
-          <pre class="code-block">Reviewed draft:
-"We have received your proposal and will revert after internal review. Nothing in this message should be treated as final acceptance."
+          <pre class="code-block">Reviewed:
+"We are still evaluating the scope and will confirm once internal alignment is complete."
 
-Modified version before send:
-"We are aligned on the commercial terms and can proceed on that basis once the paperwork is completed."</pre>
+Sent:
+"We are aligned and will proceed with the agreed scope and timeline."</pre>
           <div class="case-trap-line">
-            <div class="case-trap-label">Moment of loss</div>
-            <div class="case-trap-text">This is where commitment was created before execution.</div>
+            <div class="case-trap-text">&rarr; This is where commitment was created before execution.</div>
           </div>
-          <div class="kv-stack">
-            <div class="kv-line">
-              <div class="kv-key">Reviewed state</div>
-              <div class="kv-value">Negotiation posture remains open.</div>
-            </div>
-            <div class="kv-line">
-              <div class="kv-key">Outbound effect</div>
-              <div class="kv-value">Can be read as commercial acceptance before formal execution.</div>
-            </div>
-            <div class="kv-line">
-              <div class="kv-key">Test question</div>
-              <div class="kv-value">Would this transition be allowed after human confirmation, or fail unless the reviewed version and outbound wording still align at commit?</div>
-            </div>
-          </div>
+          <p class="section-subtitle section-wrap">Negotiation was still open. The outbound message closed it.</p>
         </section>
 
         <section class="panel">
           <h2 class="section-title">Case 03 · Outbound Position Drift</h2>
-          <p class="section-subtitle section-wrap">A reviewed neutral reply shifts into wording that can be read as a commitment to settlement.</p>
-          <pre class="code-block">Reviewed draft:
-"We acknowledge receipt of your request and will respond after internal review. This message does not confirm acceptance of liability or settlement."
+          <pre class="code-block">Reviewed:
+"We acknowledge receipt of your request and will revert after internal review."
 
-Modified version before send:
-"We have reviewed the matter and will proceed with settlement once the supporting documents are received."</pre>
+Sent:
+"We will proceed with settlement upon receiving the required documentation."</pre>
           <div class="case-trap-line">
-            <div class="case-trap-label">Moment of loss</div>
-            <div class="case-trap-text">This is where the company took a position it never approved.</div>
+            <div class="case-trap-text">&rarr; This is where the company took a position it never approved.</div>
           </div>
-          <div class="kv-stack">
-            <div class="kv-line">
-              <div class="kv-key">Reviewed state</div>
-              <div class="kv-value">Neutral correspondence posture pending internal review.</div>
-            </div>
-            <div class="kv-line">
-              <div class="kv-key">Outbound effect</div>
-              <div class="kv-value">Can be read as a commitment to settlement.</div>
-            </div>
-            <div class="kv-line">
-              <div class="kv-key">Test question</div>
-              <div class="kv-value">Would this transition be allowed after human confirmation, or fail unless the reviewed version and outbound wording still align at commit?</div>
-            </div>
-          </div>
+          <p class="section-subtitle section-wrap">Acknowledgment turned into commitment. No formal approval ever happened.</p>
         </section>
       </section>
 
       <section class="panel">
-        <h2 class="section-title">How To Use These Cases</h2>
-        <p class="section-subtitle section-wrap">These are challenge cases, not product documentation. They are designed to test whether a claimed fail-closed architecture preserves alignment between reviewed wording and the effective outbound position at the moment of commit.</p>
+        <h2 class="section-title">Before It Is Sent</h2>
+        <p class="section-subtitle section-wrap">Before a message is sent, it becomes a position.</p>
+        <p class="section-subtitle section-wrap">If the reviewed version and the outbound wording are not the same position, the transition should not proceed.</p>
         <div class="button-row tight">
           <a class="btn btn-gold" href="mailto:info@indrasnet.ee?subject=DeciRepo%20Case%20Challenge">Request a case review</a>
           <a class="btn" href="./about.html">About DeciRepo</a>

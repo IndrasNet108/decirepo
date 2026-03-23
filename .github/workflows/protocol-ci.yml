@@ -14,21 +14,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Checkout site mirror (private access)
-        if: ${{ env.DECIREPO_SITE_READ_TOKEN != '' }}
+      - name: Require site mirror token
+        if: ${{ env.DECIREPO_SITE_READ_TOKEN == '' }}
+        run: |
+          echo "DECIREPO_SITE_READ_TOKEN is missing in this workflow context." >&2
+          exit 1
+
+      - name: Checkout site mirror
         uses: actions/checkout@v5
         with:
           repository: IndrasNet108/decirepo-site
           ref: main
           path: decirepo-site-seed
           token: ${{ env.DECIREPO_SITE_READ_TOKEN }}
-
-      - name: Checkout site mirror (public fallback)
-        if: ${{ env.DECIREPO_SITE_READ_TOKEN == '' }}
-        run: |
-          GIT_TERMINAL_PROMPT=0 git clone --depth=1 --branch main \
-            https://github.com/IndrasNet108/decirepo-site.git \
-            decirepo-site-seed
 
       - name: Setup Node
         uses: actions/setup-node@v5

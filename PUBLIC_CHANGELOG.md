@@ -110,6 +110,16 @@ The second run confirmed the tightened package remained acceptable, while still 
 Published reference:
 - `DECIREPO_DOCUMENTATION_REVIEW_RECORD_2026_03_24_V0_1.md`
 
+### Canonical DeciRepo / DLX boundary note added
+A short public note was added to fix the canonical distinction between:
+
+- DeciRepo as the public registry surface,
+- DLX as the verification / control layer behind it,
+- and the execution boundary as the point where governance becomes enforceable.
+
+Published reference:
+- `DECIREPO_DLX_BOUNDARY_POSITION_NOTE_V0_1.md`
+
 ## 2026-03-09
 
 ### First external recomputation published

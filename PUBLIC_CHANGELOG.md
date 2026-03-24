@@ -72,6 +72,16 @@ A public archive note was added to preserve the currently assembled text and vis
 Published reference:
 - `INDRASNET_EARLY_PUBLIC_POST_ARCHIVE_V0_1.md`
 
+### DLX current scope note added
+A public scope note was added to distinguish:
+
+- where DLX is publicly evidenced today,
+- what remains portability-by-design,
+- and what is not yet claimed as current multi-network deployment.
+
+Published reference:
+- `DLX_CURRENT_SCOPE_AND_PORTABILITY_NOTE_V0_1.md`
+
 ## 2026-03-09
 
 ### First external recomputation published

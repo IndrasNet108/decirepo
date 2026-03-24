@@ -88,6 +88,9 @@ The correct public statement is narrower:
 
 - DLX is currently demonstrated within the DeciRepo / IndrasNet public and reference surface.
 
+This note also makes no claim that broader external rollout is already scheduled, committed, or currently underway.
+If external deployment evidence appears later, it must be published as a separate public layer rather than inferred from design portability alone.
+
 ---
 
 ## 5. Portability by Design

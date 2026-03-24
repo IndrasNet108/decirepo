@@ -82,6 +82,34 @@ A public scope note was added to distinguish:
 Published reference:
 - `DLX_CURRENT_SCOPE_AND_PORTABILITY_NOTE_V0_1.md`
 
+### Documentation spine DLX-reviewed
+A bounded DLX consistency review was run over the new public documentation spine added on 2026-03-24.
+
+Initial result:
+- `case_id`: `PILOT-DLX-DECIREPO-DOCS-SPINE-001`
+- `status`: `PASS`
+- `qa.score`: `100`
+- `qa_binding.status`: `MATCH`
+- `defects_total`: `3`
+
+Returned issues were wording-level boundary findings, not package-blocking failures. The notes were tightened after review to make the public record more fail-closed around:
+
+- future portability versus current scope,
+- public proof boundary versus full internal runtime disclosure,
+- and conceptual continuity versus artifact identity.
+
+Confirmatory rerun:
+- `case_id`: `PILOT-DLX-DECIREPO-DOCS-SPINE-002`
+- `status`: `PASS`
+- `qa.score`: `100`
+- `qa_binding.status`: `MATCH`
+- `defects_total`: `3`
+
+The second run confirmed the tightened package remained acceptable, while still surfacing residual public-language boundary tension typical of lineage / scope / disclosure notes.
+
+Published reference:
+- `DECIREPO_DOCUMENTATION_REVIEW_RECORD_2026_03_24_V0_1.md`
+
 ## 2026-03-09
 
 ### First external recomputation published

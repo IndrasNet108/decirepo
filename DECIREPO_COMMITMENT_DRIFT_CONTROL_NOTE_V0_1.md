@@ -108,7 +108,31 @@ They show the pattern across multiple domains:
 
 ---
 
-## 6. Relation to Genesis Proof Surface
+## 6. Public Proof Boundary
+
+The public surface currently proves less than the full internal runtime implementation.
+
+What is public today:
+
+- the bounded challenge cases,
+- the public root-of-trust and recomputation surface,
+- and the protocol/public-note layer that defines the narrower problem class.
+
+What is **not** publicly proved by this note alone:
+
+- every internal runtime mechanism,
+- every semantic comparison strategy,
+- or full implementation disclosure of all control paths.
+
+The safer reading is narrower:
+
+- the problem class is public,
+- the public challenge surface is public,
+- and the public proof boundary should not be confused with full internal runtime disclosure.
+
+---
+
+## 7. Relation to Genesis Proof Surface
 
 The genesis artifact and its evidence layer establish a separate but related point:
 
@@ -129,7 +153,7 @@ The safer statement is narrower:
 
 ---
 
-## 7. What Is Publicly Claimed
+## 8. What Is Publicly Claimed
 
 The public claim surface is currently this:
 
@@ -149,7 +173,7 @@ These are category and pain statements, not full implementation disclosure.
 
 ---
 
-## 8. What Is Not Claimed
+## 9. What Is Not Claimed
 
 This note does **not** claim:
 
@@ -168,7 +192,7 @@ The public position is more disciplined:
 
 ---
 
-## 9. Public Summary
+## 10. Public Summary
 
 In short:
 
@@ -184,7 +208,7 @@ That is why the public DeciRepo surface now focuses on:
 
 ---
 
-## 10. Related Public References
+## 11. Related Public References
 
 - `INDRASNET_TO_DECIREPO_LINEAGE_V0_1.md`
 - `DECIREPO_GENESIS_EVIDENCE_LAYER_V0_1.md`

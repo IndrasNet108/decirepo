@@ -16,6 +16,14 @@ This note records the public continuity between:
 It does **not** claim that the early metaphor and the current protocol are identical artifacts.
 It records the public lineage of the idea surface and its technical crystallization.
 
+Here, "conceptual continuity" means continuity of:
+
+- the trust problem being named,
+- the network language used to frame it,
+- and the later move into protocol structure.
+
+It does **not** mean continuity of artifact identity, implementation identity, or governance object identity across every period.
+
 ---
 
 ## 1. Origin Metaphor
@@ -118,6 +126,7 @@ In lineage terms, this is the first public technical answer to the earlier intui
 ## 5. Conceptual Continuity
 
 The continuity is not lexical only.
+It is a continuity of problem surface and architectural direction, not a claim that early posts were already hidden protocol artifacts.
 
 The public through-line is:
 

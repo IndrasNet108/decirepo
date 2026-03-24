@@ -54,6 +54,12 @@ A public appendix was added to document the DeciRepo genesis artifact proof laye
 Published reference:
 - `DECIREPO_GENESIS_EVIDENCE_LAYER_V0_1.md`
 
+### Commitment drift control note added
+A public note was added to define the narrower failure mode where reviewed wording and sent wording stop being the same position before commitment becomes effective.
+
+Published reference:
+- `DECIREPO_COMMITMENT_DRIFT_CONTROL_NOTE_V0_1.md`
+
 ## 2026-03-09
 
 ### First external recomputation published

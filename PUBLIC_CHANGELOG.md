@@ -18,6 +18,31 @@ Excluded:
 
 ---
 
+## 2026-03-24
+
+### Public narrative surface updated
+- Main public messaging shifted toward reviewed-vs-sent wording drift and outbound commitment control.
+- Homepage was rewritten around the boundary question:
+  - when wording becomes binding,
+  - and when the transition should fail instead.
+- Public challenge cases were tightened into bounded trap surfaces for:
+  - legal outbound drift,
+  - commercial commitment drift,
+  - outbound position drift.
+
+### Public essay published
+A public long-form essay was published to explain the failure mode where a reviewed message and a sent message stop being the same position.
+
+Published reference:
+- Medium: `When a message becomes a commitment`
+- URL: `https://medium.com/p/when-a-message-becomes-a-commitment-46d1db19d4af`
+
+### Public lineage note added
+A public lineage note was added to record the conceptual continuity from Indra's Net / IndrasNet into 2025 DAO architecture language and 2026 DeciRepo genesis formalization.
+
+Published reference:
+- `INDRASNET_TO_DECIREPO_LINEAGE_V0_1.md`
+
 ## 2026-03-09
 
 ### First external recomputation published

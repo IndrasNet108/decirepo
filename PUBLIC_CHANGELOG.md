@@ -66,6 +66,12 @@ A public source timeline was added to record the currently assembled historical 
 Published reference:
 - `INDRASNET_SOURCE_TIMELINE_V0_1.md`
 
+### Early public post archive added
+A public archive note was added to preserve the currently assembled text and visual descriptions of the key 2025 IndrasNet transition posts.
+
+Published reference:
+- `INDRASNET_EARLY_PUBLIC_POST_ARCHIVE_V0_1.md`
+
 ## 2026-03-09
 
 ### First external recomputation published

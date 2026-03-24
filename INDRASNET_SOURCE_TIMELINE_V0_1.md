@@ -36,6 +36,7 @@ Each entry is marked by dominant status:
 Archival confidence labels:
 
 - `DIRECT` — directly represented by current public files or public URLs
+- `ARCHIVED` — preserved in this repository as collected text and image description, even if original platform URL or screenshot is not yet attached
 - `RECORDED` — described from collected public material, but direct source URL or screenshot not yet attached in this repository
 
 ---
@@ -75,7 +76,7 @@ Current archive note:
 Status:
 
 - Layer: `ARCHITECTURE`
-- Archive confidence: `RECORDED`
+- Archive confidence: `ARCHIVED`
 
 Recorded post line:
 
@@ -86,6 +87,10 @@ Why it matters:
 - this is one of the first clear moves from symbolism into architecture language,
 - and it reframes nodes as active system components rather than only metaphorical reflections.
 
+Archive reference:
+
+- `INDRASNET_EARLY_PUBLIC_POST_ARCHIVE_V0_1.md`
+
 ---
 
 ### 2025-09-28 — IndrasNet as DAO and product program
@@ -93,7 +98,7 @@ Why it matters:
 Status:
 
 - Layer: `ARCHITECTURE`
-- Archive confidence: `RECORDED`
+- Archive confidence: `ARCHIVED`
 
 Recorded post line:
 
@@ -105,6 +110,10 @@ Why it matters:
 - DAO becomes the mechanism of coordination,
 - and the system starts being described as a product architecture rather than an abstract network.
 
+Archive reference:
+
+- `INDRASNET_EARLY_PUBLIC_POST_ARCHIVE_V0_1.md`
+
 ---
 
 ### 2025-10-04 — emergence through connected ideas
@@ -112,7 +121,7 @@ Why it matters:
 Status:
 
 - Layer: `ARCHITECTURE`
-- Archive confidence: `RECORDED`
+- Archive confidence: `ARCHIVED`
 
 Recorded post line:
 
@@ -123,6 +132,10 @@ Why it matters:
 - preserves the original emergence metaphor,
 - but now ties it to product formation and collaborative system behavior.
 
+Archive reference:
+
+- `INDRASNET_EARLY_PUBLIC_POST_ARCHIVE_V0_1.md`
+
 ---
 
 ### 2025-10-06 — internal growth thread: Rust / Solana / anti-spam / treasury refill
@@ -130,7 +143,7 @@ Why it matters:
 Status:
 
 - Layer: `ARCHITECTURE`
-- Archive confidence: `RECORDED`
+- Archive confidence: `ARCHIVED`
 
 Recorded public theme:
 
@@ -145,6 +158,10 @@ Why it matters:
 - this is the clearest known signal that the concept had already moved into concrete module design,
 - and it establishes the technical substrate behind the later protocol surface.
 
+Archive reference:
+
+- `INDRASNET_EARLY_PUBLIC_POST_ARCHIVE_V0_1.md`
+
 ---
 
 ### 2025-10-09 — Myth -> Code -> Project
@@ -152,7 +169,7 @@ Why it matters:
 Status:
 
 - Layer: `ARCHITECTURE`
-- Archive confidence: `RECORDED`
+- Archive confidence: `ARCHIVED`
 
 Recorded post line:
 
@@ -162,6 +179,10 @@ Why it matters:
 
 - this explicitly names the transformation path,
 - and acts as a public bridge between symbolic origin and implemented system direction.
+
+Archive reference:
+
+- `INDRASNET_EARLY_PUBLIC_POST_ARCHIVE_V0_1.md`
 
 ---
 
@@ -272,16 +293,17 @@ That line is already sufficient to show conceptual continuity.
 The following materials are not yet fully attached here as direct archived sources:
 
 - direct URLs or screenshots for the 2022-2023 metaphor posts,
-- direct URLs or screenshots for the 2025-09 / 2025-10 IndrasNet posts and thread,
+- original platform URLs or screenshots for the 2025-09 / 2025-10 IndrasNet posts and thread,
 - 2026 public thread set where DLX is explicitly separated as its own layer,
 - technical ancestry appendix linking the 2025 Rust / Solana modules into the later public protocol surface.
 
-This means the current note is a **source timeline**, but not yet a complete evidence-grade archive of every public post.
+This means the current note is now a stronger source timeline with local archive preservation for the key 2025 transition posts, but not yet a complete evidence-grade archive of every original public post.
 
 ---
 
 ## 9. Related Public References
 
+- `INDRASNET_EARLY_PUBLIC_POST_ARCHIVE_V0_1.md`
 - `INDRASNET_TO_DECIREPO_LINEAGE_V0_1.md`
 - `DECIREPO_GENESIS_EVIDENCE_LAYER_V0_1.md`
 - `DECIREPO_COMMITMENT_DRIFT_CONTROL_NOTE_V0_1.md`

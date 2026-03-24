@@ -18,17 +18,17 @@
     <main class="page-index">
       <section class="title-block">
         <h1 class="title-main">DeciRepo</h1>
-        <p class="title-sub">Git for institutional decisions.</p>
+        <p class="title-sub title-sub-wrap">The point where wording becomes binding or fails.</p>
       </section>
 
       <section class="panel index-hero-panel after-title-gap">
-        <h2 class="section-title">DeciRepo in 20 Seconds</h2>
+        <h2 class="section-title">Before It Binds</h2>
         <div class="hero-lines">
-          <p class="hero-line">DeciRepo is Git for institutional decisions.</p>
-          <p class="hero-line">Every decision becomes a verifiable artifact.</p>
-          <p class="hero-line">Any node can recompute the result.</p>
-          <p class="hero-line mono">verify(decision_id) → MATCH or FAIL.</p>
-          <p class="hero-line">Trust comes from recomputation, not authority.</p>
+          <p class="hero-line">One sentence can create liability.</p>
+          <p class="hero-line">One outbound message can create a position the company never approved.</p>
+          <p class="hero-line">The reviewed version and the sent version are not always the same position.</p>
+          <p class="hero-line">If they diverge at commit, control is already gone.</p>
+          <p class="hero-line mono">reviewed wording → outbound wording → bind or fail</p>
         </div>
         <div class="proof-strip" aria-label="Latest verification">
           <div class="proof-strip-title">Latest verification</div>
@@ -40,15 +40,41 @@
           </div>
         </div>
         <div class="button-row tight">
-          <a class="btn btn-gold" href="./verify.html?q=DR-GENESIS-0001">Verify</a>
-          <a class="btn" href="./decision.html?id=DR-GENESIS-0001">Genesis</a>
-          <a class="btn" href="./protocol.html">Protocol</a>
+          <a class="btn btn-gold" href="./cases.html">Review Cases</a>
           <a class="btn" href="./billing.html#request-pilot">Request Pilot</a>
+          <a class="btn" href="./feed.html">Open Feed</a>
+          <a class="btn" href="./protocol.html">Protocol</a>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Where This Fails First</h2>
+        <div class="kv-stack">
+          <div class="kv-line">
+            <div class="kv-key">Legal / Claims</div>
+            <div class="kv-value">A neutral review turns into admission and settlement posture.</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Commercial / Sales</div>
+            <div class="kv-value">Negotiation turns into commitment before execution.</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Support / Outbound Ops</div>
+            <div class="kv-value">Acknowledgment turns into a company position no one actually approved.</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">AI-generated Communication</div>
+            <div class="kv-value">Fluent text commits more than the facts or approvals allow.</div>
+          </div>
+        </div>
+        <div class="button-row tight">
+          <a class="btn btn-gold" href="./cases.html">Open Challenge Cases</a>
+          <a class="btn" href="./billing.html#request-pilot">Pressure-test Your Boundary</a>
         </div>
       </section>
 
       <section class="panel index-hero-panel">
-        <h2 class="section-title">Core Primitive</h2>
+        <h2 class="section-title">Why This Is Checkable</h2>
         <p class="section-subtitle section-wrap">Any compatible node can recompute the same decision artifact and return MATCH or FAIL.</p>
         <div class="code-block">$ node dlx-ref/cli.js verify artifacts/genesis/DR-GENESIS-0001.json
 status=PASS
@@ -104,11 +130,11 @@ rebuild=MATCH</div>
         <div class="review-path-steps">
           <div class="review-path-step">
             <div class="review-path-step-id">Step 1</div>
-            <div class="review-path-step-text">Open the Genesis decision record to see the canonical public artifact chain.</div>
+            <div class="review-path-step-text">Start with the challenge cases to see where reviewed wording and outbound wording become different positions.</div>
           </div>
           <div class="review-path-step">
             <div class="review-path-step-id">Step 2</div>
-            <div class="review-path-step-text">Verify the published artifact and confirm the deterministic recomputation result.</div>
+            <div class="review-path-step-text">Verify the Genesis artifact to see how the public recomputation surface works.</div>
           </div>
           <div class="review-path-step">
             <div class="review-path-step-id">Step 3</div>
@@ -124,11 +150,11 @@ rebuild=MATCH</div>
           </div>
         </div>
         <div class="button-row tight">
-          <a class="btn btn-gold" href="./decision.html?id=DR-GENESIS-0001">Start with Genesis</a>
+          <a class="btn btn-gold" href="./cases.html">Start with Cases</a>
+          <a class="btn" href="./decision.html?id=DR-GENESIS-0001">Open Genesis</a>
           <a class="btn" href="./verify.html?q=DR-GENESIS-0001">Verify Artifact</a>
           <a class="btn" href="./lineage.html?id=DR-GENESIS-0001">Inspect Lineage</a>
           <a class="btn" href="./policy-impact.html?id=DR-0001">Review Policy Impact</a>
-          <a class="btn" href="./protocol.html">Read Protocol</a>
         </div>
       </section>
 

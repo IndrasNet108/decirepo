@@ -60,6 +60,12 @@ A public note was added to define the narrower failure mode where reviewed wordi
 Published reference:
 - `DECIREPO_COMMITMENT_DRIFT_CONTROL_NOTE_V0_1.md`
 
+### Public source timeline added
+A public source timeline was added to record the currently assembled historical line from early Indra's Net metaphor language through 2025 IndrasNet architecture posts and into 2026 DeciRepo genesis formalization.
+
+Published reference:
+- `INDRASNET_SOURCE_TIMELINE_V0_1.md`
+
 ## 2026-03-09
 
 ### First external recomputation published

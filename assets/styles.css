@@ -138,6 +138,14 @@ a {
   text-overflow: clip;
 }
 
+.cases-hero-main {
+  font-size: 36px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
 .title-sub {
   margin: 0;
   color: var(--secondary-gray);
@@ -1476,6 +1484,13 @@ a {
 
   .brand-logo-dr {
     height: 24px;
+  }
+
+  .cases-hero-main {
+    font-size: 30px;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
   }
 
   .brand-registry,

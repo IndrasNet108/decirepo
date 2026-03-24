@@ -43,6 +43,17 @@ A public lineage note was added to record the conceptual continuity from Indra's
 Published reference:
 - `INDRASNET_TO_DECIREPO_LINEAGE_V0_1.md`
 
+### Genesis evidence appendix added
+A public appendix was added to document the DeciRepo genesis artifact proof layer, including:
+
+- published identity values,
+- transition-chain evidence hashes,
+- public verification status,
+- and the evidence-bundle reference surface attached to `DR-GENESIS-0001`.
+
+Published reference:
+- `DECIREPO_GENESIS_EVIDENCE_LAYER_V0_1.md`
+
 ## 2026-03-09
 
 ### First external recomputation published

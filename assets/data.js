@@ -7,10 +7,10 @@
       registry_id: "decirepo.com",
       registry_pubkey: "drpk_6f4d39deci_local_root",
       verify_endpoint: "../api/verify.json",
-      conformance_report_endpoint: "../api/conformance-report",
+      conformance_report_endpoint: "../api/conformance-report.json",
       node_endpoint: "../.well-known/decirepo-node",
       manifest_endpoint: "../api/network/decirepo-node.json",
-      trust_score_endpoint: "../api/trust-score",
+      trust_score_endpoint: "../api/trust-score.json",
       conformance_profile: "decirepo-protocol-v0_1-mandatory",
       status: "active"
     },
@@ -20,7 +20,7 @@
       verify_endpoint: "../api/network/bank-registry/verify.json",
       node_endpoint: "../api/network/bank-registry/node.json",
       manifest_endpoint: "../api/network/bank-registry/node.json",
-      trust_score_endpoint: "../api/trust-score",
+      trust_score_endpoint: "../api/trust-score.json",
       status: "connected"
     },
     {
@@ -29,7 +29,7 @@
       verify_endpoint: "../api/network/municipal-registry/verify.json",
       node_endpoint: "../api/network/municipal-registry/node.json",
       manifest_endpoint: "../api/network/municipal-registry/node.json",
-      trust_score_endpoint: "../api/trust-score",
+      trust_score_endpoint: "../api/trust-score.json",
       status: "connected"
     }
   ];
@@ -72,7 +72,7 @@
       registry_pubkey: registry.registry_pubkey,
       verify_endpoint: registry.verify_endpoint,
       manifest_endpoint: registry.manifest_endpoint || registry.node_endpoint,
-      trust_score_endpoint: registry.trust_score_endpoint || "../api/trust-score",
+      trust_score_endpoint: registry.trust_score_endpoint || "../api/trust-score.json",
       status: registry.status
     }))
   };
@@ -266,10 +266,10 @@
     "decirepo.com": {
       registry_id: "decirepo.com",
       verify_endpoint: "../api/verify.json",
-      trust_endpoint: "../api/trust",
-      trust_score_endpoint: "../api/trust-score",
-      conformance_report_endpoint: "../api/conformance-report",
-      protocol_endpoint: "../api/protocol",
+      trust_endpoint: "../api/trust.json",
+      trust_score_endpoint: "../api/trust-score.json",
+      conformance_report_endpoint: "../api/conformance-report.json",
+      protocol_endpoint: "../api/protocol.json",
       protocol_version: "v0.1",
       conformance_profile: "decirepo-protocol-v0_1-mandatory",
       compatibility_badge: {
@@ -296,8 +296,8 @@
     "bank-registry.eu": {
       registry_id: "bank-registry.eu",
       verify_endpoint: "../api/network/bank-registry/verify.json",
-      trust_endpoint: "../api/trust",
-      trust_score_endpoint: "../api/trust-score",
+      trust_endpoint: "../api/trust.json",
+      trust_score_endpoint: "../api/trust-score.json",
       protocol_version: "v0.1",
       public_keys: [
         {
@@ -317,8 +317,8 @@
     "municipal-registry.gov": {
       registry_id: "municipal-registry.gov",
       verify_endpoint: "../api/network/municipal-registry/verify.json",
-      trust_endpoint: "../api/trust",
-      trust_score_endpoint: "../api/trust-score",
+      trust_endpoint: "../api/trust.json",
+      trust_score_endpoint: "../api/trust-score.json",
       protocol_version: "v0.1",
       public_keys: [
         {

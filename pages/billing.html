@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
-  <title>DeciRepo — Billing & Refund Policy</title>
+  <title>DeciRepo - Request Pilot</title>
   <link rel="stylesheet" href="../assets/styles.css" />
 </head>
 <body>
@@ -17,13 +17,19 @@
 
     <main class="page-protocol">
       <section class="title-block">
-        <h1 class="title-main">Billing & Refund Policy</h1>
-        <p class="title-sub">Commercial terms for paid DeciRepo services.</p>
+        <h1 class="title-main">Request Pilot</h1>
+        <p class="title-sub">Fixed-scope pilot entry for one workflow surface.</p>
       </section>
 
       <section class="panel after-title-gap">
         <h2 id="request-pilot" class="section-title">Current Commercial Mode</h2>
         <p class="section-subtitle section-wrap">DeciRepo currently operates in pilot-by-agreement mode. Public self-serve checkout is not enabled.</p>
+        <div class="kv-stack">
+          <div class="kv-line"><div class="kv-key">Unit</div><div class="kv-value">Workflow Boundary Pilot</div></div>
+          <div class="kv-line"><div class="kv-key">Scope</div><div class="kv-value">One workflow surface</div></div>
+          <div class="kv-line"><div class="kv-key">Window</div><div class="kv-value">Two to four weeks</div></div>
+          <div class="kv-line"><div class="kv-key">Pricing</div><div class="kv-value">Pricing on request, defined in proposal</div></div>
+        </div>
         <div class="button-row tight">
           <a class="btn btn-gold" href="mailto:info@indrasnet.ee?subject=DeciRepo%20Pilot%20Request">Request Pilot</a>
           <a class="btn" href="./about.html">Review Scope</a>
@@ -31,26 +37,46 @@
       </section>
 
       <section class="panel">
-        <h2 class="section-title">Billing</h2>
-        <p class="section-subtitle section-wrap">If paid services are enabled, invoices and charges are defined in the active order, proposal, or subscription terms.</p>
+        <h2 class="section-title">What the pilot includes</h2>
+        <div class="lineage-list">
+          <div class="lineage-item">One bounded pilot on one workflow surface</div>
+          <div class="lineage-item">A documented boundary result</div>
+          <div class="lineage-item">Boundary Decision Pack for internal review</div>
+          <div class="lineage-item">A next-step note: hold, remediate, re-run, or open a separate scoped intake</div>
+        </div>
       </section>
 
       <section class="panel">
-        <h2 class="section-title">Payment Processor</h2>
-        <p class="section-subtitle section-wrap">Online payments, when enabled, are processed by Stripe. Card and payment data are processed under Stripe's security and compliance controls.</p>
+        <h2 class="section-title">What we need before start</h2>
+        <div class="lineage-list">
+          <div class="lineage-item">One defined workflow surface</div>
+          <div class="lineage-item">One internal owner</div>
+          <div class="lineage-item">One current and concrete reason the pilot must run now</div>
+          <div class="lineage-item">A scoped input set defined before pilot start</div>
+        </div>
       </section>
 
       <section class="panel">
-        <h2 class="section-title">Refunds</h2>
+        <h2 class="section-title">What happens next</h2>
         <div class="kv-stack">
-          <div class="kv-line"><div class="kv-key">Default Rule</div><div class="kv-value">No automatic refund unless explicitly stated in a written service agreement.</div></div>
-          <div class="kv-line"><div class="kv-key">Service Failure</div><div class="kv-value">If a paid service is not delivered as contracted, support and remediation paths are provided first; refund decisions follow contractual terms.</div></div>
+          <div class="kv-line"><div class="kv-key">Step 1</div><div class="kv-value">Pilot request and first scoping call</div></div>
+          <div class="kv-line"><div class="kv-key">Step 2</div><div class="kv-value">Admission check for scope, owner, and access boundary</div></div>
+          <div class="kv-line"><div class="kv-key">Step 3</div><div class="kv-value">Bounded pilot start if the workflow surface is admissible</div></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Billing and refunds</h2>
+        <div class="kv-stack">
+          <div class="kv-line"><div class="kv-key">Commercial terms</div><div class="kv-value">Invoices and charges are defined in the active order or proposal.</div></div>
+          <div class="kv-line"><div class="kv-key">Refunds</div><div class="kv-value">No automatic refund unless explicitly stated in a written service agreement.</div></div>
+          <div class="kv-line"><div class="kv-key">Service failure</div><div class="kv-value">If a paid pilot is not delivered as contracted, remediation is handled first and any refund follows contractual terms.</div></div>
         </div>
       </section>
 
       <section class="panel">
         <h2 class="section-title">Contact</h2>
-        <p class="section-subtitle section-wrap">Billing inquiries: <a class="menu-link" href="mailto:info@indrasnet.ee">info@indrasnet.ee</a></p>
+        <p class="section-subtitle section-wrap">Pilot and billing inquiries: <a class="menu-link" href="mailto:info@indrasnet.ee">info@indrasnet.ee</a></p>
       </section>
     </main>
 
@@ -69,14 +95,14 @@
         <a class="menu-link" href="mailto:info@indrasnet.ee">Contact</a>
       </div>
       <div class="footer-legal">© 2026 IndrasNet OÜ</div>
-      <div class="footer-meta">IndrasNet Protocol Steward · Estonia</div>
-      <div class="footer-meta">DeciRepo Protocol v0.1</div>
+      <div class="footer-meta">Pilot-by-agreement mode</div>
+      <div class="footer-meta">Bounded workflow validation powered by DLX</div>
     </footer>
   </div>
 
   <script src="../components/header.js"></script>
   <script>
-    window.DeciRepoHeader.mount("header-root", "about");
+    window.DeciRepoHeader.mount("header-root", "request-pilot");
   </script>
 </body>
 </html>

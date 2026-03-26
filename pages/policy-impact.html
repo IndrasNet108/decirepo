@@ -105,8 +105,8 @@
         <a class="menu-link" href="mailto:info@indrasnet.ee">Contact</a>
       </div>
       <div class="footer-legal">© 2026 IndrasNet OÜ</div>
-      <div class="footer-meta">IndrasNet Protocol Steward · Estonia</div>
-      <div class="footer-meta">DeciRepo Protocol v0.1</div>
+      <div class="footer-meta">Pilot-by-agreement mode</div>
+      <div class="footer-meta">Technical policy simulation surface for bounded workflow review</div>
     </footer>
 
   </div>
@@ -116,16 +116,15 @@
   <script src="../components/context-nav.js"></script>
   <script src="../components/decision-block.js"></script>
   <script>
-    window.DeciRepoHeader.mount("header-root", "policy-impact");
+    window.DeciRepoHeader.mount("header-root", "proof");
     window.DeciRepoContextNav.mount("context-nav-root", {
       current: "Policy Impact",
       meta: "simulation",
-      hint: "Suggested next: run a simulation, then open a decision or compare a changed pair.",
+      hint: "Suggested next: run a simulation, then inspect a changed decision or return to proof.",
       links: [
-        { label: "Open Genesis", href: "./decision.html?id=DR-GENESIS-0001", primary: true },
-        { label: "Back to Repository", href: "./index.html" },
-        { label: "Feed", href: "./feed.html" },
-        { label: "Protocol", href: "./protocol.html" }
+        { label: "Back to Proof", href: "./proof.html", primary: true },
+        { label: "Request Pilot", href: "./billing.html#request-pilot" },
+        { label: "Back to Home", href: "./index.html" }
       ]
     });
 
@@ -279,20 +278,22 @@
     function bindActionButtons(selected) {
       if (!selected) return;
       const pair = window.DeciRepoData.getPairId(selected.decision.id);
+      const links = [
+        { label: pair ? "Compare Pair" : "Decision", href: pair ? `./diff.html?left=${encodeURIComponent(selected.decision.id)}&right=${encodeURIComponent(pair)}` : `./decision.html?id=${encodeURIComponent(selected.decision.id)}`, primary: true },
+        { label: "Verify", href: `./verify.html?q=${encodeURIComponent(visualId(selected.decision))}` },
+        { label: "Lineage", href: `./lineage.html?id=${encodeURIComponent(selected.decision.id)}` },
+        { label: "Back to Proof", href: "./proof.html" }
+      ];
+      if (pair) {
+        links.splice(1, 0, { label: "Decision", href: `./decision.html?id=${encodeURIComponent(selected.decision.id)}` });
+      }
       window.DeciRepoContextNav.mount("context-nav-root", {
         current: "Policy Impact",
         meta: selected.decision.id,
         hint: pair
           ? "Suggested next: compare the paired decision, then return to the decision record."
           : "Suggested next: return to the decision record or verify the artifact.",
-        links: [
-          { label: pair ? "Compare Pair" : "Back to Decision", href: pair ? `./diff.html?left=${encodeURIComponent(selected.decision.id)}&right=${encodeURIComponent(pair)}` : `./decision.html?id=${encodeURIComponent(selected.decision.id)}`, primary: true },
-          { label: "Decision", href: `./decision.html?id=${encodeURIComponent(selected.decision.id)}` },
-          { label: "Verify", href: `./verify.html?q=${encodeURIComponent(visualId(selected.decision))}` },
-          { label: "Lineage", href: `./lineage.html?id=${encodeURIComponent(selected.decision.id)}` },
-          { label: "Back to Repository", href: "./index.html" },
-          { label: "Feed", href: "./feed.html" }
-        ]
+        links
       });
       openDecisionButton.onclick = () => {
         window.location.href = `./decision.html?id=${encodeURIComponent(selected.decision.id)}`;

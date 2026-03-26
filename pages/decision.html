@@ -105,8 +105,8 @@
         <a class="menu-link" href="mailto:info@indrasnet.ee">Contact</a>
       </div>
       <div class="footer-legal">© 2026 IndrasNet OÜ</div>
-      <div class="footer-meta">IndrasNet Protocol Steward · Estonia</div>
-      <div class="footer-meta">DeciRepo Protocol v0.1</div>
+      <div class="footer-meta">Pilot-by-agreement mode</div>
+      <div class="footer-meta">Technical decision surface for bounded workflow review</div>
     </footer>
 
   </div>
@@ -116,7 +116,7 @@
   <script src="../components/context-nav.js"></script>
   <script src="../components/decision-block.js"></script>
   <script>
-    window.DeciRepoHeader.mount("header-root", "repository");
+    window.DeciRepoHeader.mount("header-root", "proof");
 
     const params = new URLSearchParams(window.location.search);
     const decisionId = params.get("id") || "DR-0001";
@@ -158,12 +158,10 @@
         hint: "Suggested next: verify the published artifact before inspecting lineage or policy impact.",
         links: [
           { label: "Verify Artifact", href: `./verify.html?q=${encodeURIComponent(verifyQuery)}`, primary: true },
-          { label: "Back to Repository", href: "./index.html" },
+          { label: "Back to Proof", href: "./proof.html" },
           { label: "Lineage", href: `./lineage.html?id=${encodeURIComponent(decision.id)}` },
           { label: "Policy Impact", href: `./policy-impact.html?id=${encodeURIComponent(decision.id)}` },
-          { label: "Compare", href: pairId ? `./diff.html?left=${encodeURIComponent(decision.id)}&right=${encodeURIComponent(pairId)}` : null },
-          { label: "Feed", href: "./feed.html" },
-          { label: "Protocol", href: "./protocol.html" }
+          { label: "Compare", href: pairId ? `./diff.html?left=${encodeURIComponent(decision.id)}&right=${encodeURIComponent(pairId)}` : null }
         ]
       });
     }

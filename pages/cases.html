@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
-  <title>DeciRepo — Public Challenge Cases</title>
+  <title>DeciRepo - Cases</title>
   <link rel="stylesheet" href="../assets/styles.css" />
 </head>
 <body>
@@ -17,63 +17,81 @@
 
     <main class="page-protocol">
       <section class="title-block">
-        <h1 class="title-main title-main-wrap cases-hero-main">The point where wording becomes binding or fails.</h1>
-        <p class="title-sub title-sub-wrap">Because one sentence can create liability.</p>
-        <div class="hero-lines">
-          <p class="hero-line">These are not examples.</p>
-          <p class="hero-line">These are moments where the reviewed version and the sent version became different positions.</p>
+        <h1 class="title-main">Three places where a workflow quietly changed its position.</h1>
+        <p class="title-sub title-sub-wrap">This page is for recognition, not theory. If one of these looks familiar, the next step is a bounded pilot.</p>
+      </section>
+
+      <section class="panel after-title-gap">
+        <h2 class="section-title">Case 01 - Commercial approval drift</h2>
+        <div class="kv-stack">
+          <div class="kv-line">
+            <div class="kv-key">What was expected</div>
+            <div class="kv-value">The team would confirm scope only after internal approval.</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">What happened</div>
+            <div class="kv-value">Outbound wording moved from review language to commitment language before approval was complete.</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Where the boundary failed</div>
+            <div class="kv-value">The workflow did not hold reviewed wording and sent wording to the same approval boundary.</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Why it mattered</div>
+            <div class="kv-value">The company took on a delivery position it had not actually cleared.</div>
+          </div>
         </div>
       </section>
 
-      <section class="content-grid cases-stack after-title-gap">
-        <section class="panel">
-          <h2 class="section-title">Case 01 · Legal Outbound Drift</h2>
-          <pre class="code-block">Reviewed:
-"We are reviewing the incident and will respond after completing our internal assessment. All rights are reserved."
-
-Sent:
-"We confirm the incident falls under our responsibility and will arrange settlement after receiving the supporting documents."</pre>
-          <div class="case-trap-line">
-            <div class="case-trap-text">&rarr; This is where liability was created.</div>
+      <section class="panel">
+        <h2 class="section-title">Case 02 - Remediation promise drift</h2>
+        <div class="kv-stack">
+          <div class="kv-line">
+            <div class="kv-key">What was expected</div>
+            <div class="kv-value">The response would acknowledge receipt and hold the line until review finished.</div>
           </div>
-          <p class="section-subtitle section-wrap">The reviewed version was neutral. The outbound version created both an admission and a commitment.</p>
-        </section>
-
-        <section class="panel">
-          <h2 class="section-title">Case 02 · Commercial Commitment Drift</h2>
-          <pre class="code-block">Reviewed:
-"We are still evaluating the scope and will confirm once internal alignment is complete."
-
-Sent:
-"We are aligned and will proceed with the agreed scope and timeline."</pre>
-          <div class="case-trap-line">
-            <div class="case-trap-text">&rarr; This is where commitment was created before execution.</div>
+          <div class="kv-line">
+            <div class="kv-key">What happened</div>
+            <div class="kv-value">The sent message turned acknowledgment into a promise to resolve and settle.</div>
           </div>
-          <p class="section-subtitle section-wrap">Negotiation was still open. The outbound message closed it.</p>
-        </section>
-
-        <section class="panel">
-          <h2 class="section-title">Case 03 · Outbound Position Drift</h2>
-          <pre class="code-block">Reviewed:
-"We acknowledge receipt of your request and will revert after internal review."
-
-Sent:
-"We will proceed with settlement upon receiving the required documentation."</pre>
-          <div class="case-trap-line">
-            <div class="case-trap-text">&rarr; This is where the company took a position it never approved.</div>
+          <div class="kv-line">
+            <div class="kv-key">Where the boundary failed</div>
+            <div class="kv-value">The workflow allowed a stronger external position than the reviewed internal position.</div>
           </div>
-          <p class="section-subtitle section-wrap">Acknowledgment turned into commitment. No formal approval ever happened.</p>
-        </section>
+          <div class="kv-line">
+            <div class="kv-key">Why it mattered</div>
+            <div class="kv-value">A temporary response became an operational commitment with real cost and expectation.</div>
+          </div>
+        </div>
       </section>
 
       <section class="panel">
-        <h2 class="section-title">Before It Is Sent</h2>
-        <p class="section-subtitle section-wrap">Before a message is sent, it becomes a position.</p>
-        <p class="section-subtitle section-wrap">If the reviewed version and the outbound wording are not the same position, the transition should not proceed.</p>
+        <h2 class="section-title">Case 03 - Exception handling drift</h2>
+        <div class="kv-stack">
+          <div class="kv-line">
+            <div class="kv-key">What was expected</div>
+            <div class="kv-value">A special-case request would be held until the named approver signed off.</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">What happened</div>
+            <div class="kv-value">The exception moved forward because the workflow treated partial review as if it were final approval.</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Where the boundary failed</div>
+            <div class="kv-value">The workflow could not reliably separate review state from approved state at the point of execution.</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Why it mattered</div>
+            <div class="kv-value">A one-off exception became a real precedent without a clearly authorized decision.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Next step</h2>
+        <p class="section-subtitle section-wrap">If one of these patterns maps to a real workflow you own, start with one bounded pilot on that surface.</p>
         <div class="button-row tight">
-          <a class="btn btn-gold" href="mailto:info@indrasnet.ee?subject=DeciRepo%20Case%20Challenge">Request a case review</a>
-          <a class="btn" href="./about.html">About DeciRepo</a>
-          <a class="btn" href="./protocol.html">Protocol</a>
+          <a class="btn btn-gold" href="./billing.html#request-pilot">Request Pilot</a>
         </div>
       </section>
     </main>
@@ -93,10 +111,9 @@ Sent:
         <a class="menu-link" href="mailto:info@indrasnet.ee">Contact</a>
       </div>
       <div class="footer-legal">© 2026 IndrasNet OÜ</div>
-      <div class="footer-meta">IndrasNet Protocol Steward · Estonia</div>
-      <div class="footer-meta">DeciRepo Protocol v0.1</div>
+      <div class="footer-meta">Pilot-by-agreement mode</div>
+      <div class="footer-meta">Recognition cases for bounded workflow review</div>
     </footer>
-
   </div>
 
   <script src="../components/header.js"></script>

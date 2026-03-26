@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <title>DeciRepo - Proof</title>
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="header-root"></div>
+
+    <main class="page-protocol">
+      <section class="title-block">
+        <h1 class="title-main">Why this pilot is reviewable.</h1>
+        <p class="title-sub title-sub-wrap">This page does not try to prove everything. It explains what is checked, what is not checked, what the pilot produces, and why the output can be reviewed.</p>
+        <div class="button-row tight">
+          <a class="btn btn-gold" href="./billing.html#request-pilot">Request Pilot</a>
+          <a class="btn" href="./about.html">Review Scope</a>
+        </div>
+      </section>
+
+      <section class="panel after-title-gap">
+        <h2 class="section-title">What is checked</h2>
+        <div class="lineage-list">
+          <div class="lineage-item">One defined workflow surface</div>
+          <div class="lineage-item">One explicit approval boundary</div>
+          <div class="lineage-item">Whether reviewed wording and outbound wording can diverge at commit</div>
+          <div class="lineage-item">Whether the result can be documented against scoped inputs</div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">What is not checked</h2>
+        <div class="lineage-list">
+          <div class="lineage-item">Not legal advice</div>
+          <div class="lineage-item">Not policy approval</div>
+          <div class="lineage-item">Not broad implementation work</div>
+          <div class="lineage-item">Not an open-ended investigation across the organization</div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">What the pilot produces</h2>
+        <div class="lineage-list">
+          <div class="lineage-item">Boundary Decision Pack</div>
+          <div class="lineage-item">Executive Pilot Summary</div>
+          <div class="lineage-item">Workflow Boundary Report</div>
+          <div class="lineage-item">Evidence Appendix</div>
+        </div>
+        <p class="section-subtitle section-wrap">The output is structured to support internal review and next-step discussion. It does not become decision authority by itself.</p>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Why the output is reviewable</h2>
+        <div class="kv-stack">
+          <div class="kv-line">
+            <div class="kv-key">Defined inputs</div>
+            <div class="kv-value">The pilot starts from a scoped input set fixed before work begins.</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Reproducible path</div>
+            <div class="kv-value">The validation path is bounded and repeatable for the same scoped surface.</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Structured evidence</div>
+            <div class="kv-value">The result is delivered as a documented package instead of a verbal impression.</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Decision boundary</div>
+            <div class="kv-value">Internal owners still interpret and decide. The pilot does not take their authority.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Technical surfaces</h2>
+        <p class="section-subtitle section-wrap">These routes are for deeper technical review after first-contact. They are not the primary entry path for the pilot.</p>
+        <div class="button-row tight">
+          <a class="btn" href="./verify.html">Verify</a>
+          <a class="btn" href="./lineage.html">Lineage</a>
+          <a class="btn" href="./policy-impact.html">Policy Impact</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-brand">DeciRepo</div>
+      <div class="footer-description">Decision infrastructure powered by DLX</div>
+      <div class="footer-engine">
+        <img class="footer-dlx-logo" src="../assets/brand/dlx-logo.png" alt="DLX logo" />
+        <div class="footer-engine-text">DLX deterministic engine</div>
+      </div>
+      <div class="footer-links">
+        <a class="menu-link" href="./privacy.html">Privacy Policy</a>
+        <a class="menu-link" href="./terms.html">Terms of Use</a>
+        <a class="menu-link" href="./disclaimer.html">Disclaimer</a>
+        <a class="menu-link" href="./billing.html">Billing & Refunds</a>
+        <a class="menu-link" href="mailto:info@indrasnet.ee">Contact</a>
+      </div>
+      <div class="footer-legal">© 2026 IndrasNet OÜ</div>
+      <div class="footer-meta">Pilot-by-agreement mode</div>
+      <div class="footer-meta">Minimal public proof layer for bounded workflow review</div>
+    </footer>
+  </div>
+
+  <script src="../components/header.js"></script>
+  <script>
+    window.DeciRepoHeader.mount("header-root", "proof");
+  </script>
+</body>
+</html>

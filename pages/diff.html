@@ -47,8 +47,8 @@
         <a class="menu-link" href="mailto:info@indrasnet.ee">Contact</a>
       </div>
       <div class="footer-legal">© 2026 IndrasNet OÜ</div>
-      <div class="footer-meta">IndrasNet Protocol Steward · Estonia</div>
-      <div class="footer-meta">DeciRepo Protocol v0.1</div>
+      <div class="footer-meta">Pilot-by-agreement mode</div>
+      <div class="footer-meta">Technical comparison surface for bounded workflow review</div>
     </footer>
 
   </div>
@@ -58,7 +58,7 @@
   <script src="../components/context-nav.js"></script>
   <script src="../components/diff-view.js"></script>
   <script>
-    window.DeciRepoHeader.mount("header-root", "repository");
+    window.DeciRepoHeader.mount("header-root", "proof");
 
     const params = new URLSearchParams(window.location.search);
     const leftId = params.get("left") || "DR-0001";
@@ -75,9 +75,7 @@
       links: [
         { label: "Open Left Decision", href: `./decision.html?id=${encodeURIComponent(leftId)}`, primary: true },
         { label: "Open Right Decision", href: `./decision.html?id=${encodeURIComponent(rightId)}` },
-        { label: "Back to Repository", href: "./index.html" },
-        { label: "Feed", href: "./feed.html" },
-        { label: "Protocol", href: "./protocol.html" }
+        { label: "Back to Proof", href: "./proof.html" }
       ]
     });
 

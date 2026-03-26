@@ -140,7 +140,7 @@
     ];
 
     document.getElementById("decision-header-lines").innerHTML = headerRows
-      .map(([label, value]) => `<div class="decision-header-line"><span class="label">${label}:</span>${value}</div>`)
+      .map(([label, value]) => `<div class="decision-header-line"><span class="label">${label}:</span><span class="value">${value}</span></div>`)
       .join("");
 
     function compactObject(obj) {

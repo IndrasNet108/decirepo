@@ -13,7 +13,7 @@
       <header class="site-header">
         <div class="brand-stack">
           <div class="brand-top">
-            <img class="brand-logo-dr" src="/assets/brand/dr-logo-header.png" alt="DeciRepo logo" />
+            <img class="brand-logo-dr" src="/assets/brand/dr-logo-header.png" alt="DeciRepo logo" width="43" height="40" />
             <span class="brand-registry">DeciRepo</span>
           </div>
         <div class="brand-subline">

@@ -43,6 +43,12 @@ a {
   gap: 28px;
 }
 
+#header-root {
+  min-height: 93px;
+  display: grid;
+  align-content: start;
+}
+
 .site-header {
   min-height: 72px;
   padding: 10px 0;
@@ -78,6 +84,8 @@ a {
   height: 28px;
   width: auto;
   display: block;
+  aspect-ratio: 43 / 40;
+  flex: 0 0 auto;
 }
 
 .brand-registry {
@@ -1315,12 +1323,15 @@ a {
   grid-auto-columns: max-content;
   gap: 10px;
   align-items: center;
+  min-height: 30px;
 }
 
 .footer-dlx-logo {
+  width: 30px;
   height: 30px;
-  width: auto;
   display: block;
+  object-fit: contain;
+  flex: 0 0 30px;
 }
 
 .footer-engine-text {
@@ -1520,6 +1531,10 @@ a {
   .page-shell {
     padding: 0 14px 28px;
     gap: 18px;
+  }
+
+  #header-root {
+    min-height: 126px;
   }
 
   .site-header {

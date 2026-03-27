@@ -19,13 +19,13 @@
     <main class="page-verify">
       <section class="verify-shell">
         <section class="panel verify-panel">
-          <div class="hero-line">Verification surface</div>
-          <h1 class="section-title">Verify Decision Artifact</h1>
+          <div class="hero-line">After the boundary risk is already clear</div>
+          <h1 class="section-title">Check whether a published record actually matches what was reviewed.</h1>
           <p class="section-subtitle title-sub-wrap verify-panel-intro">
-            Enter a canonical short hash, a decision id, or a full artifact hash.
+            Use this page after the workflow problem is already understood. It helps confirm whether a published record matches the documented artifact instead of asking a team to trust the surface description.
           </p>
           <p class="verify-inline-help">
-            Need a published identifier first? Use the repository block below and click a row to autofill verification.
+            Start from a published record below if you do not already have an identifier. The goal here is not to discover the problem. It is to confirm the recorded result.
           </p>
           <div class="verify-input-row">
             <input id="verify-input" class="verify-input" type="text" placeholder="Enter ◢HASH, DR-0001, or full artifact hash" />
@@ -42,10 +42,10 @@
         </section>
 
         <section id="verify-published-records" class="panel verify-repository-panel">
-          <div class="hero-line">Repository</div>
+          <div class="hero-line">Choose a documented record</div>
           <h2 class="section-title">Published Records</h2>
           <p class="section-subtitle title-sub-wrap">
-            Click any published decision below to reuse its canonical short hash in the verifier.
+            Click a record to reuse its short hash in the verifier and check whether the published artifact still matches the documented result.
           </p>
           <div id="verify-repo-root" class="verify-repo-root"></div>
         </section>

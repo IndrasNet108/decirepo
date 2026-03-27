@@ -18,8 +18,9 @@
 
     <main class="page-policy-impact">
       <section class="panel">
+        <div class="hero-line">Use this after the boundary and record are already understood</div>
         <h1 class="section-title">Policy Impact Simulation</h1>
-        <p class="section-subtitle">What changes if policy execution rules are updated.</p>
+        <p class="section-subtitle section-wrap">This page shows how a documented decision outcome would change if execution rules changed. It is not the place to discover the problem. It is where a known boundary question becomes comparable.</p>
         <div class="policy-controls">
           <label class="feed-field">
             <span class="feed-label">Baseline policy</span>
@@ -120,7 +121,7 @@
     window.DeciRepoContextNav.mount("context-nav-root", {
       current: "Policy Impact",
       meta: "simulation",
-      hint: "Suggested next: run a simulation, then inspect a changed decision or return to proof.",
+      hint: "Suggested next: run a simulation only after the workflow risk is already clear, then inspect a changed decision or return to proof.",
       links: [
         { label: "Back to Proof", href: "./proof.html", primary: true },
         { label: "Request Pilot", href: "./billing.html#request-pilot" },

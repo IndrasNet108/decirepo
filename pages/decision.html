@@ -18,8 +18,10 @@
 
     <main class="page-decision">
       <section class="panel">
+        <div class="hero-line">Use this after the workflow risk is already identified</div>
         <h1 class="section-title" id="decision-title">Decision</h1>
         <p class="section-subtitle" id="decision-subtitle">Decision Title</p>
+        <p class="section-subtitle section-wrap">This page shows the documented record behind a boundary review result. It is for inspection and traceability, not for explaining the problem from scratch.</p>
         <div id="decision-dlx-chip" class="dlx-chip">DLX validated</div>
         <div class="decision-header-lines" id="decision-header-lines"></div>
       </section>
@@ -155,7 +157,7 @@
       window.DeciRepoContextNav.mount("context-nav-root", {
         current: "Decision",
         meta: decision.id,
-        hint: "Suggested next: verify the published artifact before inspecting lineage or policy impact.",
+        hint: "Suggested next: confirm the published artifact, then inspect lineage or policy impact only if the boundary question is already clear.",
         links: [
           { label: "Verify Artifact", href: `./verify.html?q=${encodeURIComponent(verifyQuery)}`, primary: true },
           { label: "Back to Proof", href: "./proof.html" },

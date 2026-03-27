@@ -18,8 +18,10 @@
 
     <main class="page-lineage">
       <section class="panel">
+        <div class="hero-line">Use this after the boundary question is already understood</div>
         <h1 id="lineage-decision-title" class="section-title">Decision ◢......</h1>
         <p id="lineage-decision-subtitle" class="section-subtitle">Select a decision to inspect its lineage.</p>
+        <p class="section-subtitle section-wrap">This page helps trace how one documented result connects to earlier and later decisions. It is a traceability surface, not the first explanation of why the pilot exists.</p>
         <div id="lineage-decision-meta" class="decision-header-lines"></div>
         <div class="button-row tight">
           <button id="lineage-verify" class="btn btn-gold" type="button">Verify</button>
@@ -195,7 +197,7 @@
       window.DeciRepoContextNav.mount("context-nav-root", {
         current: "Lineage",
         meta: decision.id,
-        hint: "Suggested next: inspect policy impact, then compare or verify the current decision if needed.",
+        hint: "Suggested next: inspect policy impact only if the workflow risk is already clear, then compare or verify the current decision if needed.",
         links: [
           { label: "Policy Impact", href: `./policy-impact.html?id=${encodeURIComponent(decision.id)}`, primary: true },
           { label: "Decision", href: `./decision.html?id=${encodeURIComponent(decision.id)}` },

@@ -13,7 +13,7 @@
       <header class="site-header">
         <div class="brand-stack">
           <div class="brand-top">
-            <img class="brand-logo-dr" src="../assets/brand/dr-logo-header.png" alt="DeciRepo logo" />
+            <img class="brand-logo-dr" src="/assets/brand/dr-logo-header.png" alt="DeciRepo logo" />
             <span class="brand-registry">DeciRepo</span>
           </div>
         <div class="brand-subline">
@@ -21,11 +21,11 @@
         </div>
         </div>
         <nav class="header-menu" aria-label="Primary">
-          ${item("Home", "./index.html", activeItem === "repository" || activeItem === "home")}
-          ${item("About", "./about.html", activeItem === "about")}
-          ${item("Cases", "./cases.html", activeItem === "cases")}
-          ${item("Proof", "./proof.html", activeItem === "proof")}
-          ${item("Request Pilot", "./billing.html#request-pilot", activeItem === "request-pilot" || activeItem === "billing")}
+          ${item("Home", "/", activeItem === "repository" || activeItem === "home")}
+          ${item("About", "/pages/about.html", activeItem === "about")}
+          ${item("Cases", "/pages/cases.html", activeItem === "cases")}
+          ${item("Proof", "/pages/proof.html", activeItem === "proof")}
+          ${item("Request Pilot", "/pages/billing.html#request-pilot", activeItem === "request-pilot" || activeItem === "billing")}
         </nav>
       </header>
       <div class="header-divider"></div>

@@ -2,16 +2,104 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0; url=./pages/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
-  <title>DeciRepo</title>
+  <title>DeciRepo - Bounded Workflow Validation</title>
+  <meta name="description" content="DeciRepo runs a bounded pilot on one workflow surface to make approval boundaries explicit before they are relied on." />
+  <link rel="canonical" href="https://decirepo.com/" />
+  <meta property="og:title" content="DeciRepo - Bounded workflow validation" />
+  <meta property="og:description" content="One workflow surface. One explicit boundary. One reviewable result." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://decirepo.com/" />
+  <meta property="og:image" content="https://decirepo.com/android-chrome-512x512.png" />
+  <meta property="og:site_name" content="DeciRepo" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="DeciRepo - Bounded workflow validation" />
+  <meta name="twitter:description" content="One workflow surface. One explicit boundary. One reviewable result." />
+  <meta name="twitter:image" content="https://decirepo.com/android-chrome-512x512.png" />
+  <link rel="stylesheet" href="/assets/styles.css" />
 </head>
-<body style="margin:0;background:#0f0f10;color:#f5f5f5;font-family:Inter,Arial,sans-serif;display:grid;place-items:center;min-height:100vh;">
-  <p>Redirecting to <a href="./pages/index.html" style="color:#d4af37;">DeciRepo Repository</a>…</p>
+<body>
+  <div class="page-shell">
+    <div id="header-root"></div>
+
+    <main class="page-index">
+      <section class="title-block">
+        <h1 class="title-main">Bounded workflow validation for approval boundaries.</h1>
+        <p class="title-sub title-sub-wrap">DeciRepo runs a fixed-scope pilot on one workflow surface so a boundary can be checked before a team relies on it.</p>
+      </section>
+
+      <section class="panel index-hero-panel after-title-gap">
+        <h2 class="section-title">Start from the bounded surface</h2>
+        <div class="hero-lines">
+          <p class="hero-line">One workflow surface.</p>
+          <p class="hero-line">One explicit approval boundary.</p>
+          <p class="hero-line">One reviewable output for internal decision-making.</p>
+        </div>
+        <div class="button-row tight">
+          <a class="btn btn-gold" href="/pages/billing.html#request-pilot">Request Pilot</a>
+          <a class="btn" href="/pages/cases.html">See Cases</a>
+          <a class="btn" href="/pages/proof.html">Review Proof</a>
+        </div>
+      </section>
+
+      <section class="content-grid">
+        <section class="panel">
+          <h2 class="section-title">What this checks</h2>
+          <div class="kv-stack">
+            <div class="kv-line">
+              <div class="kv-key">Boundary</div>
+              <div class="kv-value">Whether a workflow can create a position outside the intended approval boundary.</div>
+            </div>
+            <div class="kv-line">
+              <div class="kv-key">Drift</div>
+              <div class="kv-value">Whether reviewed wording and outbound wording can diverge before approval is complete.</div>
+            </div>
+            <div class="kv-line">
+              <div class="kv-key">Result</div>
+              <div class="kv-value">Whether the outcome can be documented for review without reconstructing the process from scratch.</div>
+            </div>
+          </div>
+        </section>
+
+        <aside class="panel">
+          <h2 class="section-title">Current mode</h2>
+          <div class="lineage-list">
+            <div class="lineage-item">pilot-by-agreement</div>
+            <div class="lineage-item">bounded to one workflow surface</div>
+            <div class="lineage-item">internal decision authority stays internal</div>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-brand">DeciRepo</div>
+      <div class="footer-description">Decision infrastructure powered by DLX</div>
+      <div class="footer-engine">
+        <img class="footer-dlx-logo" src="/assets/brand/dlx-logo.png" alt="DLX logo" />
+        <div class="footer-engine-text">DLX deterministic engine</div>
+      </div>
+      <div class="footer-links">
+        <a class="menu-link" href="/pages/privacy.html">Privacy Policy</a>
+        <a class="menu-link" href="/pages/terms.html">Terms of Use</a>
+        <a class="menu-link" href="/pages/disclaimer.html">Disclaimer</a>
+        <a class="menu-link" href="/pages/billing.html">Billing & Refunds</a>
+        <a class="menu-link" href="mailto:info@indrasnet.ee">Contact</a>
+      </div>
+      <div class="footer-legal">© 2026 <a class="footer-legal-link" href="https://indrasnet.ee">IndrasNet OÜ</a></div>
+      <div class="footer-meta">Pilot-by-agreement mode</div>
+      <div class="footer-meta">Bounded workflow validation for explicit approval boundaries</div>
+    </footer>
+  </div>
+
+  <script src="/components/header.js"></script>
+  <script>
+    window.DeciRepoHeader.mount("header-root", "home");
+  </script>
 </body>
 </html>

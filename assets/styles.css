@@ -1291,6 +1291,18 @@ a {
   letter-spacing: 0.03em;
 }
 
+.footer-legal-link,
+.footer-legal-link:visited {
+  color: #8790a0;
+  text-decoration: none;
+}
+
+.footer-legal-link:hover,
+.footer-legal-link:focus-visible {
+  color: var(--text-white);
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.22);
+}
+
 .footer-meta {
   color: #7f8796;
   font-size: 12px;

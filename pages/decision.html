@@ -97,7 +97,7 @@
       <div class="footer-description">Decision infrastructure powered by DLX</div>
       <div class="footer-engine">
         <img class="footer-dlx-logo" src="../assets/brand/dlx-logo-footer.png" alt="DLX logo" width="60" height="60" />
-        <div class="footer-engine-text">DLX deterministic engine</div>
+        <div class="footer-engine-text">DLX execution admissibility</div>
       </div>
       <div class="footer-links">
         <a class="menu-link" href="./privacy.html">Privacy Policy</a>
@@ -119,6 +119,7 @@
   <script src="../components/decision-block.js"></script>
   <script>
     window.DeciRepoHeader.mount("header-root", "proof");
+    const esc = window.DeciRepoDecisionBlock.escapeHtml;
 
     const params = new URLSearchParams(window.location.search);
     const decisionId = params.get("id") || "DR-0001";
@@ -142,7 +143,7 @@
     ];
 
     document.getElementById("decision-header-lines").innerHTML = headerRows
-      .map(([label, value]) => `<div class="decision-header-line"><span class="label">${label}:</span><span class="value">${value}</span></div>`)
+      .map(([label, value]) => `<div class="decision-header-line"><span class="label">${esc(label)}:</span><span class="value">${esc(value)}</span></div>`)
       .join("");
 
     function compactObject(obj) {
@@ -211,12 +212,12 @@
           container.innerHTML = `<div class="lineage-item muted">No structured explanation available for this specific decision.</div>`;
           return;
         }
-        
+
         container.innerHTML = `
           <div class="kv-stack">
-            <div class="kv-line"><div class="kv-key">Policy Context</div><div class="kv-value">${explanation.policy_context.policy_family} (${explanation.policy_context.policy_version})</div></div>
-            <div class="kv-line"><div class="kv-key">Explanation Basis</div><div class="kv-value">${explanation.explanation_basis.join(", ")}</div></div>
-            <div class="kv-line"><div class="kv-key">Outcome Type</div><div class="kv-value">${explanation.decision_outcome.exception_type}</div></div>
+            <div class="kv-line"><div class="kv-key">Policy Context</div><div class="kv-value">${esc(explanation.policy_context.policy_family)} (${esc(explanation.policy_context.policy_version)})</div></div>
+            <div class="kv-line"><div class="kv-key">Explanation Basis</div><div class="kv-value">${esc(explanation.explanation_basis.join(", "))}</div></div>
+            <div class="kv-line"><div class="kv-key">Outcome Type</div><div class="kv-value">${esc(explanation.decision_outcome.exception_type)}</div></div>
           </div>
           <div class="button-row tight">
             <a class="btn small" href="../api/decision-explanation.json" target="_blank" rel="noopener noreferrer">Open Explanation</a>
@@ -242,12 +243,12 @@
 
         container.innerHTML = data.divergent_decisions.map(d => `
           <div class="kv-stack">
-            <div class="kv-line"><div class="kv-key">Divergent Decision</div><div class="kv-value mono">${d.decision_id}</div></div>
-            <div class="kv-line"><div class="kv-key">Matching Dimensions</div><div class="kv-value">${d.matching_dimensions.join(", ")}</div></div>
-            <div class="kv-line"><div class="kv-key">Outcome Diff</div><div class="kv-value"><span class="outcome-approved">${d.outcome_difference.reference_outcome}</span> vs <span class="outcome-rejected">${d.outcome_difference.divergent_outcome}</span></div></div>
+            <div class="kv-line"><div class="kv-key">Divergent Decision</div><div class="kv-value mono">${esc(d.decision_id)}</div></div>
+            <div class="kv-line"><div class="kv-key">Matching Dimensions</div><div class="kv-value">${esc(d.matching_dimensions.join(", "))}</div></div>
+            <div class="kv-line"><div class="kv-key">Outcome Diff</div><div class="kv-value"><span class="outcome-approved">${esc(d.outcome_difference.reference_outcome)}</span> vs <span class="outcome-rejected">${esc(d.outcome_difference.divergent_outcome)}</span></div></div>
           </div>
           <div class="button-row tight">
-            <a class="btn small" href="./diff.html?left=${currentId}&right=${d.decision_id}">Compare Divergence</a>
+            <a class="btn small" href="./diff.html?left=${encodeURIComponent(currentId)}&right=${encodeURIComponent(d.decision_id)}">Compare Divergence</a>
           </div>
         `).join("");
       } catch (e) {
@@ -271,9 +272,9 @@
 
         container.innerHTML = `
           <div class="kv-stack">
-            <div class="kv-line"><div class="kv-key">Investigation ID</div><div class="kv-value mono">${data.report_id}</div></div>
-            <div class="kv-line"><div class="kv-key">Basis</div><div class="kv-value">${data.investigation_basis.join(", ")}</div></div>
-            <div class="kv-line"><div class="kv-key">Divergent Cases</div><div class="kv-value mono">${data.divergent_decisions.length}</div></div>
+            <div class="kv-line"><div class="kv-key">Investigation ID</div><div class="kv-value mono">${esc(data.report_id)}</div></div>
+            <div class="kv-line"><div class="kv-key">Basis</div><div class="kv-value">${esc(data.investigation_basis.join(", "))}</div></div>
+            <div class="kv-line"><div class="kv-key">Divergent Cases</div><div class="kv-value mono">${esc(data.divergent_decisions.length)}</div></div>
           </div>
           <div class="button-row tight">
             <a class="btn small" href="../api/divergence-investigation-report.json" target="_blank" rel="noopener noreferrer">View Full Investigation</a>
@@ -299,16 +300,16 @@
         
         container.innerHTML = `
           <div class="kv-stack">
-            <div class="kv-line"><div class="kv-key">Precedent Report</div><div class="kv-value mono">${report.report_id}</div></div>
-            <div class="kv-line"><div class="kv-key">Selected Precedent</div><div class="kv-value mono">${report.selected_precedent}</div></div>
-            <div class="kv-line"><div class="kv-key">Match Basis</div><div class="kv-value">${report.match_basis.join(", ")}</div></div>
-            <div class="kv-line"><div class="kv-key">Summary</div><div class="kv-value">Total: ${report.result_summary.total_precedents} (Approved: ${report.result_summary.approved}, Rejected: ${report.result_summary.rejected})</div></div>
+            <div class="kv-line"><div class="kv-key">Precedent Report</div><div class="kv-value mono">${esc(report.report_id)}</div></div>
+            <div class="kv-line"><div class="kv-key">Selected Precedent</div><div class="kv-value mono">${esc(report.selected_precedent)}</div></div>
+            <div class="kv-line"><div class="kv-key">Match Basis</div><div class="kv-value">${esc(report.match_basis.join(", "))}</div></div>
+            <div class="kv-line"><div class="kv-key">Summary</div><div class="kv-value">Total: ${esc(report.result_summary.total_precedents)} (Approved: ${esc(report.result_summary.approved)}, Rejected: ${esc(report.result_summary.rejected)})</div></div>
           </div>
           <div class="button-row tight">
             <a class="btn small" href="../api/precedent-search-report.json" target="_blank" rel="noopener noreferrer">Open Report</a>
-            <a class="btn small" href="./diff.html?left=${decisionId}&right=${report.selected_precedent}">Compare</a>
+            <a class="btn small" href="./diff.html?left=${encodeURIComponent(decisionId)}&right=${encodeURIComponent(report.selected_precedent)}">Compare</a>
             <a class="btn small" href="./verify.html?q=${encodeURIComponent(report.selected_precedent)}">Verify</a>
-            <a class="btn small" href="./lineage.html?id=${report.selected_precedent}">Open Lineage</a>
+            <a class="btn small" href="./lineage.html?id=${encodeURIComponent(report.selected_precedent)}">Open Lineage</a>
           </div>
         `;
       } catch (e) {

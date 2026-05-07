@@ -26,7 +26,7 @@
             <span class="brand-registry">DeciRepo</span>
           </div>
         <div class="brand-subline">
-          <span class="brand-sub">Powered by DLX deterministic engine</span>
+          <span class="brand-sub">Powered by DLX execution admissibility</span>
         </div>
         </div>
         <nav class="header-menu" aria-label="Primary">
@@ -35,6 +35,7 @@
           ${item("Cases", "/pages/cases.html", activeItem === "cases")}
           ${item("Proof", "/pages/proof.html", activeItem === "proof")}
           ${item("Verification", "/pages/verification.html", activeItem === "verification")}
+          ${item("Canon", "/pages/canon.html", activeItem === "canon")}
           ${item("Request Pilot", "/pages/billing.html#request-pilot", activeItem === "request-pilot" || activeItem === "billing")}
         </nav>
       </header>

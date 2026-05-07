@@ -1,4 +1,13 @@
 (function () {
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
   function changed(left, right) {
     return String(left) !== String(right);
   }
@@ -7,10 +16,10 @@
     const glow = changed(leftValue, rightValue) ? "changed" : "";
     return `
       <div class="diff-row ${glow}">
-        <div class="diff-key">${key}</div>
-        <div class="diff-left">${leftValue}</div>
+        <div class="diff-key">${escapeHtml(key)}</div>
+        <div class="diff-left">${escapeHtml(leftValue)}</div>
         <div class="diff-arrow">→</div>
-        <div class="diff-right">${rightValue}</div>
+        <div class="diff-right">${escapeHtml(rightValue)}</div>
       </div>
     `;
   }
@@ -23,12 +32,12 @@
       <section class="panel diff-panel">
         <div class="diff-head-grid">
           <div class="diff-head-card">
-            <div>${left.canonical_id || left.id}</div>
-            <div class="diff-head-sub">${left.id}</div>
+            <div>${escapeHtml(left.canonical_id || left.id)}</div>
+            <div class="diff-head-sub">${escapeHtml(left.id)}</div>
           </div>
           <div class="diff-head-card">
-            <div>${right.canonical_id || right.id}</div>
-            <div class="diff-head-sub">${right.id}</div>
+            <div>${escapeHtml(right.canonical_id || right.id)}</div>
+            <div class="diff-head-sub">${escapeHtml(right.id)}</div>
           </div>
         </div>
 

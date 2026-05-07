@@ -1,4 +1,13 @@
 (function () {
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
   function toRows(obj) {
     return Object.entries(obj || {}).map(([k, v]) => ({ key: k, value: String(v) }));
   }
@@ -10,8 +19,8 @@
           .map(
             (r) => `
           <div class="kv-item">
-            <div class="kv-key">${r.key}</div>
-            <div class="kv-value">${r.value}</div>
+            <div class="kv-key">${escapeHtml(r.key)}</div>
+            <div class="kv-value">${escapeHtml(r.value)}</div>
           </div>
         `
           )
@@ -28,8 +37,8 @@
           .map(
             (r) => `
           <div class="kv-line">
-            <div class="kv-key">${r.key}</div>
-            <div class="kv-value ${mono.has(r.key) ? "mono" : ""}">${r.value}</div>
+            <div class="kv-key">${escapeHtml(r.key)}</div>
+            <div class="kv-value ${mono.has(r.key) ? "mono" : ""}">${escapeHtml(r.value)}</div>
           </div>
         `
           )
@@ -40,6 +49,7 @@
 
   window.DeciRepoDecisionBlock = {
     toRows,
+    escapeHtml,
     renderTwoColumnGrid,
     renderStack
   };

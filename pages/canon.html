@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <title>DeciRepo - Canon</title>
+  <meta name="description" content="Stable DLX terminology, invariants, and reference model used by DeciRepo verification surfaces." />
+  <link rel="canonical" href="https://decirepo.com/pages/canon.html" />
+  <meta property="og:title" content="DeciRepo - Canon" />
+  <meta property="og:description" content="Stable DLX terminology, invariants, and reference model used by DeciRepo verification surfaces." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://decirepo.com/pages/canon.html" />
+  <meta property="og:image" content="https://decirepo.com/android-chrome-512x512.png" />
+  <meta property="og:site_name" content="DeciRepo" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="DeciRepo - Canon" />
+  <meta name="twitter:description" content="Stable DLX terminology, invariants, and reference model used by DeciRepo verification surfaces." />
+  <meta name="twitter:image" content="https://decirepo.com/android-chrome-512x512.png" />
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="header-root"></div>
+
+    <main class="page-protocol page-proof">
+      <section class="title-block">
+        <h1 class="title-main">Canon</h1>
+        <p class="title-sub title-sub-wrap">The DLX canon defines the stable terminology, invariants, and reference model used by DeciRepo verification surfaces.</p>
+      </section>
+
+      <section class="panel after-title-gap">
+        <h2 class="section-title">Core invariants</h2>
+        <div class="lineage-list">
+          <div class="lineage-item">Agreement does not establish validity.</div>
+          <div class="lineage-item">Execution validity requires admissibility proof.</div>
+          <div class="lineage-item">Replay non-equivalence invalidates execution claims.</div>
+          <div class="lineage-item">Unverifiable execution fails closed.</div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Terminology</h2>
+        <div class="kv-stack">
+          <div class="kv-line">
+            <div class="kv-key">Admissibility</div>
+            <div class="kv-value">Current-state and policy-constrained permissibility of a proposed execution at commit-time.</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Execution validity</div>
+            <div class="kv-value">Validity of a binding state transition at the execution boundary.</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Replay-equivalence</div>
+            <div class="kv-value">Deterministic equivalence between the original boundary result and replay recomputation under the same input, policy, and contract identity.</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Independent recomputation</div>
+            <div class="kv-value">Re-evaluation of a boundary result by a verifier external to the originating runtime context.</div>
+          </div>
+          <div class="kv-line">
+            <div class="kv-key">Verification artifact</div>
+            <div class="kv-value">Structured evidence bound to an execution claim and replay inputs, used for reproducible verification.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Reference model</h2>
+        <pre><code>Input
+→ Contract Identity
+→ Admissibility Evaluation
+→ ALLOW | DENY
+→ Verification Artifact
+→ Replay Verification
+→ Execution Validity Result</code></pre>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Scope</h2>
+        <p class="section-subtitle section-wrap">Canon documents define public semantics. They do not expose production runtime internals, operator infrastructure, enterprise deployment mechanics, or commercial enforcement topology.</p>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Status</h2>
+        <div class="lineage-list">
+          <div class="lineage-item">Canon layer: v0.1 frozen</div>
+          <div class="lineage-item">Runtime verification surface: v0.1</div>
+          <div class="lineage-item">External witnessed replay verification: pending</div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-brand">DeciRepo</div>
+      <div class="footer-description">Decision infrastructure powered by DLX</div>
+      <div class="footer-engine">
+        <img class="footer-dlx-logo" src="../assets/brand/dlx-logo-footer.png" alt="DLX logo" width="60" height="60" />
+        <div class="footer-engine-text">DLX execution admissibility</div>
+      </div>
+      <div class="footer-links">
+        <a class="menu-link" href="./privacy.html">Privacy Policy</a>
+        <a class="menu-link" href="./terms.html">Terms of Use</a>
+        <a class="menu-link" href="./disclaimer.html">Disclaimer</a>
+        <a class="menu-link" href="./billing.html">Billing & Refunds</a>
+        <a class="menu-link" href="mailto:info@indrasnet.ee">Contact</a>
+      </div>
+      <div class="footer-legal">© 2026 <a class="footer-legal-link" href="https://indrasnet.ee">IndrasNet OÜ</a></div>
+      <div class="footer-meta">Pilot-by-agreement mode</div>
+      <div class="footer-meta">Canon semantics for verification surfaces</div>
+    </footer>
+  </div>
+
+  <script src="../components/header.js"></script>
+  <script>
+    window.DeciRepoHeader.mount("header-root", "canon");
+  </script>
+</body>
+</html>

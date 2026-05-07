@@ -78,7 +78,7 @@
       <div class="footer-description">Decision infrastructure powered by DLX</div>
       <div class="footer-engine">
         <img class="footer-dlx-logo" src="../assets/brand/dlx-logo-footer.png" alt="DLX logo" width="60" height="60" />
-        <div class="footer-engine-text">DLX deterministic engine</div>
+        <div class="footer-engine-text">DLX execution admissibility</div>
       </div>
       <div class="footer-links">
         <a class="menu-link" href="./privacy.html">Privacy Policy</a>
@@ -100,6 +100,7 @@
   <script src="../components/decision-block.js"></script>
   <script>
     window.DeciRepoHeader.mount("header-root", "proof");
+    const esc = window.DeciRepoDecisionBlock.escapeHtml;
 
     const edges = window.DeciRepoData.lineageEdges || [];
     const decisions = window.DeciRepoData.decisions || [];
@@ -173,7 +174,7 @@
         ["Policy", decision.policyVersion],
         ["Date", decision.date]
       ]
-        .map(([label, value]) => `<div class="decision-header-line"><span class="label">${label}:</span>${value}</div>`)
+        .map(([label, value]) => `<div class="decision-header-line"><span class="label">${esc(label)}:</span>${esc(value)}</div>`)
         .join("");
 
       verifyButton.onclick = () => {
@@ -224,7 +225,7 @@
         ? parents
             .map((edge) => {
               const parent = decisionById(edge.parent);
-              return parent ? `<div class="lineage-item">${visualId(parent)} · ${parent.title}</div>` : "";
+              return parent ? `<div class="lineage-item">${esc(visualId(parent))} · ${esc(parent.title)}</div>` : "";
             })
             .join("")
         : `<div class="lineage-item muted">No parent decisions</div>`;
@@ -233,7 +234,7 @@
         ? children
             .map((edge) => {
               const child = decisionById(edge.child);
-              return child ? `<div class="lineage-item">${visualId(child)} · ${child.title}</div>` : "";
+              return child ? `<div class="lineage-item">${esc(visualId(child))} · ${esc(child.title)}</div>` : "";
             })
             .join("")
         : `<div class="lineage-item muted">No influenced decisions</div>`;
@@ -247,10 +248,10 @@
               ${chain
                 .map(
                   (node, idx) => `
-                    <div class="lineage-node ${node.id === decision.id ? "active" : ""}" data-node-id="${node.id}">
-                      <div class="lineage-node-id">${visualId(node)}</div>
-                      <div class="lineage-node-title">${node.title}</div>
-                      <div class="lineage-node-meta">${node.date}</div>
+                    <div class="lineage-node ${node.id === decision.id ? "active" : ""}" data-node-id="${esc(node.id)}">
+                      <div class="lineage-node-id">${esc(visualId(node))}</div>
+                      <div class="lineage-node-title">${esc(node.title)}</div>
+                      <div class="lineage-node-meta">${esc(node.date)}</div>
                     </div>
                     ${idx < chain.length - 1 ? '<div class="lineage-node-arrow">▼</div>' : ""}
                   `
@@ -278,21 +279,21 @@
           if (!parent || !child) return "";
           const changed = parent.outcome !== child.outcome ? "changed" : "";
           return `
-            <tr class="lineage-row ${changed}" data-parent="${edge.parent}" data-child="${edge.child}">
+            <tr class="lineage-row ${changed}" data-parent="${esc(edge.parent)}" data-child="${esc(edge.child)}">
               <td>
-                <div class="index-id">${visualId(parent)}</div>
-                <div class="legacy-id">${parent.id}</div>
+                <div class="index-id">${esc(visualId(parent))}</div>
+                <div class="legacy-id">${esc(parent.id)}</div>
               </td>
-              <td>${edge.relation}</td>
+              <td>${esc(edge.relation)}</td>
               <td>
-                <div class="index-id">${visualId(child)}</div>
-                <div class="legacy-id">${child.id}</div>
+                <div class="index-id">${esc(visualId(child))}</div>
+                <div class="legacy-id">${esc(child.id)}</div>
               </td>
               <td>
                 <div class="feed-actions">
-                  <button class="btn small" type="button" data-select="${edge.child}">Select</button>
-                  <button class="btn small" type="button" data-open="${edge.child}">Open</button>
-                  <button class="btn small" type="button" data-diff-left="${edge.parent}" data-diff-right="${edge.child}">Diff</button>
+                  <button class="btn small" type="button" data-select="${esc(edge.child)}">Select</button>
+                  <button class="btn small" type="button" data-open="${esc(edge.child)}">Open</button>
+                  <button class="btn small" type="button" data-diff-left="${esc(edge.parent)}" data-diff-right="${esc(edge.child)}">Diff</button>
                 </div>
               </td>
             </tr>

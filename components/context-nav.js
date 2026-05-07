@@ -1,22 +1,32 @@
 (function () {
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
   function renderLink(item) {
-    const label = item.label || "Link";
+    const label = escapeHtml(item.label || "Link");
     if (!item.href || item.active) {
       const cls = item.active ? "btn btn-gold small disabled" : "btn small disabled";
       return `<span class="${cls}" aria-current="${item.active ? "page" : "false"}">${label}</span>`;
     }
+    const href = escapeHtml(item.href);
     const attrs = item.external ? ` target="_blank" rel="noopener noreferrer"` : "";
     const cls = item.primary ? "btn btn-gold small" : "btn small";
-    return `<a class="${cls}" href="${item.href}"${attrs}>${label}</a>`;
+    return `<a class="${cls}" href="${href}"${attrs}>${label}</a>`;
   }
 
   function mount(targetId, options) {
     const root = document.getElementById(targetId);
     if (!root) return;
 
-    const current = options && options.current ? options.current : "Context";
-    const meta = options && options.meta ? options.meta : "";
-    const hint = options && options.hint ? options.hint : "";
+    const current = escapeHtml(options && options.current ? options.current : "Context");
+    const meta = escapeHtml(options && options.meta ? options.meta : "");
+    const hint = escapeHtml(options && options.hint ? options.hint : "");
     const links = options && Array.isArray(options.links) ? options.links : [];
 
     root.innerHTML = `

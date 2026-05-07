@@ -1,4 +1,13 @@
 (function () {
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
   function outcomeClass(outcome) {
     if (outcome === "APPROVED") return "outcome-approved";
     if (outcome === "REJECTED") return "outcome-rejected";
@@ -29,15 +38,15 @@
           ${rows
             .map(
               (r, index) => `
-            <tr class="repo-row" data-id="${r.id}" data-index="${index}">
+            <tr class="repo-row" data-id="${escapeHtml(r.id)}" data-index="${index}">
               <td>
-                <span class="canonical-id">◢${r.short_hash || String(r.canonical_id || "").replace(/^[^0-9A-Fa-f]*/, "").slice(0, 6).toUpperCase()}</span>
-                <span class="legacy-id">${r.id}</span>
+                <span class="canonical-id">◢${escapeHtml(r.short_hash || String(r.canonical_id || "").replace(/^[^0-9A-Fa-f]*/, "").slice(0, 6).toUpperCase())}</span>
+                <span class="legacy-id">${escapeHtml(r.id)}</span>
               </td>
-              <td>${r.title}</td>
-              <td class="${outcomeClass(r.outcome)}">${r.outcome}</td>
-              <td>${r.policy}</td>
-              <td>${r.date}</td>
+              <td>${escapeHtml(r.title)}</td>
+              <td class="${outcomeClass(r.outcome)}">${escapeHtml(r.outcome)}</td>
+              <td>${escapeHtml(r.policy)}</td>
+              <td>${escapeHtml(r.date)}</td>
             </tr>
           `
             )

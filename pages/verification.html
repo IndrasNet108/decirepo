@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <title>DeciRepo - Verification</title>
+  <meta name="description" content="Verification scope, replay checks, and release artifact requirements for DeciRepo." />
+  <link rel="canonical" href="https://decirepo.com/pages/verification.html" />
+  <meta property="og:title" content="DeciRepo - Verification" />
+  <meta property="og:description" content="Verification scope, replay checks, and release artifact requirements for DeciRepo." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://decirepo.com/pages/verification.html" />
+  <meta property="og:image" content="https://decirepo.com/android-chrome-512x512.png" />
+  <meta property="og:site_name" content="DeciRepo" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="DeciRepo - Verification" />
+  <meta name="twitter:description" content="Verification scope, replay checks, and release artifact requirements for DeciRepo." />
+  <meta name="twitter:image" content="https://decirepo.com/android-chrome-512x512.png" />
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="header-root"></div>
+
+    <main class="page-protocol page-proof">
+      <section class="title-block">
+        <h1 class="title-main">Verification</h1>
+        <p class="title-sub title-sub-wrap">DeciRepo verification is scoped to explicit release artifacts, runtime identity, contract identity, policy identity, and replay evidence.</p>
+      </section>
+
+      <section class="panel after-title-gap">
+        <h2 class="section-title">Current status</h2>
+        <div class="lineage-list">
+          <div class="lineage-item">Internal runtime smoke: PASS</div>
+          <div class="lineage-item">External witnessed replay verification: pending</div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Release artifacts</h2>
+        <p class="section-subtitle section-wrap">Published verification claims must reference a package name, SHA256 checksum, manifest, and release lineage pointer.</p>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Replay check</h2>
+        <p class="section-subtitle section-wrap">Replay verification confirms whether the claimed execution result is reproducible under the same input, policy, and contract identity.</p>
+        <pre><code>bash scripts/smoke_dlx_llm_v0.sh
+bash scripts/replay_case.sh cases/case_invalid_v0.json
+bash scripts/replay_case.sh cases/case_valid_v0.json</code></pre>
+        <pre><code>smoke PASS
+DENY + HASH VERIFIED
+ALLOW + HASH VERIFIED</code></pre>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title">Scope note</h2>
+        <p class="section-subtitle section-wrap">A PASS result applies only to the stated package, runtime, contract, policy, and replay input identity. PASS does not propagate to modified runtime, policy, contract, or artifact state.</p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-brand">DeciRepo</div>
+      <div class="footer-description">Decision infrastructure powered by DLX</div>
+      <div class="footer-engine">
+        <img class="footer-dlx-logo" src="../assets/brand/dlx-logo-footer.png" alt="DLX logo" width="60" height="60" />
+        <div class="footer-engine-text">DLX deterministic engine</div>
+      </div>
+      <div class="footer-links">
+        <a class="menu-link" href="./privacy.html">Privacy Policy</a>
+        <a class="menu-link" href="./terms.html">Terms of Use</a>
+        <a class="menu-link" href="./disclaimer.html">Disclaimer</a>
+        <a class="menu-link" href="./billing.html">Billing & Refunds</a>
+        <a class="menu-link" href="mailto:info@indrasnet.ee">Contact</a>
+      </div>
+      <div class="footer-legal">© 2026 <a class="footer-legal-link" href="https://indrasnet.ee">IndrasNet OÜ</a></div>
+      <div class="footer-meta">Pilot-by-agreement mode</div>
+      <div class="footer-meta">Verification surface for release-scoped reproducibility</div>
+    </footer>
+  </div>
+
+  <script src="../components/header.js"></script>
+  <script>
+    window.DeciRepoHeader.mount("header-root", "verification");
+  </script>
+</body>
+</html>

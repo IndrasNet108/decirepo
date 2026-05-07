@@ -1,8 +1,17 @@
 (function () {
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
   function item(label, href, active, external = false) {
     const cls = active ? "menu-link active" : "menu-link";
     const attrs = external ? ` target="_blank" rel="noopener noreferrer"` : "";
-    return `<a class="${cls}" href="${href}"${attrs}>${label}</a>`;
+    return `<a class="${escapeHtml(cls)}" href="${escapeHtml(href)}"${attrs}>${escapeHtml(label)}</a>`;
   }
 
   function mount(targetId, activeItem) {
@@ -25,6 +34,7 @@
           ${item("About", "/pages/about.html", activeItem === "about")}
           ${item("Cases", "/pages/cases.html", activeItem === "cases")}
           ${item("Proof", "/pages/proof.html", activeItem === "proof")}
+          ${item("Verification", "/pages/verification.html", activeItem === "verification")}
           ${item("Request Pilot", "/pages/billing.html#request-pilot", activeItem === "request-pilot" || activeItem === "billing")}
         </nav>
       </header>
@@ -32,5 +42,5 @@
     `;
   }
 
-  window.DeciRepoHeader = { mount };
+  window.DeciRepoHeader = { mount, escapeHtml };
 })();

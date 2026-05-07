@@ -100,6 +100,26 @@
       </section>
 
       <section class="panel">
+        <h2 class="section-title">Example scenario</h2>
+        <p class="section-subtitle section-wrap">A workflow transition is approved under policy v0.1.</p>
+        <p class="section-subtitle section-wrap">Before execution becomes binding, the replay verifier recomputes admissibility using:</p>
+        <div class="lineage-list">
+          <div class="lineage-item">contract identity,</div>
+          <div class="lineage-item">policy identity,</div>
+          <div class="lineage-item">replay input,</div>
+          <div class="lineage-item">claimed execution result.</div>
+        </div>
+        <p class="section-subtitle section-wrap">The replay result does not match the claimed execution outcome.</p>
+        <p class="section-subtitle section-wrap">Result:</p>
+        <div class="lineage-list">
+          <div class="lineage-item">execution claim invalidated,</div>
+          <div class="lineage-item">transition denied,</div>
+          <div class="lineage-item">verification artifact preserved.</div>
+        </div>
+        <p class="section-subtitle section-wrap">The system validates admissibility before consequence becomes binding.</p>
+      </section>
+
+      <section class="panel">
         <h2 class="section-title">Next step</h2>
         <p class="section-subtitle section-wrap">If one of these scenes has already cost time, money, or internal trust, start with the lightest next step: review what can be checked, or run one example check before scoping a pilot.</p>
         <div class="button-row tight">

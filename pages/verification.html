@@ -58,6 +58,27 @@ ALLOW + HASH VERIFIED</code></pre>
       </section>
 
       <section class="panel">
+        <h2 class="section-title">Replay example</h2>
+        <p class="section-subtitle section-wrap">Replay verification checks whether a claimed execution result remains reproducible under the same contract, policy, and replay input.</p>
+        <pre><code>Input:
+approval=true
+policy=v0.1
+contract=workflow_release_v0
+
+Claimed result:
+ALLOW
+
+Replay result:
+DENY
+
+Verification:
+HASH VERIFIED
+NON-EQUIVALENT
+INVALID_CLAIM</code></pre>
+        <p class="section-subtitle section-wrap">Replay non-equivalence invalidates the execution claim.</p>
+      </section>
+
+      <section class="panel">
         <h2 class="section-title">Scope note</h2>
         <p class="section-subtitle section-wrap">A PASS result applies only to the stated package, runtime, contract, policy, and replay input identity. PASS does not propagate to modified runtime, policy, contract, or artifact state.</p>
       </section>

@@ -37,7 +37,7 @@
         <h2 class="section-title">Start from one bounded surface</h2>
         <div class="hero-lines">
           <p class="hero-line">One workflow surface.</p>
-          <p class="hero-line">One explicit approval boundary.</p>
+          <p class="hero-line">One explicit execution boundary.</p>
           <p class="hero-line">One reviewable result for internal decision-making.</p>
           <p class="hero-line mono">risk -> check -> result -> internal decision</p>
         </div>
@@ -48,7 +48,7 @@
       </section>
 
       <section class="panel">
-        <h2 class="section-title">DLX execution admissibility</h2>
+        <h2 class="section-title">DLX boundary model</h2>
         <p class="section-subtitle section-wrap">DLX is an execution admissibility architecture for replay-verifiable validation of binding workflow transitions.</p>
         <p class="section-subtitle section-wrap">DeciRepo uses DLX to check whether an approved workflow transition may still bind at execution time, and preserves reviewable evidence for replay verification.</p>
       </section>
@@ -66,7 +66,7 @@
           <div class="kv-stack">
             <div class="kv-line">
               <div class="kv-key">Boundary</div>
-              <div class="kv-value">Whether a workflow can produce an output outside the defined approval boundary.</div>
+              <div class="kv-value">Whether a workflow can produce an output outside the defined execution boundary.</div>
             </div>
             <div class="kv-line">
               <div class="kv-key">Drift</div>
@@ -103,7 +103,7 @@
           </div>
           <div class="kv-line">
             <div class="kv-key">Boundary result</div>
-            <div class="kv-value">Mismatch found: the outbound wording crossed the approval boundary before approval was complete.</div>
+            <div class="kv-value">Mismatch found: the outbound wording crossed the execution boundary before approval was complete.</div>
           </div>
           <div class="kv-line">
             <div class="kv-key">Reviewable package</div>

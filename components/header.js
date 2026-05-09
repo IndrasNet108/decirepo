@@ -26,7 +26,6 @@
             <span class="brand-registry">DeciRepo</span>
           </div>
         <div class="brand-subline">
-          <span class="brand-sub">Powered by DLX execution admissibility</span>
         </div>
         </div>
         <nav class="header-menu" aria-label="Primary">

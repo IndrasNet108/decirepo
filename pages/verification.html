@@ -50,10 +50,10 @@
       <section class="panel">
         <h2 class="section-title">Replay check</h2>
         <p class="section-subtitle section-wrap">Replay verification confirms whether the claimed execution result is reproducible under the same input, policy, and contract identity.</p>
-        <pre><code>bash scripts/smoke_dlx_llm_v0.sh
+        <pre class="code-block"><code>bash scripts/smoke_dlx_llm_v0.sh
 bash scripts/replay_case.sh cases/case_invalid_v0.json
 bash scripts/replay_case.sh cases/case_valid_v0.json</code></pre>
-        <pre><code>smoke PASS
+        <pre class="code-block"><code>smoke PASS
 DENY + HASH VERIFIED
 ALLOW + HASH VERIFIED</code></pre>
       </section>
@@ -61,7 +61,7 @@ ALLOW + HASH VERIFIED</code></pre>
       <section class="panel">
         <h2 class="section-title">Replay example</h2>
         <p class="section-subtitle section-wrap">Replay verification checks whether a claimed execution result remains reproducible under the same contract, policy, and replay input.</p>
-        <pre><code>Input:
+        <pre class="code-block"><code>Input:
 approval=true
 policy=v0.1
 contract=workflow_release_v0
@@ -87,7 +87,6 @@ INVALID_CLAIM</code></pre>
 
     <footer class="footer">
       <div class="footer-brand">DeciRepo</div>
-      <div class="footer-description">Decision infrastructure powered by DLX</div>
       <div class="footer-engine">
         <img class="footer-dlx-logo" src="../assets/brand/dlx-logo-footer.png" alt="DLX logo" width="60" height="60" />
         <div class="footer-engine-text">DLX execution admissibility</div>
